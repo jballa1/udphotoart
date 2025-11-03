@@ -9,13 +9,19 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { href: "/", label: "Home" },
-  { href: "/revelations", label: "Recent Revelations" },
-  { href: "/gallery", label: "The World Through My Lense" },
-  { href: "/unspoken", label: "Unspoken" },
-  { href: "/perspectives", label: "Captured Perspectives" },
+  {
+    href: "/galleries",
+    label: "Galleries",
+    submenu: [
+      { href: "/galleries/recent-revelations", label: "Recent Revelations" },
+      { href: "/galleries/world-through-my-lens", label: "World Through My Lens" },
+      { href: "/galleries/captured-perspectives", label: "Captured Perspectives" },
+      { href: "/galleries/unspoken", label: "Unspoken" },
+    ]
+  },
   { href: "/blog", label: "Blog" },
-  { href: "/shop", label: "Shop Here" },
-  { href: "/contact", label: "Get in Touch" },
+  { href: "/shop", label: "Shop" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function Navigation() {
@@ -84,17 +90,44 @@ export function Navigation() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
+                  className="relative group"
                 >
-                  <Link
-                    href={item.href}
-                    className={cn(
-                      "text-sm font-medium tracking-wide hover:text-accent transition-colors relative group",
-                      isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                    )}
-                  >
-                    {item.label}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
-                  </Link>
+                  {item.submenu ? (
+                    <>
+                      <span
+                        className={cn(
+                          "text-sm font-medium tracking-wide hover:text-accent transition-colors cursor-pointer relative",
+                          isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                        )}
+                      >
+                        {item.label}
+                        <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+                      </span>
+                      {/* Dropdown */}
+                      <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        {item.submenu.map((subItem) => (
+                          <Link
+                            key={subItem.href}
+                            href={subItem.href}
+                            className="block px-4 py-3 text-sm text-gray-800 hover:bg-accent hover:text-white transition-colors"
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className={cn(
+                        "text-sm font-medium tracking-wide hover:text-accent transition-colors relative",
+                        isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                      )}
+                    >
+                      {item.label}
+                      <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
+                    </Link>
+                  )}
                 </motion.div>
               ))}
             </div>
@@ -128,22 +161,43 @@ export function Navigation() {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed inset-y-0 right-0 z-40 w-full max-w-sm bg-background shadow-2xl lg:hidden"
           >
-            <div className="flex flex-col h-full pt-20 px-6 pb-6">
-              <div className="flex-1 space-y-6">
+            <div className="flex flex-col h-full pt-20 px-6 pb-6 overflow-y-auto">
+              <div className="flex-1 space-y-4">
                 {navItems.map((item, index) => (
                   <motion.div
                     key={item.href}
                     initial={{ opacity: 0, x: 50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05, duration: 0.3 }}
+                    className="space-y-2"
                   >
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-lg font-medium tracking-wide hover:text-accent transition-colors py-2"
-                    >
-                      {item.label}
-                    </Link>
+                    {item.submenu ? (
+                      <>
+                        <div className="text-lg font-bold tracking-wide text-accent py-2 font-bebas">
+                          {item.label}
+                        </div>
+                        <div className="pl-4 space-y-2">
+                          {item.submenu.map((subItem) => (
+                            <Link
+                              key={subItem.href}
+                              href={subItem.href}
+                              onClick={() => setIsMobileMenuOpen(false)}
+                              className="block text-base font-medium tracking-wide hover:text-accent transition-colors py-2"
+                            >
+                              {subItem.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block text-lg font-medium tracking-wide hover:text-accent transition-colors py-2"
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                   </motion.div>
                 ))}
               </div>
