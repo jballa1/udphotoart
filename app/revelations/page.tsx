@@ -1,90 +1,49 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Calendar, Eye } from "lucide-react";
+import { Lightbox } from "@/components/lightbox";
+import { MapPin, Globe2 } from "lucide-react";
+import locationsData from "@/lib/revelations-photos.json";
 
-const revelations = [
-  {
-    id: 1,
-    title: "Golden Hour Reflections",
-    description:
-      "Capturing the ethereal beauty of sunset's last light dancing on still waters",
-    image:
-      "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940",
-    date: "2024-10-15",
-    views: "2.4k",
-  },
-  {
-    id: 2,
-    title: "Urban Symphony",
-    description:
-      "The rhythmic patterns and geometric poetry of modern architecture",
-    image:
-      "https://images.unsplash.com/photo-1682687221038-404cb8830901?q=80&w=2940",
-    date: "2024-10-12",
-    views: "1.8k",
-  },
-  {
-    id: 3,
-    title: "Silent Conversations",
-    description:
-      "Intimate moments between strangers in bustling city streets",
-    image:
-      "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940",
-    date: "2024-10-08",
-    views: "3.1k",
-  },
-  {
-    id: 4,
-    title: "Wilderness Awakening",
-    description:
-      "Morning mist unveiling the secrets of untouched natural landscapes",
-    image:
-      "https://images.unsplash.com/photo-1682687220199-d0124f48f95b?q=80&w=2940",
-    date: "2024-10-05",
-    views: "2.7k",
-  },
-  {
-    id: 5,
-    title: "Monochrome Emotions",
-    description:
-      "Stripping away color to reveal raw, unfiltered human expression",
-    image:
-      "https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940",
-    date: "2024-10-01",
-    views: "2.2k",
-  },
-  {
-    id: 6,
-    title: "Celestial Dreams",
-    description:
-      "When earth meets sky in a breathtaking dance of light and shadow",
-    image:
-      "https://images.unsplash.com/photo-1682695794947-17061dc284dd?q=80&w=2940",
-    date: "2024-09-28",
-    views: "4.5k",
-  },
-];
+const regions = ["All", "Europe", "Asia", "Americas"];
 
 export default function RevelationsPage() {
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+
+  const filteredLocations = locationsData.filter((loc) =>
+    selectedRegion === "All" ? true : loc.region === selectedRegion
+  );
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const selectedLocationData = selectedLocation
+    ? locationsData.find((loc) => loc.id === selectedLocation)
+    : null;
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940"
+          <img
+            src="/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg"
             alt="Recent Revelations"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -92,72 +51,195 @@ export default function RevelationsPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-4"
+            className="space-y-6"
           >
-            <h1 className="font-serif text-5xl md:text-7xl font-bold text-white">
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <Globe2 className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Global Exploration
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
               Recent Revelations
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              My latest discoveries, where each moment reveals something
-              extraordinary
+              Contemporary global urban exploration across 9 cities — from
+              Nordic winters to vibrant India
             </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>216 Photos</span>
+              <span>•</span>
+              <span>9 Locations</span>
+              <span>•</span>
+              <span>4 Continents</span>
+            </div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          </div>
+        </motion.div>
       </section>
 
-      {/* Gallery Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {revelations.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group cursor-pointer"
+      {/* Region Filter */}
+      <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            {regions.map((region) => (
+              <button
+                key={region}
+                onClick={() => {
+                  setSelectedRegion(region);
+                  setSelectedLocation(null);
+                }}
+                className={`px-6 py-2 rounded-full font-bebas text-sm tracking-wide transition-all ${
+                  selectedRegion === region
+                    ? "bg-accent text-white shadow-lg scale-105"
+                    : "bg-secondary text-foreground hover:bg-accent/10 hover:text-accent"
+                }`}
               >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-lg mb-4">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <div className="flex items-center gap-4 text-white/80 text-sm mb-2">
-                        <span className="flex items-center gap-1">
-                          <Calendar className="w-4 h-4" />
-                          {new Date(item.date).toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          })}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Eye className="w-4 h-4" />
-                          {item.views}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="font-serif text-2xl font-bold group-hover:text-accent transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-muted-foreground line-clamp-2">
-                    {item.description}
-                  </p>
-                </div>
-              </motion.div>
+                {region}
+              </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Locations Grid */}
+      {!selectedLocation && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedRegion}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {filteredLocations.map((location, index) => (
+                  <motion.div
+                    key={location.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedLocation(location.id)}
+                  >
+                    {/* Location Card */}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                      <img
+                        src={location.hero}
+                        alt={location.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+
+                      {/* Location Badge */}
+                      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-xs font-bebas tracking-wide">
+                          {location.photoCount} Photos
+                        </span>
+                      </div>
+
+                      {/* Location Info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-center gap-2 text-accent mb-2">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-xs uppercase tracking-wider font-bebas">
+                            {location.country}
+                          </span>
+                        </div>
+                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                          {location.name}
+                        </h3>
+                        <p className="text-white/80 text-sm line-clamp-2">
+                          {location.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+      )}
+
+      {/* Selected Location Gallery with Masonry Layout */}
+      {selectedLocation && selectedLocationData && (
+        <section className="py-16 bg-black/5">
+          <div className="container mx-auto px-4">
+            {/* Back Button */}
+            <button
+              onClick={() => setSelectedLocation(null)}
+              className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2"
+            >
+              ← Back to Locations
+            </button>
+
+            {/* Gallery Header */}
+            <div className="text-center space-y-4 mb-12">
+              <div className="flex items-center justify-center gap-2 text-accent">
+                <MapPin className="w-5 h-5" />
+                <span className="text-sm uppercase tracking-widest font-bebas">
+                  {selectedLocationData.country}
+                </span>
+              </div>
+              <h2 className="font-bebas text-5xl md:text-7xl font-bold tracking-tight">
+                {selectedLocationData.name}
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                {selectedLocationData.description}
+              </p>
+              <div className="text-muted-foreground/70 text-sm">
+                {selectedLocationData.photoCount} photographs
+              </div>
+            </div>
+
+            {/* Vertical Masonry Grid - Pinterest Style */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+              {selectedLocationData.photos.map((photo, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.02, duration: 0.4 }}
+                  className="break-inside-avoid mb-4 cursor-pointer group"
+                  onClick={() =>
+                    openLightbox(selectedLocationData.photos, idx)
+                  }
+                >
+                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img
+                      src={photo}
+                      alt={`${selectedLocationData.name} ${idx + 1}`}
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
 
       <Footer />
     </main>

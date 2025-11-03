@@ -1,135 +1,42 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { useRef } from "react";
-
-const unspokenMoments = [
-  {
-    id: 1,
-    title: "The Weight of Silence",
-    emotion: "Contemplation",
-    image:
-      "https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940",
-    story:
-      "In the quiet moments between words, we find the deepest truths. This image captures a soul lost in thought, where silence speaks volumes.",
-  },
-  {
-    id: 2,
-    title: "Echoes of Memory",
-    emotion: "Nostalgia",
-    image:
-      "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940",
-    story:
-      "Some moments live forever in the spaces between heartbeats—memories that resurface in the golden light of remembrance.",
-  },
-  {
-    id: 3,
-    title: "Solitary Strength",
-    emotion: "Resilience",
-    image:
-      "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940",
-    story:
-      "Standing alone doesn't mean standing weak. In solitude, we often discover our truest strength.",
-  },
-  {
-    id: 4,
-    title: "The Language of Eyes",
-    emotion: "Connection",
-    image:
-      "https://images.unsplash.com/photo-1682687221038-404cb8830901?q=80&w=2940",
-    story:
-      "Sometimes a glance carries more meaning than a thousand words. Eyes speak a universal language of emotion.",
-  },
-  {
-    id: 5,
-    title: "Shadows of the Past",
-    emotion: "Melancholy",
-    image:
-      "https://images.unsplash.com/photo-1682687220199-d0124f48f95b?q=80&w=2940",
-    story:
-      "We all carry shadows from yesterday. They shape us, define us, and remind us of the journey we've traveled.",
-  },
-];
-
-function ParallaxSection({ item, index }: { item: typeof unspokenMoments[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
-
-  const isEven = index % 2 === 0;
-
-  return (
-    <div ref={ref} className="relative min-h-screen flex items-center py-24">
-      <div className="container mx-auto px-4">
-        <div
-          className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
-            isEven ? "" : "lg:grid-flow-dense"
-          }`}
-        >
-          <motion.div
-            style={{ y, opacity }}
-            className={`relative h-[600px] rounded-lg overflow-hidden ${
-              isEven ? "" : "lg:col-start-2"
-            }`}
-          >
-            <Image
-              src={item.image}
-              alt={item.title}
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: isEven ? -50 : 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className={`space-y-6 ${isEven ? "" : "lg:col-start-1 lg:row-start-1"}`}
-          >
-            <div>
-              <span className="inline-block px-4 py-1 bg-accent/10 text-accent rounded-full text-sm font-medium mb-4">
-                {item.emotion}
-              </span>
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-                {item.title}
-              </h2>
-            </div>
-            <p className="text-lg text-muted-foreground leading-relaxed italic">
-              "{item.story}"
-            </p>
-          </motion.div>
-        </div>
-      </div>
-    </div>
-  );
-}
+import { Lightbox } from "@/components/lightbox";
+import { Heart } from "lucide-react";
+import unspokenData from "@/lib/unspoken-photos.json";
 
 export default function UnspokenPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const selectedCategoryData = selectedCategory
+    ? unspokenData.find((cat) => cat.id === selectedCategory)
+    : null;
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940"
+          <img
+            src="/images/unspoken/Portraits/023140e6-f8e1-4e66-a89f-ee346dbacfeb_rw_1200.jpg"
             alt="Unspoken"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -137,64 +44,170 @@ export default function UnspokenPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6 max-w-4xl mx-auto"
+            className="space-y-6"
           >
-            <h1 className="font-serif text-6xl md:text-8xl font-bold text-white">
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <Heart className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Portrait Photography
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
               Unspoken
             </h1>
-            <p className="text-2xl md:text-3xl text-white/90 font-light italic">
-              Emotions and stories without words
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              Life's precious moments told through portraits—from first breaths to
+              life's milestones
             </p>
-            <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
-              In a world filled with noise, the most profound moments often
-              exist in silence. These images capture the essence of human
-              emotion—raw, unfiltered, and beautifully unspoken.
-            </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>163 Photos</span>
+              <span>•</span>
+              <span>6 Categories</span>
+              <span>•</span>
+              <span>Life Stages</span>
+            </div>
           </motion.div>
         </div>
 
+        {/* Scroll Indicator */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
         >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1 h-3 bg-white/50 rounded-full mt-2"
-            />
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
           </div>
         </motion.div>
       </section>
 
-      {/* Parallax Sections */}
-      {unspokenMoments.map((item, index) => (
-        <ParallaxSection key={item.id} item={item} index={index} />
-      ))}
+      {/* Categories Grid */}
+      {!selectedCategory && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {unspokenData.map((category, index) => (
+                  <motion.div
+                    key={category.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedCategory(category.id)}
+                  >
+                    {/* Category Card */}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                      <img
+                        src={category.hero}
+                        alt={category.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
-      {/* Closing Quote */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center space-y-8"
-          >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold italic">
-              "The most powerful stories are those told without words"
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              Every photograph in this collection speaks to the silent language
-              we all share—the language of emotion, memory, and the human
-              experience.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+                      {/* Category Badge */}
+                      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-xs font-bebas tracking-wide">
+                          {category.photoCount} Photos
+                        </span>
+                      </div>
+
+                      {/* Category Info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-center gap-2 text-accent mb-2">
+                          <Heart className="w-4 h-4" />
+                          <span className="text-xs uppercase tracking-wider font-bebas">
+                            {category.name}
+                          </span>
+                        </div>
+                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                          {category.name}
+                        </h3>
+                        <p className="text-white/80 text-sm line-clamp-2">
+                          {category.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+      )}
+
+      {/* Selected Category Gallery with Masonry Layout */}
+      {selectedCategory && selectedCategoryData && (
+        <section className="py-16 bg-black/5">
+          <div className="container mx-auto px-4">
+            {/* Back Button */}
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2"
+            >
+              ← Back to Categories
+            </button>
+
+            {/* Gallery Header */}
+            <div className="text-center space-y-4 mb-12">
+              <div className="flex items-center justify-center gap-2 text-accent">
+                <Heart className="w-5 h-5" />
+                <span className="text-sm uppercase tracking-widest font-bebas">
+                  {selectedCategoryData.name}
+                </span>
+              </div>
+              <h2 className="font-bebas text-5xl md:text-7xl font-bold tracking-tight">
+                {selectedCategoryData.name}
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                {selectedCategoryData.description}
+              </p>
+              <div className="text-muted-foreground/70 text-sm">
+                {selectedCategoryData.photoCount} photographs
+              </div>
+            </div>
+
+            {/* Vertical Masonry Grid - Pinterest Style */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+              {selectedCategoryData.photos.map((photo, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.02, duration: 0.4 }}
+                  className="break-inside-avoid mb-4 cursor-pointer group"
+                  onClick={() =>
+                    openLightbox(selectedCategoryData.photos, idx)
+                  }
+                >
+                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img
+                      src={photo}
+                      alt={`${selectedCategoryData.name} ${idx + 1}`}
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
 
       <Footer />
     </main>

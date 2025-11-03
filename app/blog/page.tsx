@@ -1,92 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
-
-const blogPosts = [
-  {
-    id: 1,
-    title: "The Golden Hour: A Photographer's Best Friend",
-    excerpt:
-      "Discover why the golden hour creates the most magical light for photography and how to make the most of those fleeting moments.",
-    image:
-      "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940",
-    category: "Techniques",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-10-20",
-    readTime: "5 min read",
-    featured: true,
-  },
-  {
-    id: 2,
-    title: "Behind the Lens: My Journey Through the Swiss Alps",
-    excerpt:
-      "A personal account of capturing the raw beauty of mountain landscapes and the challenges faced along the way.",
-    image:
-      "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940",
-    category: "Travel",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-10-15",
-    readTime: "8 min read",
-    featured: false,
-  },
-  {
-    id: 3,
-    title: "The Art of Black and White Photography",
-    excerpt:
-      "Exploring how removing color can amplify emotion and create timeless images that speak to the soul.",
-    image:
-      "https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940",
-    category: "Techniques",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-10-10",
-    readTime: "6 min read",
-    featured: false,
-  },
-  {
-    id: 4,
-    title: "Street Photography: Capturing Life's Candid Moments",
-    excerpt:
-      "The ethics, techniques, and mindset behind capturing authentic moments in public spaces.",
-    image:
-      "https://images.unsplash.com/photo-1682687221038-404cb8830901?q=80&w=2940",
-    category: "Street Photography",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-10-05",
-    readTime: "7 min read",
-    featured: false,
-  },
-  {
-    id: 5,
-    title: "Essential Gear for Landscape Photography",
-    excerpt:
-      "A comprehensive guide to the equipment that helps me capture stunning landscape photographs.",
-    image:
-      "https://images.unsplash.com/photo-1682695798256-28a674122872?q=80&w=2940",
-    category: "Gear",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-09-28",
-    readTime: "10 min read",
-    featured: false,
-  },
-  {
-    id: 6,
-    title: "Finding Your Unique Photographic Voice",
-    excerpt:
-      "How to develop a distinctive style that sets your work apart in a crowded field.",
-    image:
-      "https://images.unsplash.com/photo-1682687220199-d0124f48f95b?q=80&w=2940",
-    category: "Inspiration",
-    author: "Rigo Gonzalez-Nossa",
-    date: "2024-09-22",
-    readTime: "6 min read",
-    featured: false,
-  },
-];
+import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
+import { blogPosts } from "@/lib/blog-posts";
 
 export default function BlogPage() {
   const featuredPost = blogPosts.find((post) => post.featured);
@@ -97,54 +16,85 @@ export default function BlogPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0 bg-gradient-to-br from-accent/20 to-background" />
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/perspectives/Nature/0dae414e-aff8-446f-9f8b-f26987a17d3c_rw_1200.jpg"
+            alt="Blog"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-4"
+            className="space-y-6"
           >
-            <h1 className="font-serif text-5xl md:text-7xl font-bold">
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <BookOpen className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Photography Journal
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
               Stories & Insights
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Thoughts, techniques, and tales from behind the lens
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              Thoughts, techniques, and tales from behind the lens—documenting
+              adventures and lessons learned
             </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>10 Articles</span>
+              <span>•</span>
+              <span>Photography & Travel</span>
+              <span>•</span>
+              <span>Tips & Techniques</span>
+            </div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          </div>
+        </motion.div>
       </section>
 
       {/* Featured Post */}
       {featuredPost && (
-        <section className="py-16">
+        <section className="py-16 bg-black/5">
           <div className="container mx-auto px-4">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
-              className="relative rounded-lg overflow-hidden group cursor-pointer"
+              className="relative rounded-2xl overflow-hidden group cursor-pointer shadow-lg"
             >
               <Link href={`/blog/${featuredPost.id}`}>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
                   <div className="relative h-[400px] lg:h-[600px]">
-                    <Image
+                    <img
                       src={featuredPost.image}
                       alt={featuredPost.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20" />
                   </div>
 
                   <div className="bg-muted p-8 lg:p-12 flex flex-col justify-center">
-                    <span className="inline-block px-3 py-1 bg-accent text-white text-xs font-medium rounded-full w-fit mb-4">
-                      Featured
+                    <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-bebas tracking-wide rounded-full w-fit mb-4">
+                      Featured Article
                     </span>
 
-                    <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 group-hover:text-accent transition-colors">
+                    <h2 className="font-bebas text-3xl md:text-5xl font-bold mb-4 group-hover:text-accent transition-colors tracking-tight">
                       {featuredPost.title}
                     </h2>
 
@@ -168,15 +118,15 @@ export default function BlogPage() {
                         <Clock className="w-4 h-4" />
                         {featuredPost.readTime}
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Tag className="w-4 h-4" />
-                        {featuredPost.category}
-                      </span>
                     </div>
 
-                    <div className="flex items-center text-accent font-medium group-hover:gap-2 transition-all">
-                      Read More
-                      <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <div className="inline-block px-3 py-1 bg-secondary text-xs font-medium rounded-full w-fit mb-6">
+                      {featuredPost.category}
+                    </div>
+
+                    <div className="flex items-center text-accent font-bebas text-lg tracking-wide group-hover:gap-2 transition-all">
+                      Read Full Story
+                      <ArrowRight className="ml-1 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -189,35 +139,55 @@ export default function BlogPage() {
       {/* Blog Grid */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="mb-12 text-center"
+          >
+            <h2 className="font-bebas text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+              More Stories
+            </h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Exploring photography through adventure, technique, and personal
+              reflection
+            </p>
+          </motion.div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {regularPosts.map((post, index) => (
               <motion.article
                 key={post.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="group cursor-pointer"
               >
                 <Link href={`/blog/${post.id}`}>
-                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden mb-4">
-                    <Image
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-lg">
+                    <img
                       src={post.image}
                       alt={post.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2">
-                      <span className="px-3 py-1 bg-muted text-xs font-medium rounded-full">
-                        {post.category}
+                    {/* Category Badge */}
+                    <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                      <span className="text-white text-xs font-bebas tracking-wide">
+                        {post.readTime}
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-xl font-bold group-hover:text-accent transition-colors line-clamp-2">
+                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-medium rounded-full mb-3">
+                        {post.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="font-bebas text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-tight">
                       {post.title}
                     </h3>
 
@@ -231,11 +201,8 @@ export default function BlogPage() {
                         {new Date(post.date).toLocaleDateString("en-US", {
                           month: "short",
                           day: "numeric",
+                          year: "numeric",
                         })}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-3 h-3" />
-                        {post.readTime}
                       </span>
                     </div>
                   </div>
@@ -243,40 +210,6 @@ export default function BlogPage() {
               </motion.article>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="py-24 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl mx-auto text-center space-y-6"
-          >
-            <h2 className="font-serif text-3xl md:text-4xl font-bold">
-              Stay Inspired
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              Subscribe to receive photography tips, behind-the-scenes stories,
-              and updates on new work.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 px-4 py-3 rounded-md border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent"
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-accent text-white rounded-md hover:bg-accent/90 transition-colors font-medium"
-              >
-                Subscribe
-              </button>
-            </form>
-          </motion.div>
         </div>
       </section>
 

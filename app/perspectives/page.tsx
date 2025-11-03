@@ -1,75 +1,29 @@
 "use client";
 
-import { motion } from "framer-motion";
-import Image from "next/image";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { MapPin, Clock } from "lucide-react";
-
-const perspectives = [
-  {
-    id: 1,
-    title: "Through the Lens of Time",
-    location: "Ancient Ruins, Peru",
-    time: "Dawn",
-    image:
-      "https://images.unsplash.com/photo-1682687220199-d0124f48f95b?q=80&w=2940",
-    perspective:
-      "Standing before structures that have witnessed centuries, I'm reminded that perspective is not just about angle—it's about understanding our place in the vastness of time.",
-  },
-  {
-    id: 2,
-    title: "Vertical Horizons",
-    location: "Manhattan, New York",
-    time: "Golden Hour",
-    image:
-      "https://images.unsplash.com/photo-1682687221038-404cb8830901?q=80&w=2940",
-    perspective:
-      "In cities, we're taught to look forward. But when you look up, a whole new world of geometry and light reveals itself—a perspective most people never see.",
-  },
-  {
-    id: 3,
-    title: "The Minimalist's View",
-    location: "Sahara Desert, Morocco",
-    time: "Midday",
-    image:
-      "https://images.unsplash.com/photo-1682695798256-28a674122872?q=80&w=2940",
-    perspective:
-      "When everything is stripped away, when there's nothing but sand and sky, perspective becomes pure. It's not about what you see—it's about what you feel.",
-  },
-  {
-    id: 4,
-    title: "Reflections of Reality",
-    location: "Lake District, England",
-    time: "Dusk",
-    image:
-      "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940",
-    perspective:
-      "Is the reflection the truth, or is the reality above the water? Perspective teaches us that truth is often a matter of which angle we choose to observe from.",
-  },
-  {
-    id: 5,
-    title: "From Above the Clouds",
-    location: "Swiss Alps, Switzerland",
-    time: "Sunrise",
-    image:
-      "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940",
-    perspective:
-      "There's something humbling about rising above the clouds. From this perspective, the problems below seem smaller, and the possibilities seem infinite.",
-  },
-  {
-    id: 6,
-    title: "The Intimate Perspective",
-    location: "Tokyo Streets, Japan",
-    time: "Evening",
-    image:
-      "https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940",
-    perspective:
-      "Sometimes the most powerful perspective is the closest one. Getting intimate with your subject reveals details that distant observation would miss.",
-  },
-];
+import { Lightbox } from "@/components/lightbox";
+import { Camera } from "lucide-react";
+import perspectivesData from "@/lib/perspectives-photos.json";
 
 export default function PerspectivesPage() {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const selectedCategoryData = selectedCategory
+    ? perspectivesData.find((cat) => cat.id === selectedCategory)
+    : null;
+
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -77,14 +31,12 @@ export default function PerspectivesPage() {
       {/* Hero Section */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940"
+          <img
+            src="/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg"
             alt="Captured Perspectives"
-            fill
-            className="object-cover"
-            priority
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -94,130 +46,168 @@ export default function PerspectivesPage() {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h1 className="font-serif text-6xl md:text-8xl font-bold text-white">
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <Camera className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Artistic Vision
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
               Captured Perspectives
             </h1>
-            <p className="text-2xl text-white/90 max-w-3xl mx-auto">
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
               The world changes with every angle, every moment, every point of
               view
             </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>229 Photos</span>
+              <span>•</span>
+              <span>5 Categories</span>
+              <span>•</span>
+              <span>Artistic Collections</span>
+            </div>
           </motion.div>
         </div>
-      </section>
 
-      {/* Introduction */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center space-y-6"
-          >
-            <h2 className="font-serif text-3xl md:text-4xl font-bold">
-              Seeing Beyond the Obvious
-            </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Photography is the art of perspective—choosing not just what to
-              capture, but from where, when, and how. Each perspective tells a
-              different story, reveals a different truth, and invites us to see
-              the familiar in extraordinary new ways.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Perspectives Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="space-y-32">
-            {perspectives.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
-              >
-                {/* Image */}
-                <div
-                  className={`lg:col-span-7 ${
-                    index % 2 === 0 ? "" : "lg:col-start-6"
-                  }`}
-                >
-                  <div className="relative aspect-[4/3] rounded-lg overflow-hidden group">
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div
-                  className={`lg:col-span-5 space-y-6 ${
-                    index % 2 === 0
-                      ? ""
-                      : "lg:col-start-1 lg:row-start-1"
-                  }`}
-                >
-                  <div>
-                    <div className="flex flex-wrap gap-4 mb-4 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-2">
-                        <MapPin className="w-4 h-4 text-accent" />
-                        {item.location}
-                      </span>
-                      <span className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-accent" />
-                        {item.time}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                      {item.title}
-                    </h3>
-                  </div>
-
-                  <p className="text-lg text-muted-foreground leading-relaxed italic border-l-4 border-accent pl-6">
-                    {item.perspective}
-                  </p>
-                </div>
-              </motion.div>
-            ))}
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
           </div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Philosophy Section */}
-      <section className="py-24 bg-accent text-white">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center space-y-8"
-          >
-            <h2 className="font-serif text-4xl md:text-5xl font-bold">
-              The Art of Seeing
-            </h2>
-            <p className="text-xl leading-relaxed">
-              Every photographer sees the world differently. My perspective is
-              shaped by curiosity, wanderlust, and a belief that beauty exists
-              in every corner of our world—you just need to find the right angle
-              to reveal it.
-            </p>
-            <p className="text-lg opacity-90">
-              These images represent not just places and moments, but the unique
-              way I choose to see and share them with you.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      {/* Categories Grid */}
+      {!selectedCategory && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {perspectivesData.map((category, index) => (
+                  <motion.div
+                    key={category.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedCategory(category.id)}
+                  >
+                    {/* Category Card */}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                      <img
+                        src={category.hero}
+                        alt={category.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+
+                      {/* Category Badge */}
+                      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-xs font-bebas tracking-wide">
+                          {category.photoCount} Photos
+                        </span>
+                      </div>
+
+                      {/* Category Info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-center gap-2 text-accent mb-2">
+                          <Camera className="w-4 h-4" />
+                          <span className="text-xs uppercase tracking-wider font-bebas">
+                            {category.theme}
+                          </span>
+                        </div>
+                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                          {category.name}
+                        </h3>
+                        <p className="text-white/80 text-sm line-clamp-2">
+                          {category.description}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+      )}
+
+      {/* Selected Category Gallery with Masonry Layout */}
+      {selectedCategory && selectedCategoryData && (
+        <section className="py-16 bg-black/5">
+          <div className="container mx-auto px-4">
+            {/* Back Button */}
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2"
+            >
+              ← Back to Categories
+            </button>
+
+            {/* Gallery Header */}
+            <div className="text-center space-y-4 mb-12">
+              <div className="flex items-center justify-center gap-2 text-accent">
+                <Camera className="w-5 h-5" />
+                <span className="text-sm uppercase tracking-widest font-bebas">
+                  {selectedCategoryData.theme}
+                </span>
+              </div>
+              <h2 className="font-bebas text-5xl md:text-7xl font-bold tracking-tight">
+                {selectedCategoryData.name}
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                {selectedCategoryData.description}
+              </p>
+              <div className="text-muted-foreground/70 text-sm">
+                {selectedCategoryData.photoCount} photographs
+              </div>
+            </div>
+
+            {/* Vertical Masonry Grid - Pinterest Style */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+              {selectedCategoryData.photos.map((photo, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.02, duration: 0.4 }}
+                  className="break-inside-avoid mb-4 cursor-pointer group"
+                  onClick={() =>
+                    openLightbox(selectedCategoryData.photos, idx)
+                  }
+                >
+                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img
+                      src={photo}
+                      alt={`${selectedCategoryData.name} ${idx + 1}`}
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Lightbox */}
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
 
       <Footer />
     </main>

@@ -2,116 +2,48 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Lightbox } from "@/components/lightbox";
+import { MapPin, Compass } from "lucide-react";
+import worldLensData from "@/lib/world-lens-photos.json";
 
-const categories = ["All", "Landscapes", "Urban", "Portraits", "Nature", "Abstract"];
-
-const galleryImages = [
-  {
-    id: 1,
-    category: "Landscapes",
-    title: "Mountain Majesty",
-    image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940",
-  },
-  {
-    id: 2,
-    category: "Urban",
-    title: "City Lights",
-    image: "https://images.unsplash.com/photo-1682687221038-404cb8830901?q=80&w=2940",
-  },
-  {
-    id: 3,
-    category: "Nature",
-    title: "Forest Whispers",
-    image: "https://images.unsplash.com/photo-1682687220199-d0124f48f95b?q=80&w=2940",
-  },
-  {
-    id: 4,
-    category: "Landscapes",
-    title: "Coastal Serenity",
-    image: "https://images.unsplash.com/photo-1682687220063-4742bd7fd538?q=80&w=2940",
-  },
-  {
-    id: 5,
-    category: "Abstract",
-    title: "Light Patterns",
-    image: "https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?q=80&w=2940",
-  },
-  {
-    id: 6,
-    category: "Urban",
-    title: "Architectural Lines",
-    image: "https://images.unsplash.com/photo-1682687221080-5cb261c645cb?q=80&w=2940",
-  },
-  {
-    id: 7,
-    category: "Nature",
-    title: "Golden Fields",
-    image: "https://images.unsplash.com/photo-1682695794947-17061dc284dd?q=80&w=2940",
-  },
-  {
-    id: 8,
-    category: "Landscapes",
-    title: "Desert Dreams",
-    image: "https://images.unsplash.com/photo-1682695798256-28a674122872?q=80&w=2940",
-  },
-  {
-    id: 9,
-    category: "Abstract",
-    title: "Color Symphony",
-    image: "https://images.unsplash.com/photo-1682695796497-31a44224d6d6?q=80&w=2940",
-  },
-];
+const regions = ["All", "Southwest", "Alaska", "Peru", "West Coast", "Midwest"];
 
 export default function GalleryPage() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [selectedRegion, setSelectedRegion] = useState("All");
+  const [selectedLocation, setSelectedLocation] = useState<string | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
 
-  const filteredImages =
-    selectedCategory === "All"
-      ? galleryImages
-      : galleryImages.filter((img) => img.category === selectedCategory);
+  const filteredLocations = worldLensData.filter((loc) =>
+    selectedRegion === "All" ? true : loc.region === selectedRegion
+  );
 
-  const handlePrevious = () => {
-    if (selectedImage !== null) {
-      const currentIndex = filteredImages.findIndex(
-        (img) => img.id === selectedImage
-      );
-      const prevIndex =
-        currentIndex === 0 ? filteredImages.length - 1 : currentIndex - 1;
-      setSelectedImage(filteredImages[prevIndex].id);
-    }
+  const openLightbox = (images: string[], index: number) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
   };
 
-  const handleNext = () => {
-    if (selectedImage !== null) {
-      const currentIndex = filteredImages.findIndex(
-        (img) => img.id === selectedImage
-      );
-      const nextIndex =
-        currentIndex === filteredImages.length - 1 ? 0 : currentIndex + 1;
-      setSelectedImage(filteredImages[nextIndex].id);
-    }
-  };
+  const selectedLocationData = selectedLocation
+    ? worldLensData.find((loc) => loc.id === selectedLocation)
+    : null;
 
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2940"
-            alt="Gallery"
-            fill
-            className="object-cover"
-            priority
+          <img
+            src="/images/world-lens/Big Bend National Park, Texas/0bac9d96-b622-453a-be16-80de4506f6e4_rw_1920.jpg"
+            alt="World Through My Lens"
+            className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -119,162 +51,195 @@ export default function GalleryPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-4"
+            className="space-y-6"
           >
-            <h1 className="font-serif text-5xl md:text-7xl font-bold text-white">
-              The World Through My Lense
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <Compass className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Adventure & Nature
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+              The World Through My Lens
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              A visual journey across landscapes, cultures, and fleeting moments
+              Adventures across America and beyond—landscapes, wildlife, and the
+              beauty of our natural world
             </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>733 Photos</span>
+              <span>•</span>
+              <span>20 Locations</span>
+              <span>•</span>
+              <span>5 Regions</span>
+            </div>
           </motion.div>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          </div>
+        </motion.div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-12 border-b border-border">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-4">
-            {categories.map((category, index) => (
-              <motion.button
-                key={category}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === category
-                    ? "bg-accent text-white"
-                    : "bg-muted hover:bg-muted/80"
+      {/* Region Filter */}
+      <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm border-b">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            {regions.map((region) => (
+              <button
+                key={region}
+                onClick={() => {
+                  setSelectedRegion(region);
+                  setSelectedLocation(null);
+                }}
+                className={`px-6 py-2 rounded-full font-bebas text-sm tracking-wide transition-all ${
+                  selectedRegion === region
+                    ? "bg-accent text-white shadow-lg scale-105"
+                    : "bg-secondary text-foreground hover:bg-accent/10 hover:text-accent"
                 }`}
               >
-                {category}
-              </motion.button>
+                {region}
+              </button>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Gallery Grid */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredImages.map((image, index) => (
-                <motion.div
-                  key={image.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5, delay: index * 0.05 }}
-                  className="group relative aspect-square overflow-hidden rounded-lg cursor-pointer"
-                  onClick={() => setSelectedImage(image.id)}
-                >
-                  <Image
-                    src={image.image}
-                    alt={image.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-xs text-white/70 mb-1">
-                        {image.category}
-                      </p>
-                      <h3 className="font-serif text-xl font-bold text-white">
-                        {image.title}
-                      </h3>
+      {/* Locations Grid */}
+      {!selectedLocation && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedRegion}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              >
+                {filteredLocations.map((location, index) => (
+                  <motion.div
+                    key={location.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                    className="group cursor-pointer"
+                    onClick={() => setSelectedLocation(location.id)}
+                  >
+                    {/* Location Card */}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                      <img
+                        src={location.hero}
+                        alt={location.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+
+                      {/* Location Badge */}
+                      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-xs font-bebas tracking-wide">
+                          {location.photoCount} Photos
+                        </span>
+                      </div>
+
+                      {/* Location Info */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <div className="flex items-center gap-2 text-accent mb-2">
+                          <MapPin className="w-4 h-4" />
+                          <span className="text-xs uppercase tracking-wider font-bebas">
+                            {location.state}
+                          </span>
+                        </div>
+                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                          {location.name}
+                        </h3>
+                        <p className="text-white/80 text-sm line-clamp-2">
+                          {location.description}
+                        </p>
+                      </div>
                     </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+      )}
+
+      {/* Selected Location Gallery with Masonry Layout */}
+      {selectedLocation && selectedLocationData && (
+        <section className="py-16 bg-black/5">
+          <div className="container mx-auto px-4">
+            {/* Back Button */}
+            <button
+              onClick={() => setSelectedLocation(null)}
+              className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2"
+            >
+              ← Back to Locations
+            </button>
+
+            {/* Gallery Header */}
+            <div className="text-center space-y-4 mb-12">
+              <div className="flex items-center justify-center gap-2 text-accent">
+                <MapPin className="w-5 h-5" />
+                <span className="text-sm uppercase tracking-widest font-bebas">
+                  {selectedLocationData.state}
+                </span>
+              </div>
+              <h2 className="font-bebas text-5xl md:text-7xl font-bold tracking-tight">
+                {selectedLocationData.name}
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                {selectedLocationData.description}
+              </p>
+              <div className="text-muted-foreground/70 text-sm">
+                {selectedLocationData.photoCount} photographs
+              </div>
+            </div>
+
+            {/* Vertical Masonry Grid - Pinterest Style */}
+            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
+              {selectedLocationData.photos.map((photo, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.02, duration: 0.4 }}
+                  className="break-inside-avoid mb-4 cursor-pointer group"
+                  onClick={() =>
+                    openLightbox(selectedLocationData.photos, idx)
+                  }
+                >
+                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img
+                      src={photo}
+                      alt={`${selectedLocationData.name} ${idx + 1}`}
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
                   </div>
                 </motion.div>
               ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Lightbox */}
-      <AnimatePresence>
-        {selectedImage !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
-            onClick={() => setSelectedImage(null)}
-          >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 p-2 text-white hover:bg-white/10 rounded-full transition-colors z-50"
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePrevious();
-              }}
-              className="absolute left-4 p-3 text-white hover:bg-white/10 rounded-full transition-colors"
-            >
-              <ChevronLeft className="w-8 h-8" />
-            </button>
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNext();
-              }}
-              className="absolute right-4 p-3 text-white hover:bg-white/10 rounded-full transition-colors"
-            >
-              <ChevronRight className="w-8 h-8" />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.8 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.8 }}
-              className="relative w-11/12 h-5/6 max-w-6xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {filteredImages.find((img) => img.id === selectedImage) && (
-                <>
-                  <Image
-                    src={
-                      filteredImages.find((img) => img.id === selectedImage)!
-                        .image
-                    }
-                    alt={
-                      filteredImages.find((img) => img.id === selectedImage)!
-                        .title
-                    }
-                    fill
-                    className="object-contain"
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                    <p className="text-sm text-white/70 mb-1">
-                      {
-                        filteredImages.find((img) => img.id === selectedImage)!
-                          .category
-                      }
-                    </p>
-                    <h3 className="font-serif text-2xl font-bold text-white">
-                      {
-                        filteredImages.find((img) => img.id === selectedImage)!
-                          .title
-                      }
-                    </h3>
-                  </div>
-                </>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        images={lightboxImages}
+        initialIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
 
       <Footer />
     </main>
