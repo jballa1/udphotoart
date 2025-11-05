@@ -9,7 +9,7 @@ const regionMap = {
   'Oslo, Norway': { region: 'Europe', country: 'Norway', name: 'Oslo', description: 'Nordic minimalism and seasonal contrasts' },
   'Boleslawiec, Poland': { region: 'Europe', country: 'Poland', name: 'Boleslawiec', description: 'Artistic whimsy meets traditional European charm' },
   'Bucharest, Romania': { region: 'Europe', country: 'Romania', name: 'Bucharest', description: 'Historic grandeur meets modern Europe' },
-  'Constanța, Romania': { region: 'Europe', country: 'Romania', name: 'Constanța', description: 'Historic Black Sea port city charm' },
+  'Constanta, Romania': { region: 'Europe', country: 'Romania', name: 'constanja', description: 'Historic Black Sea port city charm' },
   'Pune, Maharashtra, India': { region: 'Asia', country: 'India', name: 'Pune', description: 'Cultural authenticity and vibrant street life' },
   'Dallas, Texas': { region: 'Americas', country: 'United States', name: 'Dallas', description: 'Modern American architecture' },
   'Palms Springs, California': { region: 'Americas', country: 'United States', name: 'Palm Springs', description: 'Desert modernism and natural beauty' },

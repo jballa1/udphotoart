@@ -81,7 +81,7 @@ export default function ShopPage() {
       </section>
 
       {/* Category Filter */}
-      <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm border-b">
+      <section className="sticky top-20 z-20 bg-background/95 backdrop-blur-sm border-b">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-center gap-2 flex-wrap">
             {categories.map((category) => (

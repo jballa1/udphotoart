@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, ContactRound } from "lucide-react";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -36,7 +36,7 @@ export default function ContactPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
+      {/* <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=2940"
@@ -55,7 +55,7 @@ export default function ContactPage() {
             transition={{ duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className="font-serif text-5xl md:text-7xl font-bold text-white">
+            <h1 className="font-bebas text-5xl md:text-7xl font-bold text-white">
               Get in Touch
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
@@ -63,7 +63,49 @@ export default function ContactPage() {
             </p>
           </motion.div>
         </div>
-      </section>
+      </section> */}
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/world-lens/White Sands National Park, New Mexico/08b3751a-dba1-440a-aeaf-e8b2c81d2afb_rw_1920.jpg"
+            alt="Shop Fine Art"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-4"
+          >
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <ContactRound className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Contact Us
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+              Get in Touch
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              Let's create something beautiful together
+            </p>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          </div>
+        </motion.div>
+      </section> 
 
       {/* Contact Section */}
       <section className="py-24">
@@ -78,7 +120,7 @@ export default function ContactPage() {
               className="lg:col-span-2 space-y-8"
             >
               <div>
-                <h2 className="font-serif text-3xl font-bold mb-4">
+                <h2 className="font-bebas text-3xl font-bold mb-4">
                   Let's Connect
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
@@ -94,7 +136,7 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Email</h3>
+                    <h3 className="font-bebas mb-1">Email</h3>
                     <a
                       href="mailto:info@udphotoart.com"
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -109,7 +151,7 @@ export default function ContactPage() {
                     <Phone className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Phone</h3>
+                    <h3 className="font-bebas mb-1">Phone</h3>
                     <a
                       href="tel:+1234567890"
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -124,7 +166,7 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-semibold mb-1">Location</h3>
+                    <h3 className="font-bebas mb-1">Location</h3>
                     <p className="text-muted-foreground">
                       Based in the United States
                       <br />
@@ -136,7 +178,7 @@ export default function ContactPage() {
 
               {/* Social Links */}
               <div className="pt-6 border-t border-border">
-                <h3 className="font-semibold mb-4">Follow My Work</h3>
+                <h3 className="font-bebas mb-4">Follow My Work</h3>
                 <div className="flex gap-4">
                   <a
                     href="https://instagram.com"
@@ -280,7 +322,7 @@ export default function ContactPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="font-serif text-4xl font-bold mb-4">
+            <h2 className="font-bebas text-4xl font-bold mb-4">
               Services Offered
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -319,7 +361,7 @@ export default function ContactPage() {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 className="p-6 bg-background rounded-lg border border-border hover:border-accent transition-colors"
               >
-                <h3 className="font-serif text-xl font-bold mb-3">
+                <h3 className="font-bebas text-xl font-bold mb-3">
                   {service.title}
                 </h3>
                 <p className="text-muted-foreground text-sm">

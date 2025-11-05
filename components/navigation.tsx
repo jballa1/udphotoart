@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -27,7 +28,8 @@ const navItems = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const pathname = usePathname();
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -36,6 +38,14 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const isActive = (href: string, submenu?: { href: string; label: string }[]) => {
+    if (submenu) {
+      return submenu.some(item => item.href === pathname) || href === pathname;
+    }
+    return href === pathname;
+  };
+
+
 
   return (
     <>
@@ -46,7 +56,7 @@ export function Navigation() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-white/98 backdrop-blur-md shadow-lg"
+            ? "bg-white backdrop-blur-md shadow-lg"
             : "bg-gradient-to-b from-black/60 to-transparent backdrop-blur-sm"
         )}
       >
@@ -55,31 +65,19 @@ export function Navigation() {
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3">
               <div className={cn(
-                "relative w-10 h-10 md:w-12 md:h-12 transition-all duration-300",
+                "relative w-full h-full transition-all duration-300",
                 !isScrolled && "drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
               )}>
                 <Image
-                  src="/images/logo-icon-round.png"
+                  src={isScrolled ? '/images/logo.png':"/images/logo-white.png"}
                   alt="UD PhotoArt"
-                  fill
-                  className="object-contain"
+                  width={300}
+                  height={75}
+                  className="h-14 w-auto"
                   priority
                 />
               </div>
-              <div className="flex flex-col leading-none">
-                <span className={cn(
-                  "font-bold text-lg md:text-xl tracking-tight transition-colors duration-300",
-                  isScrolled ? "text-black" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                )} style={{ fontFamily: 'Arial, sans-serif' }}>
-                  PHOTO<span style={{ color: '#D97D3E' }}>ART</span>
-                </span>
-                <span className={cn(
-                  "text-[10px] md:text-xs tracking-[0.2em] uppercase transition-colors duration-300",
-                  isScrolled ? "text-gray-600" : "text-white/90 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
-                )}>
-                  SEIZING THE MOMENT
-                </span>
-              </div>
+              
             </Link>
 
             {/* Desktop Navigation */}
@@ -94,15 +92,18 @@ export function Navigation() {
                 >
                   {item.submenu ? (
                     <>
+                    <Link
+                      href={item.href}>
                       <span
                         className={cn(
                           "text-sm font-medium tracking-wide hover:text-accent transition-colors cursor-pointer relative",
-                          isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                          isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+                          isActive(item.href, item.submenu) && "text-accent/90"
                         )}
                       >
                         {item.label}
                         <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full" />
-                      </span>
+                      </span></Link>
                       {/* Dropdown */}
                       <div className="absolute top-full left-0 mt-2 w-56 bg-white shadow-xl rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
                         {item.submenu.map((subItem) => (
@@ -121,7 +122,8 @@ export function Navigation() {
                       href={item.href}
                       className={cn(
                         "text-sm font-medium tracking-wide hover:text-accent transition-colors relative",
-                        isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                        isScrolled ? "text-gray-800" : "text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]",
+                        isActive(item.href, item.submenu) && "text-accent/90"
                       )}
                     >
                       {item.label}

@@ -1,0 +1,238 @@
+"use client";
+
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/footer";
+import { Camera, MapPin, Image as ImageIcon, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const galleries = [
+  {
+    id: "recent-revelations",
+    title: "Recent Revelations",
+    description: "A visual diary of my latest photographic adventures across 9 captivating destinations",
+    image: "/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg",
+    href: "/galleries/recent-revelations",
+    stats: {
+      photos: 50,
+      locations: 9,
+    },
+    locations: ["Prague", "Paris", "Amsterdam", "Barcelona", "Venice", "Rome", "Vienna", "Budapest", "Krakow"],
+    color: "from-blue-600/20 to-purple-600/20",
+  },
+  {
+    id: "world-through-my-lens",
+    title: "World Through My Lens",
+    description: "733 moments captured across 20 iconic locations throughout America and beyond",
+    image: "/images/world-lens/White Sands National Park, New Mexico/08b3751a-dba1-440a-aeaf-e8b2c81d2afb_rw_1920.jpg",
+    href: "/galleries/world-through-my-lens",
+    stats: {
+      photos: 733,
+      locations: 20,
+    },
+    locations: ["White Sands", "Big Bend", "Iditarod", "Balloon Fiesta", "Grand Canyon", "Yellowstone"],
+    color: "from-orange-600/20 to-red-600/20",
+  },
+  {
+    id: "captured-perspectives",
+    title: "Captured Perspectives",
+    description: "Diverse perspectives through 5 unique categories showcasing artistic vision",
+    image: "/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg",
+    href: "/galleries/captured-perspectives",
+    stats: {
+      photos: 120,
+      locations: 5,
+    },
+    locations: ["Landscapes", "Black & White", "Nature", "Oil Country", "Drone Photography"],
+    color: "from-green-600/20 to-teal-600/20",
+  },
+  {
+    id: "unspoken",
+    title: "Unspoken",
+    description: "Life's most precious moments told through portraits, celebrations, and intimate scenes",
+    image: "/images/unspoken/Portraits/023140e6-f8e1-4e66-a89f-ee346dbacfeb_rw_1200.jpg",
+    href: "/galleries/unspoken",
+    stats: {
+      photos: 85,
+      locations: 7,
+    },
+    locations: ["Portraits", "Maternity", "Baby Photoshoot", "Weddings", "Events", "Shadows", "Couples"],
+    color: "from-pink-600/20 to-rose-600/20",
+  },
+];
+
+export default function GalleriesPage() {
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Navigation />
+
+      {/* Hero Section */}
+      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/world-lens/Big Bend National Park, Texas/1b6ad388-01d3-4484-a14f-90398e73e698_rw_1920.jpg"
+            alt="Photography Galleries"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        </div>
+
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
+          >
+            <div className="flex items-center justify-center gap-2 text-accent">
+              <Camera className="w-6 h-6" />
+              <span className="text-sm uppercase tracking-widest font-bebas">
+                Photography Collections
+              </span>
+            </div>
+            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+              EXPLORE MY <span className="text-accent">GALLERIES</span>
+            </h1>
+            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+              Four distinct collections capturing the beauty of our world through
+              different lenses and perspectives
+            </p>
+            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+              <span>4 Collections</span>
+              <span>•</span>
+              <span>988+ Photos</span>
+              <span>•</span>
+              <span>41+ Locations</span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        >
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+            <div className="w-1 h-2 bg-white/50 rounded-full" />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Galleries Grid */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <motion.div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {galleries.map((gallery, index) => (
+                <motion.div
+                  key={gallery.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -30 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group"
+                >
+                  <Link href={gallery.href}>
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg mb-6">
+                      <img
+                        src={gallery.image}
+                        alt={gallery.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className={`absolute inset-0 bg-gradient-to-br ${gallery.color} opacity-40 group-hover:opacity-60 transition-opacity duration-300`} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                      {/* Stats Badges */}
+                      <div className="absolute top-4 right-4 flex gap-2">
+                        <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                          <ImageIcon className="w-3 h-3 text-white" />
+                          <span className="text-white text-xs font-bebas tracking-wide">
+                            {gallery.stats.photos}
+                          </span>
+                        </div>
+                        <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                          <MapPin className="w-3 h-3 text-white" />
+                          <span className="text-white text-xs font-bebas tracking-wide">
+                            {gallery.stats.locations}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Hover CTA */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <Button className="bg-accent hover:bg-accent/90 text-white font-bebas tracking-wide">
+                          EXPLORE GALLERY
+                          <ArrowRight className="w-4 h-4 ml-2" />
+                        </Button>
+                      </div>
+
+                      {/* Title Overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                        <h2 className="font-bebas text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
+                          {gallery.title}
+                        </h2>
+                      </div>
+                    </div>
+
+                    {/* Description and Locations */}
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground leading-relaxed">
+                        {gallery.description}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {gallery.locations.slice(0, 6).map((location) => (
+                          <span
+                            key={location}
+                            className="px-3 py-1 bg-secondary rounded-full text-xs font-medium"
+                          >
+                            {location}
+                          </span>
+                        ))}
+                        {gallery.locations.length > 6 && (
+                          <span className="px-3 py-1 bg-accent/10 text-accent rounded-full text-xs font-medium">
+                            +{gallery.locations.length - 6} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+          </motion.div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 bg-black/5">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl mx-auto space-y-6"
+          >
+            <h2 className="font-bebas text-4xl md:text-6xl font-bold tracking-tight">
+              BRING THESE MOMENTS <span className="text-accent">HOME</span>
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              Museum-quality prints and photobooks available for all collections
+            </p>
+            <Link href="/shop">
+              <Button
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-white mt-6 px-8 py-6 text-lg font-bebas tracking-wide"
+              >
+                VISIT SHOP
+              </Button>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      <Footer />
+    </main>
+  );
+}

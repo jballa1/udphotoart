@@ -10,25 +10,10 @@ export function Footer() {
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Left: Logo/Icon */}
-          <div className="lg:col-span-2 flex justify-center lg:justify-start">
-            <div className="relative w-32 h-32 md:w-40 md:h-40">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#D97D3E] to-[#B86A32] p-1">
-                <div className="w-full h-full rounded-full bg-black flex items-center justify-center p-4">
-                  <Image
-                    src="/images/logo-icon-round.png"
-                    alt="UDPhotoArt Logo"
-                    width={120}
-                    height={120}
-                    className="object-contain"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
+          
 
           {/* Center: Brand & Contact Info */}
-          <div className="lg:col-span-6 text-center lg:text-left space-y-6">
+          <div className="lg:col-span-8 text-center lg:text-left space-y-6">
             {/* Name & Title */}
             <div className="border-b border-[#D97D3E] pb-4">
               <h2 className="font-bold text-3xl md:text-4xl mb-2">
@@ -38,26 +23,18 @@ export function Footer() {
             </div>
 
             {/* Logo */}
-            <div className="flex items-center justify-center lg:justify-start gap-3 py-2">
-              <div className="relative w-10 h-10">
+            <div className="flex items-center justify-center lg:justify-start gap-3 py-1">
+              <div className="relative w-full h-full">
                 <Image
-                  src="/images/logo-icon-round.png"
+                  src="/images/logo-white.png"
                   alt="Camera Icon"
-                  width={40}
-                  height={40}
-                  className="object-contain"
+                  width={300}
+                  height={75}
+                  className="h-14 w-auto justify-self-center md:justify-self-start"
+                  priority
                 />
               </div>
-              <div>
-                <h3 className="font-bold text-2xl tracking-tight" style={{ fontFamily: 'Arial, sans-serif' }}>
-                  PHOTO<span className="text-[#D97D3E]">ART</span>
-                </h3>
-                <p className="text-xs tracking-[0.2em] text-gray-400 uppercase">
-                  Seizing the Moment
-                </p>
-              </div>
             </div>
-
             {/* Contact Info */}
             <div className="space-y-3 text-sm md:text-base">
               <div className="flex items-center justify-center lg:justify-start gap-3">
@@ -84,11 +61,17 @@ export function Footer() {
           {/* Right: QR Code & Social */}
           <div className="lg:col-span-4 flex flex-col items-center lg:items-end gap-6">
             {/* QR Code Placeholder */}
-            <div className="bg-white p-4 rounded-lg">
-              <div className="w-32 h-32 bg-gray-200 rounded flex items-center justify-center text-gray-500 text-xs text-center">
-                QR Code
-                <br />
-                (Add your vCard)
+            <div className="bg-white p-1 rounded-lg">
+              
+              <div className="relative w-full h-full">
+                <Image
+                  src="/images/qr-code.png"
+                  alt="qr Code"
+                  width={150}
+                  height={150}
+                  className="h-32 w-auto justify-self-center rounded-md md:justify-self-start"
+                  priority
+                />
               </div>
             </div>
 
@@ -127,29 +110,11 @@ export function Footer() {
         </div>
 
         {/* Bottom Wave Section */}
-        <div className="mt-16 pt-8 border-t border-[#D97D3E]/30">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm">
-            {/* Left: Phone & Social Handle */}
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-[#D97D3E]" />
-                <a href="tel:+18323731092" className="hover:text-[#D97D3E] transition-colors">
-                  (832) 373-1092
-                </a>
-              </div>
-              <div className="flex items-center gap-2">
-                <Instagram className="w-4 h-4 text-[#D97D3E]" />
-                <Facebook className="w-4 h-4 text-[#D97D3E]" />
-                <Twitter className="w-4 h-4 text-[#D97D3E]" />
-                <span>/udPhotoArt</span>
-              </div>
-            </div>
+        <div className="mt-8 pt-4 border-t border-[#D97D3E]/30">
 
-            {/* Right: Copyright */}
-            <div className="text-gray-400">
+            <div className="text-gray-400 text-center">
               <p>&copy; {new Date().getFullYear()} UDPhotoArt. All rights reserved.</p>
             </div>
-          </div>
 
           {/* Quick Links */}
           <div className="mt-6 flex flex-wrap justify-center gap-6 text-xs text-gray-400">

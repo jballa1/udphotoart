@@ -6,6 +6,7 @@ import { ArrowRight, Camera, MapPin, Heart, Sparkles, BookOpen, ShoppingCart, Co
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -44,10 +45,16 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.8 }}
-              className="flex items-center justify-center gap-3 mb-4"
+              className="flex items-center justify-center mb-4"
             >
-              <Camera className="w-12 h-12 text-accent" />
-              <span className="font-bebas text-5xl tracking-wide text-white">UDPHOTOART</span>
+              <Image
+                src="/images/logo-white-icon.png"
+                alt="UDPhotoArt Logo"
+                width={90}
+                height={90}
+                className="object-contain"
+              />
+              <span className="font-bebas text-5xl !font-thin tracking-wider text-white">PHOTO<span className="text-accent">ART</span></span>
             </motion.div>
 
             <motion.h1
@@ -332,7 +339,7 @@ export default function HomePage() {
                 collection: "Unspoken"
               },
               {
-                src: "/images/revelations/Prague - Czech Republic/0a7a37ed-d4ef-4b40-841d-32a3cb9ee23b_rw_1920.jpg",
+                src: "/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg",
                 span: "",
                 title: "Prague",
                 href: "/galleries/recent-revelations",
@@ -347,11 +354,40 @@ export default function HomePage() {
               },
               {
                 src: "/images/perspectives/Black&White/04c630a6-0dbe-447c-8f39-be082ae74df5_rw_1200.jpg",
-                span: "md:col-span-2",
+                span: "md:col-span-2 md:row-span-2",
                 title: "Black & White",
                 href: "/galleries/captured-perspectives",
                 collection: "Captured Perspectives"
               },
+              {
+                src: "/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg",
+                span: "",
+                title: "LandScape",
+                href: "/galleries/captured-perspectives",
+                collection: "Captured Perspectives"
+              },
+              {
+                src: "/images/unspoken/Baby Photoshoot/0e0ed734-d9f7-4856-bb7c-04c9ea0bbfab_rw_1200.jpg",
+                span: "",
+                title: "Baby Photoshoot",
+                href: "/galleries/unspoken",
+                collection: "Unspoken"
+              },
+              {
+                src: "/images/revelations/Palms Springs, California/48e4d897-4cdc-4fd0-bacc-cb92e0a4bdeb_rw_1920.jpg",
+                span: "",
+                title: "Palms Springs",
+                href: "/galleries/recent-revelations",
+                collection: "Recent Revelations"
+              },
+              {
+                src: "/images/world-lens/Holland, Michigan/3b21b722-9405-4c9e-8985-490f1e578816_rw_1920.jpg",
+                span: "",
+                title: "Holland",
+                href: "/galleries/world-through-my-lens",
+                collection: "World Through My Lens"
+              },
+              
             ].map((item, index) => (
               <motion.div
                 key={index}
@@ -383,7 +419,7 @@ export default function HomePage() {
           </div>
 
           <div className="text-center">
-            <Link href="/gallery">
+            <Link href="/galleries">
               <Button size="lg" variant="outline" className="font-bebas tracking-wide group">
                 VIEW ALL GALLERIES
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -444,14 +480,16 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15, duration: 0.6 }}
-                className="bg-background p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+                className="bg-background p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow flex flex-col justify-between"
               >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
-                  <service.icon className="w-8 h-8 text-accent" />
+                <div >
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
+                    <service.icon className="w-8 h-8 text-accent" />
+                  </div>
+                  <h3 className="font-bebas text-2xl font-bold mb-4 tracking-tight">{service.title}</h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
                 </div>
-                <h3 className="font-bebas text-2xl font-bold mb-4 tracking-tight">{service.title}</h3>
-                <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
-                <Link href={service.link}>
+                <Link href={service.link} className="justify-self-end">
                   <Button variant="outline" className="font-bebas tracking-wide group">
                     LEARN MORE
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

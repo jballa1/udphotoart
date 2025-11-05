@@ -46,14 +46,15 @@ export default function BlogPostPage() {
             transition={{ duration: 0.8 }}
             className="max-w-4xl"
           >
-            <Link
-              href="/blog"
-              className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="font-bebas tracking-wide">Back to Blog</span>
-            </Link>
-
+            <div>
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span className="font-bebas tracking-wide">Back to Blog</span>
+              </Link>
+            </div>
             <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-bebas tracking-wide rounded-full mb-4">
               {post.category}
             </span>
