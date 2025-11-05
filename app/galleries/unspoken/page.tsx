@@ -32,7 +32,7 @@ export default function UnspokenPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/unspoken/Portraits/023140e6-f8e1-4e66-a89f-ee346dbacfeb_rw_1200.jpg"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public"
             alt="Unspoken"
             className="w-full h-full object-cover"
           />

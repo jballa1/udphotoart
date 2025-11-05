@@ -25,7 +25,7 @@ export default function GalleryPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/world-lens/Big Bend National Park, Texas/0bac9d96-b622-453a-be16-80de4506f6e4_rw_1920.jpg"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public"
             alt="World Through My Lens"
             className="w-full h-full object-cover"
           />

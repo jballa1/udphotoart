@@ -12,7 +12,7 @@ const galleries = [
     id: "recent-revelations",
     title: "Recent Revelations",
     description: "A visual diary of my latest photographic adventures across 9 captivating destinations",
-    image: "/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
     href: "/galleries/recent-revelations",
     stats: {
       photos: 50,
@@ -25,7 +25,7 @@ const galleries = [
     id: "world-through-my-lens",
     title: "World Through My Lens",
     description: "733 moments captured across 20 iconic locations throughout America and beyond",
-    image: "/images/world-lens/White Sands National Park, New Mexico/08b3751a-dba1-440a-aeaf-e8b2c81d2afb_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public",
     href: "/galleries/world-through-my-lens",
     stats: {
       photos: 733,
@@ -38,7 +38,7 @@ const galleries = [
     id: "captured-perspectives",
     title: "Captured Perspectives",
     description: "Diverse perspectives through 5 unique categories showcasing artistic vision",
-    image: "/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
     href: "/galleries/captured-perspectives",
     stats: {
       photos: 120,
@@ -51,7 +51,7 @@ const galleries = [
     id: "unspoken",
     title: "Unspoken",
     description: "Life's most precious moments told through portraits, celebrations, and intimate scenes",
-    image: "/images/unspoken/Portraits/023140e6-f8e1-4e66-a89f-ee346dbacfeb_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public",
     href: "/galleries/unspoken",
     stats: {
       photos: 85,
@@ -72,7 +72,7 @@ export default function GalleriesPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/world-lens/Big Bend National Park, Texas/1b6ad388-01d3-4484-a14f-90398e73e698_rw_1920.jpg"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-1b6ad388-01d3-4484-a14f-90398e73e698-rw-1920.jpg/public"
             alt="Photography Galleries"
             className="w-full h-full object-cover"
           />

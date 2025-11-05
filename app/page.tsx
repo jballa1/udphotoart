@@ -25,7 +25,7 @@ export default function HomePage() {
           className="absolute inset-0 z-0"
         >
           <img
-            src="/images/world-lens/White Sands National Park, New Mexico/08b3751a-dba1-440a-aeaf-e8b2c81d2afb_rw_1920.jpg"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public"
             alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
             className="absolute inset-0 w-full h-full object-cover"
           />
@@ -153,7 +153,7 @@ export default function HomePage() {
                 count: "50 Photos",
                 locations: "9 Countries",
                 description: "Latest captures from international travels",
-                image: "/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
                 href: "/galleries/recent-revelations",
                 icon: Sparkles,
               },
@@ -162,7 +162,7 @@ export default function HomePage() {
                 count: "733 Photos",
                 locations: "20 Locations",
                 description: "Adventures across America and beyond",
-                image: "/images/world-lens/Big Bend National Park, Texas/0bac9d96-b622-453a-be16-80de4506f6e4_rw_1920.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
                 href: "/galleries/world-through-my-lens",
                 icon: Compass,
               },
@@ -171,7 +171,7 @@ export default function HomePage() {
                 count: "230 Photos",
                 locations: "5 Categories",
                 description: "Artistic interpretations and unique viewpoints",
-                image: "/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
                 href: "/galleries/captured-perspectives",
                 icon: Camera,
               },
@@ -180,7 +180,7 @@ export default function HomePage() {
                 count: "163 Photos",
                 locations: "6 Categories",
                 description: "Life's precious moments without words",
-                image: "/images/unspoken/Portraits/023140e6-f8e1-4e66-a89f-ee346dbacfeb_rw_1200.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public",
                 href: "/galleries/unspoken",
                 icon: Heart,
               },
@@ -240,7 +240,7 @@ export default function HomePage() {
               className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl"
             >
               <img
-                src="/images/rigo-headshot.png"
+                src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-rigo-headshot.png/public"
                 alt="Rigo Gonzalez-Nossa - Fine Art Photographer"
                 className="absolute inset-0 w-full h-full object-cover"
               />
@@ -318,70 +318,70 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {[
               {
-                src: "/images/world-lens/Iditarod, Alaska/0a2c4313-37cb-429f-acaf-f6ad40735097_rw_1920.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-iditarod-alaska-0a2c4313-37cb-429f-acaf-f6ad40735097-rw-1920.jpg/public",
                 span: "md:col-span-2 md:row-span-2",
                 title: "Iditarod, Alaska",
                 href: "/galleries/world-through-my-lens",
                 collection: "World Through My Lens"
               },
               {
-                src: "/images/perspectives/Nature/0dae414e-aff8-446f-9f8b-f26987a17d3c_rw_1200.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-nature-0dae414e-aff8-446f-9f8b-f26987a17d3c-rw-1200.jpg/public",
                 span: "",
                 title: "Nature",
                 href: "/galleries/captured-perspectives",
                 collection: "Captured Perspectives"
               },
               {
-                src: "/images/unspoken/Maternity/157f88b0-4f8a-460c-9eb0-bd9a03228cf6_rw_1200.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-maternity-157f88b0-4f8a-460c-9eb0-bd9a03228cf6-rw-1200.jpg/public",
                 span: "",
                 title: "Maternity",
                 href: "/galleries/unspoken",
                 collection: "Unspoken"
               },
               {
-                src: "/images/revelations/Prague - Czech Republic/0d73fbe7-c3c7-4a77-95ad-c83a9180162c_rw_1920.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
                 span: "",
                 title: "Prague",
                 href: "/galleries/recent-revelations",
                 collection: "Recent Revelations"
               },
               {
-                src: "/images/world-lens/Balloon Fiesta, New Mexico/00490719-d6fd-4b26-ac92-ac443e3db926_rw_1920.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-balloon-fiesta-new-mexico-00490719-d6fd-4b26-ac92-ac443e3db926-rw-1920.jpg/public",
                 span: "",
                 title: "Balloon Fiesta",
                 href: "/galleries/world-through-my-lens",
                 collection: "World Through My Lens"
               },
               {
-                src: "/images/perspectives/Black&White/04c630a6-0dbe-447c-8f39-be082ae74df5_rw_1200.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
                 span: "md:col-span-2 md:row-span-2",
                 title: "Black & White",
                 href: "/galleries/captured-perspectives",
                 collection: "Captured Perspectives"
               },
               {
-                src: "/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
                 span: "",
                 title: "LandScape",
                 href: "/galleries/captured-perspectives",
                 collection: "Captured Perspectives"
               },
               {
-                src: "/images/unspoken/Baby Photoshoot/0e0ed734-d9f7-4856-bb7c-04c9ea0bbfab_rw_1200.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-baby-photoshoot-0e0ed734-d9f7-4856-bb7c-04c9ea0bbfab-rw-1200.jpg/public",
                 span: "",
                 title: "Baby Photoshoot",
                 href: "/galleries/unspoken",
                 collection: "Unspoken"
               },
               {
-                src: "/images/revelations/Palms Springs, California/48e4d897-4cdc-4fd0-bacc-cb92e0a4bdeb_rw_1920.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-palms-springs-california-48e4d897-4cdc-4fd0-bacc-cb92e0a4bdeb-rw-1920.jpg/public",
                 span: "",
                 title: "Palms Springs",
                 href: "/galleries/recent-revelations",
                 collection: "Recent Revelations"
               },
               {
-                src: "/images/world-lens/Holland, Michigan/3b21b722-9405-4c9e-8985-490f1e578816_rw_1920.jpg",
+                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-holland-michigan-3b21b722-9405-4c9e-8985-490f1e578816-rw-1920.jpg/public",
                 span: "",
                 title: "Holland",
                 href: "/galleries/world-through-my-lens",
@@ -530,7 +530,7 @@ export default function HomePage() {
               {
                 title: "Capturing Wild Horses in Big Bend",
                 excerpt: "An unforgettable encounter with wild mustangs in the dramatic Texas landscape",
-                image: "/images/world-lens/Big Bend National Park, Texas/0bac9d96-b622-453a-be16-80de4506f6e4_rw_1920.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
                 category: "Wildlife",
                 readTime: "8 min read",
                 link: "/blog/capturing-wild-horses-big-bend"
@@ -538,7 +538,7 @@ export default function HomePage() {
               {
                 title: "White Sands: Photographing Another World",
                 excerpt: "Capturing the ethereal beauty of New Mexico's otherworldly gypsum dunes",
-                image: "/images/world-lens/White Sands National Park, New Mexico/0444d443-61f2-4036-a528-a51643d9d672_rw_1920.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-0444d443-61f2-4036-a528-a51643d9d672-rw-1920.jpg/public",
                 category: "Landscape",
                 readTime: "7 min read",
                 link: "/blog/white-sands-photographing-otherworldly-landscape"
@@ -546,7 +546,7 @@ export default function HomePage() {
               {
                 title: "Monochrome Magic: Black & White Photography",
                 excerpt: "How removing color amplifies emotion and creates timeless imagery",
-                image: "/images/perspectives/Black&White/04c630a6-0dbe-447c-8f39-be082ae74df5_rw_1200.jpg",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
                 category: "Techniques",
                 readTime: "6 min read",
                 link: "/blog/monochrome-magic-black-white-photography"

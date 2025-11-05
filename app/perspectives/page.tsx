@@ -32,7 +32,7 @@ export default function PerspectivesPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/perspectives/LandScape/c1474280-d99c-491f-a321-a9009a2a5c3d.jpg"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public"
             alt="Captured Perspectives"
             className="w-full h-full object-cover"
           />
