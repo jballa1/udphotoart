@@ -57,7 +57,7 @@ Big Bend's wild horses are a symbol of freedom and natural beauty. Their preserv
 
 The images from this trip now form a special part of my "World Through My Lens" collection, serving as a reminder of nature's raw beauty and the privilege of witnessing it firsthand.
     `,
-    image: "/images/world-lens/Big Bend National Park, Texas/0bac9d96-b622-453a-be16-80de4506f6e4_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
     category: "Wildlife & Nature",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-28",
@@ -118,7 +118,7 @@ Black and white photographs have an enduring quality. They don't date themselves
 
 Photography legend Ansel Adams once said, "Black and white are the colors of photography." In removing color, we don't lose something—we reveal something essential.
     `,
-    image: "/images/perspectives/Black&White/04c630a6-0dbe-447c-8f39-be082ae74df5_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
     category: "Technique & Artistry",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-22",
@@ -204,7 +204,7 @@ If you're expecting, here's my advice:
 
 These first few weeks pass in a blur of sleepless nights and tender moments. Professional newborn photography ensures that even when memories fade, the images remain—a beautiful reminder of when your family grew and your heart expanded in ways you never imagined possible.
     `,
-    image: "/images/unspoken/Baby Photoshoot/08c449d2-3d74-4891-8b11-54cdc615f89d_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-baby-photoshoot-08c449d2-3d74-4891-8b11-54cdc615f89d-rw-1200.jpg/public",
     category: "Portrait Photography",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-18",
@@ -318,7 +318,7 @@ If you're planning to photograph White Sands:
 
 White Sands isn't just a location—it's an experience that challenges your perception, tests your technical skills, and rewards you with some of the most unique photographs you'll ever create.
     `,
-    image: "/images/world-lens/White Sands National Park, New Mexico/0444d443-61f2-4036-a528-a51643d9d672_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-0444d443-61f2-4036-a528-a51643d9d672-rw-1920.jpg/public",
     category: "Landscape Photography",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-15",
@@ -447,7 +447,7 @@ For photographers considering covering the Iditarod:
 
 The Iditarod taught me that great photography isn't just about beautiful images—it's about documenting human stories, animal athletes, and the wild places where they come together.
     `,
-    image: "/images/world-lens/Iditarod, Alaska/0a2c4313-37cb-429f-acaf-f6ad40735097_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-iditarod-alaska-0a2c4313-37cb-429f-acaf-f6ad40735097-rw-1920.jpg/public",
     category: "Adventure & Documentary",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-10",
@@ -671,7 +671,7 @@ Maternity photography isn't vanity—it's documentation of one of life's most pr
 
 These sessions are among my favorites because I get to witness and capture pure love before it's even fully born. It's a privilege I never take for granted.
     `,
-    image: "/images/unspoken/Maternity/157f88b0-4f8a-460c-9eb0-bd9a03228cf6_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-maternity-157f88b0-4f8a-460c-9eb0-bd9a03228cf6-rw-1200.jpg/public",
     category: "Portrait Photography",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-10-05",
@@ -919,7 +919,7 @@ In my "Captured Perspectives" collection, Oil Country represents an important tr
 
 Whether we love it or question it, Oil Country shaped Texas, and these images preserve that story for future understanding.
     `,
-    image: "/images/perspectives/Oil Country/124c9218-c74b-4bf3-bc25-1d6b8bfb5c61_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-oil-country-124c9218-c74b-4bf3-bc25-1d6b8bfb5c61-rw-1200.jpg/public",
     category: "Documentary & Industrial",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-09-28",
@@ -1194,7 +1194,7 @@ Years later, you'll look back at these images and remember not just how you look
 
 That's what I try to capture: not just a face, but a moment, a feeling, a threshold. Because senior year isn't just about graduating—it's about becoming.
     `,
-    image: "/images/unspoken/Senior Year/093f7b40-706b-4c51-a014-a15a62189714_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-senior-year-093f7b40-706b-4c51-a014-a15a62189714-rw-1200.jpg/public",
     category: "Portrait Photography",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-09-20",
@@ -1473,7 +1473,7 @@ These moments remind you why you photograph—to capture magic, to preserve wond
 
 The Albuquerque International Balloon Fiesta isn't just a photo opportunity—it's a celebration of flight, color, human ingenuity, and shared wonder. And I'm grateful to document it.
     `,
-    image: "/images/world-lens/Balloon Fiesta, New Mexico/00490719-d6fd-4b26-ac92-ac443e3db926_rw_1920.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-balloon-fiesta-new-mexico-00490719-d6fd-4b26-ac92-ac443e3db926-rw-1920.jpg/public",
     category: "Event & Celebration",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-09-12",
@@ -1890,7 +1890,7 @@ My shadow work in the "Unspoken" collection embraces this philosophy—using dar
 
 Because sometimes, what we don't show is as important as what we do. Sometimes, the shadow tells the better story.
     `,
-    image: "/images/unspoken/Shadows/0bc0d256-f0a5-487d-a406-f3ebcd1472aa_rw_1200.jpg",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-shadows-0bc0d256-f0a5-487d-a406-f3ebcd1472aa-rw-1200.jpg/public",
     category: "Technique & Artistry",
     author: "Rigo Gonzalez-Nossa",
     date: "2024-09-05",
