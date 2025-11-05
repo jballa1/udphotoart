@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -11,8 +11,28 @@ interface LightboxProps {
   onClose: () => void;
 }
 
+function getCloudflareVariant(url: string, variant: string): string {
+  if (!url || typeof url !== "string") {
+    return url;
+  }
+
+  if (!url.includes("imagedelivery.net")) {
+    return url;
+  }
+
+  const parts = url.split("/");
+  if (parts.length < 4) {
+    return url;
+  }
+
+  parts[parts.length - 1] = variant;
+  return parts.join("/");
+}
+
 export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  const optimizedImages = useMemo(() => images.map((image) => image), [images]);
 
   useEffect(() => {
     setCurrentIndex(initialIndex);
@@ -32,11 +52,11 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
   }, [isOpen, currentIndex]);
 
   const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : images.length - 1));
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : optimizedImages.length - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev < images.length - 1 ? prev + 1 : 0));
+    setCurrentIndex((prev) => (prev < optimizedImages.length - 1 ? prev + 1 : 0));
   };
 
   if (!isOpen) return null;
@@ -53,7 +73,7 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
         {/* Header */}
         <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent">
           <div className="text-white/70 text-sm">
-            {currentIndex + 1} / {images.length}
+            {currentIndex + 1} / {optimizedImages.length}
           </div>
           <button
             onClick={onClose}
@@ -71,7 +91,7 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
           <AnimatePresence mode="wait">
             <motion.img
               key={currentIndex}
-              src={images[currentIndex]}
+              src={getCloudflareVariant(optimizedImages[currentIndex], "public")}
               alt={`Photo ${currentIndex + 1}`}
               className="max-w-full max-h-[70vh] object-contain"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -99,7 +119,7 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
         {/* Filmstrip */}
         <div className="h-32 bg-gradient-to-t from-black/80 to-transparent px-4 pb-4">
           <div className="h-full overflow-x-auto overflow-y-hidden flex items-center gap-2 scrollbar-hide">
-            {images.map((image, index) => (
+            {optimizedImages.map((image, index) => (
               <button
                 key={index}
                 onClick={(e) => {
@@ -113,7 +133,7 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
                 }`}
               >
                 <img
-                  src={image}
+                  src={getCloudflareVariant(image, "thumbnail")}
                   alt={`Thumbnail ${index + 1}`}
                   className="w-full h-full object-cover"
                 />
