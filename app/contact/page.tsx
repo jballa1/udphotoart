@@ -55,14 +55,14 @@ export default function ContactPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <ContactRound className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Contact Us
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               Get in Touch
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               Let's create something beautiful together
             </p>
           </motion.div>
@@ -85,7 +85,7 @@ export default function ContactPage() {
               className="lg:col-span-2 space-y-8"
             >
               <div>
-                <h2 className="font-bebas text-3xl font-bold mb-4">
+                <h2 className="section-heading mb-4 text-left">
                   Let's Connect
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
@@ -101,7 +101,7 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bebas mb-1">Email</h3>
+                    <h3 className="font-heading mb-1">Email</h3>
                     <a
                       href="mailto:info@udphotoart.com"
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -116,7 +116,7 @@ export default function ContactPage() {
                     <Phone className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bebas mb-1">Phone</h3>
+                    <h3 className="font-heading mb-1">Phone</h3>
                     <a
                       href="tel:+1234567890"
                       className="text-muted-foreground hover:text-accent transition-colors"
@@ -131,7 +131,7 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 text-accent" />
                   </div>
                   <div>
-                    <h3 className="font-bebas mb-1">Location</h3>
+                    <h3 className="font-heading mb-1">Location</h3>
                     <p className="text-muted-foreground">
                       Based in the United States
                       <br />
@@ -143,7 +143,9 @@ export default function ContactPage() {
 
               {/* Social Links */}
               <div className="pt-6 border-t border-border">
-                <h3 className="font-bebas mb-4">Follow My Work</h3>
+                <h3 className="font-heading mb-4 text-xl tracking-[0.01em]">
+                  Follow My Work
+                </h3>
                 <div className="flex gap-4">
                   <a
                     href="https://instagram.com"
@@ -258,7 +260,7 @@ export default function ContactPage() {
                 <Button
                   type="submit"
                   size="lg"
-                  className="w-full bg-accent hover:bg-accent/90 py-6 text-lg group"
+                  className="cta-button w-full bg-accent hover:bg-[var(--color-accent-hover)] py-6 text-lg text-white group"
                 >
                   Send Message
                   <Send className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -279,7 +281,7 @@ export default function ContactPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-16"
           >
-            <h2 className="font-bebas text-4xl font-bold mb-4">
+            <h2 className="section-heading mb-4">
               Services Offered
             </h2>
           </motion.div>
@@ -310,7 +312,7 @@ export default function ContactPage() {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 className="p-6 bg-background rounded-lg border border-border hover:border-accent transition-colors"
               >
-                <h3 className="font-bebas text-xl font-bold mb-3">
+                <h3 className="font-heading text-xl font-bold mb-3">
                   {service.title}
                 </h3>
                 <p className="text-muted-foreground text-sm">

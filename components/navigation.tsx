@@ -175,7 +175,7 @@ export function Navigation() {
                   >
                     {item.submenu ? (
                       <>
-                        <div className="text-lg font-bold tracking-wide text-accent py-2 font-bebas">
+                        <div className="text-lg font-semibold tracking-[0.08em] text-accent py-2 font-sans uppercase">
                           {item.label}
                         </div>
                         <div className="pl-4 space-y-2">

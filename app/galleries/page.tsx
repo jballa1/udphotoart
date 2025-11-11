@@ -89,18 +89,18 @@ export default function GalleriesPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <Camera className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Photography Collections
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               EXPLORE MY <span className="text-accent">GALLERIES</span>
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               Four distinct collections capturing the beauty of our world through
               different lenses and perspectives
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>4 Collections</span>
               <span>•</span>
               <span>988+ Photos</span>
@@ -141,13 +141,13 @@ export default function GalleriesPage() {
                       <div className="absolute top-4 right-4 flex gap-2">
                         <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <ImageIcon className="w-3 h-3 text-white" />
-                          <span className="text-white text-xs font-bebas tracking-wide">
+                          <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.stats.photos}
                           </span>
                         </div>
                         <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <MapPin className="w-3 h-3 text-white" />
-                          <span className="text-white text-xs font-bebas tracking-wide">
+                          <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.stats.locations}
                           </span>
                         </div>
@@ -155,7 +155,7 @@ export default function GalleriesPage() {
 
                       {/* Hover CTA */}
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <Button className="bg-accent hover:bg-accent/90 text-white font-bebas tracking-wide">
+                        <Button className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-3">
                           EXPLORE GALLERY
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
@@ -163,7 +163,7 @@ export default function GalleriesPage() {
 
                       {/* Title Overlay */}
                       <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <h2 className="font-bebas text-3xl md:text-4xl font-bold text-white tracking-tight mb-2">
+                        <h2 className="font-heading text-3xl md:text-4xl font-bold text-white tracking-[0.01em] mb-2">
                           {gallery.title}
                         </h2>
                       </div>
@@ -207,7 +207,7 @@ export default function GalleriesPage() {
             transition={{ duration: 0.8 }}
             className="max-w-3xl mx-auto space-y-6"
           >
-            <h2 className="font-bebas text-4xl md:text-6xl font-bold tracking-tight">
+            <h2 className="font-heading text-4xl md:text-6xl font-bold tracking-[0.01em]">
               BRING THESE MOMENTS <span className="text-accent">HOME</span>
             </h2>
             <p className="text-lg text-muted-foreground">
@@ -216,7 +216,7 @@ export default function GalleriesPage() {
             <Link href="/shop">
               <Button
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-white mt-6 px-8 py-6 text-lg font-bebas tracking-wide"
+                className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white mt-6 px-8 py-6 text-lg"
               >
                 VISIT SHOP
               </Button>

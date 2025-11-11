@@ -33,18 +33,18 @@ export default function PerspectivesPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <Camera className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Artistic Vision
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               Captured Perspectives
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               The world changes with every angle, every moment, every point of
               view
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>229 Photos</span>
               <span>•</span>
               <span>5 Categories</span>
@@ -90,7 +90,7 @@ export default function PerspectivesPage() {
 
                       {/* Category Badge */}
                       <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <span className="text-white text-xs font-bebas tracking-wide">
+                        <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                           {category.photoCount} Photos
                         </span>
                       </div>
@@ -99,11 +99,11 @@ export default function PerspectivesPage() {
                       <div className="absolute bottom-0 left-0 right-0 p-6">
                         <div className="flex items-center gap-2 text-accent mb-2">
                           <Camera className="w-4 h-4" />
-                          <span className="text-xs uppercase tracking-wider font-bebas">
+                          <span className="text-xs uppercase tracking-[0.08em] font-sans">
                             {category.theme}
                           </span>
                         </div>
-                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                        <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                           {category.name}
                         </h3>
                         <p className="text-white/80 text-sm line-clamp-2">

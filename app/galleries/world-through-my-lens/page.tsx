@@ -42,18 +42,18 @@ export default function GalleryPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <Compass className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Adventure & Nature
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               The World Through My Lens
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               Adventures across America and beyond—landscapes, wildlife, and the
               beauty of our natural world
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>733 Photos</span>
               <span>•</span>
               <span>20 Locations</span>
@@ -75,7 +75,7 @@ export default function GalleryPage() {
               <button
                 key={region}
                 onClick={() => setSelectedRegion(region)}
-                className={`px-6 py-2 rounded-full font-bebas text-sm tracking-wide transition-all ${
+                className={`px-6 py-2 rounded-full font-sans uppercase tracking-[0.05em] transition-all ${
                   selectedRegion === region
                     ? "bg-accent text-white shadow-lg scale-105"
                     : "bg-secondary text-foreground hover:bg-accent/10 hover:text-accent"
@@ -120,7 +120,7 @@ export default function GalleryPage() {
 
                       {/* Location Badge */}
                       <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                        <span className="text-white text-xs font-bebas tracking-wide">
+                        <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                           {location.photoCount} Photos
                         </span>
                       </div>
@@ -129,11 +129,11 @@ export default function GalleryPage() {
                       <div className="absolute bottom-0 left-0 right-0 p-6">
                         <div className="flex items-center gap-2 text-accent mb-2">
                           <MapPin className="w-4 h-4" />
-                          <span className="text-xs uppercase tracking-wider font-bebas">
+                          <span className="text-xs uppercase tracking-[0.08em] font-sans">
                             {location.state}
                           </span>
                         </div>
-                        <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                        <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                           {location.name}
                         </h3>
                         <p className="text-white/80 text-sm line-clamp-2">

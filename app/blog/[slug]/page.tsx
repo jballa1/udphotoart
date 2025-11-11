@@ -52,20 +52,22 @@ export default function BlogPostPage() {
                 className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span className="font-bebas tracking-wide">Back to Blog</span>
+                <span className="font-sans uppercase tracking-[0.05em]">
+                  Back to Blog
+                </span>
               </Link>
             </div>
-            <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-bebas tracking-wide rounded-full mb-4">
+            <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full mb-4">
               {post.category}
             </span>
 
-            <h1 className="font-bebas text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 tracking-tight">
+            <h1 className="hero-title text-white">
               {post.title}
             </h1>
 
             <div className="flex flex-wrap items-center gap-6 text-white/80">
               <div className="flex items-center gap-2">
-                <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-bebas">
+                <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-heading">
                   RG
                 </div>
                 <span className="font-medium">{post.author}</span>
@@ -111,7 +113,7 @@ export default function BlogPostPage() {
                   return (
                     <h1
                       key={index}
-                      className="font-bebas text-4xl md:text-5xl font-bold mb-6 mt-12 tracking-tight"
+                      className="font-heading text-4xl md:text-5xl font-bold mb-6 mt-12 tracking-[0.01em]"
                     >
                       {paragraph.replace("# ", "")}
                     </h1>
@@ -121,7 +123,7 @@ export default function BlogPostPage() {
                   return (
                     <h2
                       key={index}
-                      className="font-bebas text-3xl md:text-4xl font-bold mb-4 mt-10 tracking-tight"
+                      className="font-heading text-3xl md:text-4xl font-bold mb-4 mt-10 tracking-[0.01em]"
                     >
                       {paragraph.replace("## ", "")}
                     </h2>
@@ -131,7 +133,7 @@ export default function BlogPostPage() {
                   return (
                     <h3
                       key={index}
-                      className="font-bebas text-2xl md:text-3xl font-bold mb-3 mt-8 tracking-tight"
+                      className="font-heading text-2xl md:text-3xl font-bold mb-3 mt-8 tracking-[0.01em]"
                     >
                       {paragraph.replace("### ", "")}
                     </h3>
@@ -186,7 +188,7 @@ export default function BlogPostPage() {
                 </div>
                 <Link
                   href="/blog"
-                  className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-bebas tracking-wide"
+                  className="flex items-center gap-2 text-accent hover:text-accent/80 transition-colors font-sans uppercase tracking-[0.05em]"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   Back to All Articles
@@ -201,7 +203,7 @@ export default function BlogPostPage() {
       {relatedPosts.length > 0 && (
         <section className="py-16 bg-black/5">
           <div className="container mx-auto px-4">
-            <h2 className="font-bebas text-3xl md:text-4xl font-bold mb-8 text-center tracking-tight">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold mb-8 text-center tracking-[0.01em]">
               Related Articles
             </h2>
 
@@ -229,7 +231,7 @@ export default function BlogPostPage() {
                         {relatedPost.category}
                       </span>
 
-                      <h3 className="font-bebas text-xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-tight">
+                      <h3 className="font-heading text-xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-[0.01em]">
                         {relatedPost.title}
                       </h3>
 

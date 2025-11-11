@@ -51,17 +51,17 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <MapPin className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 {locationData.name}
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               {locationData.name}
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               {locationData.description}
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>{locationData.photoCount} Photos</span>
               <span>•</span>
               <span>{locationData.region}</span>
@@ -78,7 +78,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
         <div className="container mx-auto px-4">
           {/* Back Button */}
           <Link href="/galleries/unspoken">
-            <button className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors inline-flex items-center gap-2">
+            <button className="cta-button mb-8 px-6 py-3 rounded-full bg-accent text-white hover:bg-[var(--color-accent-hover)] hover:bg-[var(--color-accent-hover)] transition-colors inline-flex items-center gap-2">
               <MoveLeft size={14}/> Back to Unspoken
             </button>
           </Link>

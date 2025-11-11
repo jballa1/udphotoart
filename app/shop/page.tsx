@@ -48,22 +48,20 @@ export default function ShopPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <ShoppingBag className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Fine Art Collection
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               Shop Prints & Books
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               Transform your space with gallery-quality photography—each piece
               tells a story
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>15 Products</span>
-              <span>•</span>
               <span>Gallery Quality</span>
-              <span>•</span>
               <span>Worldwide Shipping</span>
             </div>
           </motion.div>
@@ -81,7 +79,7 @@ export default function ShopPage() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full font-bebas text-sm tracking-wide transition-all ${
+                className={`px-6 py-2 rounded-full font-sans uppercase tracking-[0.05em] transition-all ${
                   selectedCategory === category
                     ? "bg-accent text-white shadow-lg scale-105"
                     : "bg-secondary text-foreground hover:bg-accent/10 hover:text-accent"
@@ -121,14 +119,14 @@ export default function ShopPage() {
 
                     {/* Price Badge */}
                     <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                      <span className="text-white text-xs font-bebas tracking-wide">
+                      <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                         ${product.price}
                       </span>
                     </div>
 
                     {/* Hover CTA */}
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Button className="bg-accent hover:bg-accent/90 text-white font-bebas tracking-wide">
+                      <Button className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-3">
                         <ShoppingCart className="w-4 h-4 mr-2" />
                         View Details
                       </Button>
@@ -142,7 +140,7 @@ export default function ShopPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="font-bebas text-xl font-bold group-hover:text-accent transition-colors tracking-tight">
+                    <h3 className="font-heading text-xl font-bold group-hover:text-accent transition-colors tracking-[0.01em]">
                       {product.title}
                     </h3>
                     <p className="text-xs text-muted-foreground">
@@ -199,7 +197,7 @@ export default function ShopPage() {
                       <span className="inline-block px-3 py-1 bg-secondary text-xs font-medium rounded-full mb-3">
                         {currentProduct.category}
                       </span>
-                      <h2 className="font-bebas text-3xl md:text-4xl font-bold mb-2 tracking-tight">
+                      <h2 className="font-heading text-3xl md:text-4xl font-bold mb-2 tracking-[0.01em]">
                         {currentProduct.title}
                       </h2>
                       <p className="text-sm text-accent mb-4">
@@ -212,7 +210,7 @@ export default function ShopPage() {
 
                     {currentProduct.category === "Prints" && (
                       <div className="space-y-3">
-                        <p className="text-sm font-bebas tracking-wide">
+                        <p className="text-sm font-sans uppercase tracking-[0.05em]">
                           Select Size:
                         </p>
                         <div className="grid grid-cols-2 gap-2">
@@ -238,7 +236,7 @@ export default function ShopPage() {
 
                     <div className="pt-4 border-t border-border">
                       <div className="flex items-baseline gap-2 mb-6">
-                        <span className="font-bebas text-5xl font-bold">
+                        <span className="font-heading text-5xl font-bold">
                           ${currentProduct.price}
                         </span>
                         {currentProduct.category === "Prints" && (
@@ -248,7 +246,7 @@ export default function ShopPage() {
                         )}
                       </div>
 
-                      <Button className="w-full bg-accent hover:bg-accent/90 py-6 text-lg font-bebas tracking-wide">
+                      <Button className="cta-button w-full bg-accent hover:bg-[var(--color-accent-hover)] py-6 text-lg text-white">
                         <ShoppingCart className="w-5 h-5 mr-2" />
                         Add to Cart
                       </Button>
@@ -305,7 +303,7 @@ export default function ShopPage() {
                 transition={{ delay: index * 0.2, duration: 0.6 }}
                 className="space-y-4"
               >
-                <h3 className="font-bebas text-2xl font-bold tracking-tight">
+                <h3 className="font-heading text-2xl font-bold tracking-[0.01em]">
                   {feature.title}
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">

@@ -55,14 +55,16 @@ export default function HomePage() {
                 height={90}
                 className="object-contain"
               />
-              <span className="font-bebas text-5xl !font-thin tracking-wider text-white">PHOTO<span className="text-accent">ART</span></span>
+              <span className="font-heading text-4xl md:text-5xl font-semibold tracking-[0.02em] text-white">
+                PHOTO<span className="text-accent">ART</span>
+              </span>
             </motion.div>
 
             <motion.h1
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="font-bebas text-6xl md:text-8xl lg:text-9xl font-bold text-white tracking-tight"
+              className="hero-title text-white"
             >
               SEIZING THE{" "}
               <span className="text-accent">MOMENT</span>
@@ -72,7 +74,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto"
+              className="hero-subtitle text-white/85 max-w-3xl mx-auto"
             >
               Fine art photography capturing the beauty of our world—from vast landscapes
               to intimate portraits, transforming fleeting moments into timeless art
@@ -87,7 +89,7 @@ export default function HomePage() {
               <Link href="/galleries">
                 <Button
                   size="lg"
-                  className="bg-accent hover:bg-accent/90 text-white px-8 py-6 text-lg font-bebas tracking-wide group"
+                  className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-8 py-6 md:text-lg group"
                 >
                   EXPLORE GALLERIES
                   <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -97,7 +99,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-black px-8 py-6 text-lg font-bebas tracking-wide transition-all"
+                  className="cta-button border-2 border-white text-white bg-transparent hover:bg-white hover:text-black px-8 py-6 md:text-lg transition-all"
                 >
                   SHOP
                 </Button>
@@ -129,11 +131,11 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <Sparkles className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 PHOTOGRAPHY COLLECTIONS
               </span>
             </div>
-            <h2 className="font-bebas text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+            <h2 className="section-heading mb-6">
               FEATURED GALLERIES
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -199,10 +201,10 @@ export default function HomePage() {
 
                     <div className="absolute inset-0 flex flex-col justify-end p-6">
                       <collection.icon className="w-8 h-8 text-accent mb-3" />
-                      <h3 className="font-bebas text-3xl font-bold text-white mb-2 tracking-tight">
+                      <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                         {collection.title}
                       </h3>
-                      <div className="flex items-center gap-3 text-white/70 text-xs mb-3 font-bebas tracking-wide">
+                      <div className="flex items-center gap-3 text-white/70 text-xs mb-3 font-sans uppercase tracking-[0.05em]">
                         <span>{collection.count}</span>
                         <span>•</span>
                         <span>{collection.locations}</span>
@@ -210,7 +212,7 @@ export default function HomePage() {
                       <p className="text-white/80 text-sm mb-4">
                         {collection.description}
                       </p>
-                      <div className="flex items-center text-accent text-sm font-bebas tracking-wide group-hover:gap-2 transition-all">
+                      <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
                         EXPLORE COLLECTION
                         <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                       </div>
@@ -250,11 +252,11 @@ export default function HomePage() {
             >
               <div className="flex items-center gap-2 text-accent mb-4">
                 <Camera className="w-5 h-5" />
-                <span className="text-sm uppercase tracking-widest font-bebas">
+                <span className="section-kicker text-accent">
                   PHOTOGRAPHER & ARTIST
                 </span>
               </div>
-              <h2 className="font-bebas text-5xl md:text-6xl font-bold tracking-tight">
+              <h2 className="section-heading">
                 RIGO GONZALEZ-NOSSA
               </h2>
               <div className="h-1 w-20 bg-accent"></div>
@@ -271,12 +273,19 @@ export default function HomePage() {
               </p>
               <div className="pt-4 flex gap-4">
                 <Link href="/contact">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 font-bebas tracking-wide">
+                  <Button
+                    size="lg"
+                    className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-4"
+                  >
                     LET'S COLLABORATE
                   </Button>
                 </Link>
                 <Link href="/blog">
-                  <Button size="lg" variant="outline" className="font-bebas tracking-wide">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="cta-button px-6 py-4"
+                  >
                     READ MY STORIES
                   </Button>
                 </Link>
@@ -298,11 +307,11 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <MapPin className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 PHOTOGRAPHY HIGHLIGHTS
               </span>
             </div>
-            <h2 className="font-bebas text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+            <h2 className="section-heading mb-6">
               FEATURED WORK
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -400,9 +409,11 @@ export default function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300">
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <p className="text-white/70 text-xs font-bebas tracking-widest mb-1">{item.collection}</p>
-                      <p className="text-white font-bebas text-xl tracking-wide">{item.title}</p>
-                      <div className="flex items-center text-accent text-sm font-bebas tracking-wide mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <p className="text-white/70 text-xs font-sans uppercase tracking-[0.08em] mb-1">{item.collection}</p>
+                      <p className="text-white font-heading text-xl tracking-[0.01em]">
+                        {item.title}
+                      </p>
+                      <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         VIEW GALLERY
                         <ArrowRight className="ml-1 w-4 h-4" />
                       </div>
@@ -415,7 +426,11 @@ export default function HomePage() {
 
           <div className="text-center">
             <Link href="/galleries">
-              <Button size="lg" variant="outline" className="font-bebas tracking-wide group">
+              <Button
+                size="lg"
+                variant="outline"
+                className="cta-button group px-8 py-4"
+              >
                 VIEW ALL GALLERIES
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -436,11 +451,11 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <ShoppingCart className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 SERVICES & PRODUCTS
               </span>
             </div>
-            <h2 className="font-bebas text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+            <h2 className="section-heading mb-6">
               WHAT I OFFER
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -481,11 +496,11 @@ export default function HomePage() {
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
                     <service.icon className="w-8 h-8 text-accent" />
                   </div>
-                  <h3 className="font-bebas text-2xl font-bold mb-4 tracking-tight">{service.title}</h3>
+                  <h3 className="font-heading text-2xl font-bold mb-4 tracking-[0.01em]">{service.title}</h3>
                   <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
                 </div>
                 <Link href={service.link} className="justify-self-end">
-                  <Button variant="outline" className="font-bebas tracking-wide group">
+                  <Button variant="outline" className="cta-button group px-6 py-4">
                     LEARN MORE
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
@@ -508,11 +523,11 @@ export default function HomePage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <BookOpen className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 PHOTOGRAPHY JOURNAL
               </span>
             </div>
-            <h2 className="font-bebas text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+            <h2 className="section-heading mb-6">
               STORIES & INSIGHTS
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -565,26 +580,26 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
                     <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                      <span className="text-white text-xs font-bebas tracking-wide">
+                      <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                         {post.readTime}
                       </span>
                     </div>
 
                     <div className="absolute bottom-0 left-0 right-0 p-6">
-                      <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-bebas tracking-wide rounded-full mb-3">
+                      <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full mb-3">
                         {post.category}
                       </span>
                     </div>
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="font-bebas text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-tight">
+                    <h3 className="font-heading text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-[0.01em]">
                       {post.title}
                     </h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">
                       {post.excerpt}
                     </p>
-                    <div className="flex items-center text-accent text-sm font-bebas tracking-wide group-hover:gap-2 transition-all">
+                    <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
                       READ MORE
                       <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -596,7 +611,11 @@ export default function HomePage() {
 
           <div className="text-center mt-12">
             <Link href="/blog">
-              <Button size="lg" variant="outline" className="font-bebas tracking-wide group">
+              <Button
+                size="lg"
+                variant="outline"
+                className="cta-button group px-8 py-4"
+              >
                 VIEW ALL ARTICLES
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
@@ -618,7 +637,7 @@ export default function HomePage() {
             <div className="flex items-center justify-center gap-2 text-accent mb-4">
               <Camera className="w-8 h-8" />
             </div>
-            <h2 className="font-bebas text-5xl md:text-6xl font-bold tracking-tight">
+            <h2 className="section-heading">
               LET'S CREATE SOMETHING BEAUTIFUL
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -626,12 +645,19 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/contact">
-                <Button size="lg" className="bg-accent hover:bg-accent/90 px-10 py-6 text-lg font-bebas tracking-wide">
+                <Button
+                  size="lg"
+                  className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] px-10 py-6 md:text-lg text-white"
+                >
                   GET IN TOUCH
                 </Button>
               </Link>
               <Link href="/shop">
-                <Button size="lg" variant="outline" className="px-10 py-6 text-lg font-bebas tracking-wide">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="cta-button px-10 py-6 md:text-lg"
+                >
                   BROWSE SHOP
                 </Button>
               </Link>

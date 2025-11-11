@@ -54,8 +54,12 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["var(--font-open-sans)", "system-ui", "sans-serif"],
-        bebas: ["var(--font-bebas)", "Impact", "sans-serif"],
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        heading: [
+          "var(--font-cormorant)",
+          "Cormorant Garamond",
+          "serif",
+        ],
       },
       borderRadius: {
         lg: "var(--radius)",

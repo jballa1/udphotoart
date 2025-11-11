@@ -36,18 +36,18 @@ export default function BlogPage() {
           >
             <div className="flex items-center justify-center gap-2 text-accent">
               <BookOpen className="w-6 h-6" />
-              <span className="text-sm uppercase tracking-widest font-bebas">
+              <span className="section-kicker text-accent">
                 Photography Journal
               </span>
             </div>
-            <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
+            <h1 className="hero-title text-white">
               Stories & Insights
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
+            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
               Thoughts, techniques, and tales from behind the lens—documenting
               adventures and lessons learned
             </p>
-            <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
+            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>10 Articles</span>
               <span>•</span>
               <span>Photography & Travel</span>
@@ -83,11 +83,11 @@ export default function BlogPage() {
                   </div>
 
                   <div className="bg-muted p-8 lg:p-12 flex flex-col justify-center">
-                    <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-bebas tracking-wide rounded-full w-fit mb-4">
+                    <span className="inline-block px-4 py-1 bg-accent text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full w-fit mb-4">
                       Featured Article
                     </span>
 
-                    <h2 className="font-bebas text-3xl md:text-5xl font-bold mb-4 group-hover:text-accent transition-colors tracking-tight">
+                    <h2 className="font-heading text-3xl md:text-5xl font-bold mb-4 group-hover:text-accent transition-colors tracking-[0.01em]">
                       {featuredPost.title}
                     </h2>
 
@@ -117,7 +117,7 @@ export default function BlogPage() {
                       {featuredPost.category}
                     </div>
 
-                    <div className="flex items-center text-accent font-bebas text-lg tracking-wide group-hover:gap-2 transition-all">
+                    <div className="flex items-center text-accent text-lg font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
                       Read Full Story
                       <ArrowRight className="ml-1 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -138,7 +138,7 @@ export default function BlogPage() {
             transition={{ duration: 0.6 }}
             className="mb-12 text-center"
           >
-            <h2 className="font-bebas text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold mb-4 tracking-[0.01em]">
               More Stories
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -167,7 +167,7 @@ export default function BlogPage() {
 
                     {/* Category Badge */}
                     <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
-                      <span className="text-white text-xs font-bebas tracking-wide">
+                      <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                         {post.readTime}
                       </span>
                     </div>
@@ -180,7 +180,7 @@ export default function BlogPage() {
                   </div>
 
                   <div className="space-y-3">
-                    <h3 className="font-bebas text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-tight">
+                    <h3 className="font-heading text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-[0.01em]">
                       {post.title}
                     </h3>
 

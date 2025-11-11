@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Open_Sans } from "next/font/google";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 
-// Primary Typography: Bebas Neue - for titles (Brand Manual)
-const bebasNeue = Bebas_Neue({
-  weight: ["400"],
+// Primary Typography: Cormorant Garamond - for titles (Brand Manual)
+const cormorantGaramond = Cormorant_Garamond({
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-bebas",
+  variable: "--font-cormorant",
   display: "swap",
 });
 
-// Secondary Typography: Open Sans - for content (Brand Manual)
-const openSans = Open_Sans({
-  weight: ["300", "400", "500", "600", "700"],
+// Secondary Typography: Inter - for content (Brand Manual)
+const inter = Inter({
+  weight: ["300", "400", "500"],
   subsets: ["latin"],
-  variable: "--font-open-sans",
+  variable: "--font-inter",
   display: "swap",
 });
 
@@ -55,7 +55,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${openSans.variable}`}>
+    <html
+      lang="en"
+      className={`${cormorantGaramond.variable} ${inter.variable}`}
+    >
       <body className="antialiased">{children}</body>
     </html>
   );
