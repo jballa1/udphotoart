@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Lightbox } from "@/components/lightbox";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import { MapPin, MoveLeft } from "lucide-react";
 import { useState, use } from "react";
 import { notFound } from "next/navigation";
@@ -69,15 +70,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Gallery */}

@@ -6,6 +6,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Check, X, ShoppingBag } from "lucide-react";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import { shopProducts } from "@/lib/shop-products";
 
 const categories = ["All", "Prints", "Photobooks", "Digital Downloads"];
@@ -55,13 +56,13 @@ export default function ShopPage() {
               Shop Prints & Books
             </h1>
             <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Transform your space with museum-quality photography—each piece
+              Transform your space with gallery-quality photography—each piece
               tells a story
             </p>
             <div className="flex items-center justify-center gap-4 text-white/70 text-sm">
               <span>15 Products</span>
               <span>•</span>
-              <span>Museum Quality</span>
+              <span>Gallery Quality</span>
               <span>•</span>
               <span>Worldwide Shipping</span>
             </div>
@@ -69,15 +70,7 @@ export default function ShopPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Category Filter */}
@@ -265,7 +258,7 @@ export default function ShopPage() {
                   <div className="mt-6 space-y-2 text-sm text-muted-foreground">
                     <p className="flex items-center gap-2">
                       <Check className="w-4 h-4 text-accent" />
-                      Museum-quality materials
+                      Gallery-quality materials
                     </p>
                     <p className="flex items-center gap-2">
                       <Check className="w-4 h-4 text-accent" />
@@ -289,7 +282,7 @@ export default function ShopPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center max-w-6xl mx-auto">
             {[
               {
-                title: "Museum Quality",
+                title: "Gallery Quality",
                 description:
                   "Printed on archival-grade paper using finest giclée techniques for lasting beauty",
               },

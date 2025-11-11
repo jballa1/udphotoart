@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -98,7 +99,7 @@ export default function HomePage() {
                   variant="outline"
                   className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-black px-8 py-6 text-lg font-bebas tracking-wide transition-all"
                 >
-                  SHOP PRINTS
+                  SHOP
                 </Button>
               </Link>
             </motion.div>
@@ -110,15 +111,9 @@ export default function HomePage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 1 }}
-          className="absolute bottom-12 left-1/2 transform -translate-x-1/2 z-20"
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2"
-          >
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </motion.div>
+          <ScrollIndicator/>
         </motion.div>
       </section>
 
@@ -449,7 +444,7 @@ export default function HomePage() {
               WHAT I OFFER
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Museum-quality prints, photobooks, and digital collections to bring art into your space
+              Gallery-quality prints, photobooks, and digital collections to bring art into your space
             </p>
           </motion.div>
 
@@ -458,7 +453,7 @@ export default function HomePage() {
               {
                 icon: Camera,
                 title: "Fine Art Prints",
-                description: "Museum-quality giclée prints on archival paper in multiple sizes—from intimate 8x10\" to striking 40x60\" pieces",
+                description: "Gallery-quality giclée prints on archival paper in multiple sizes—from intimate 8x10\" to striking 40x60\" pieces",
                 link: "/shop"
               },
               {

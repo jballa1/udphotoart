@@ -14,23 +14,15 @@ export function Footer() {
 
           {/* Center: Brand & Contact Info */}
           <div className="lg:col-span-8 text-center lg:text-left space-y-6">
-            {/* Name & Title */}
-            <div className="border-b border-[#D97D3E] pb-4">
-              <h2 className="font-bold text-3xl md:text-4xl mb-2">
-                Rigo Gonzalez-Nossa
-              </h2>
-              <p className="text-lg text-gray-300">Founder & CEO</p>
-            </div>
-
             {/* Logo */}
             <div className="flex items-center justify-center lg:justify-start gap-3 py-1">
               <div className="relative w-full h-full">
                 <Image
                   src="/images/logo-white.png"
                   alt="Camera Icon"
-                  width={300}
+                  width={500}
                   height={75}
-                  className="h-14 w-auto justify-self-center md:justify-self-start"
+                  className="h-20 w-auto justify-self-center md:justify-self-start"
                   priority
                 />
               </div>
@@ -94,15 +86,6 @@ export function Footer() {
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5 text-white" />
-              </a>
-              <a
-                href="https://twitter.com/udphotoart"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-[#D97D3E] flex items-center justify-center hover:bg-[#E89555] transition-colors"
-                aria-label="Twitter"
-              >
-                <Twitter className="w-5 h-5 text-white" />
               </a>
               <span className="text-sm ml-2">/udPhotoArt</span>
             </div>

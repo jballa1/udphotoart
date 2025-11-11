@@ -9,14 +9,14 @@ import { ScrollIndicator } from "@/components/scroll-indicator";
 import { MapPin, MoveLeft } from "lucide-react";
 import { useState, use } from "react";
 import { notFound } from "next/navigation";
-import worldLensData from "@/lib/world-lens-photos.json";
+import locationsData from "@/lib/unspoken-photos.json";
 
 export default function LocationPage({ params }: { params: Promise<{ location: string }> }) {
   const { location } = use(params);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const locationData = worldLensData.find((loc) => loc.id === location);
+  const locationData = locationsData.find((loc) => loc.id === location);
 
   if (!locationData) {
     notFound();
@@ -52,7 +52,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
             <div className="flex items-center justify-center gap-2 text-accent">
               <MapPin className="w-6 h-6" />
               <span className="text-sm uppercase tracking-widest font-bebas">
-                {locationData.state}
+                {locationData.name}
               </span>
             </div>
             <h1 className="font-bebas text-6xl md:text-8xl font-bold text-white tracking-tight">
@@ -77,9 +77,9 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
       <section className="py-16 bg-black/5">
         <div className="container mx-auto px-4">
           {/* Back Button */}
-          <Link href="/galleries/world-through-my-lens">
-            <button className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2">
-              <MoveLeft size={14}/> Back to World Through My Lens
+          <Link href="/galleries/unspoken">
+            <button className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors inline-flex items-center gap-2">
+              <MoveLeft size={14}/> Back to Unspoken
             </button>
           </Link>
 

@@ -6,6 +6,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Camera, MapPin, Image as ImageIcon, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 
 const galleries = [
   {
@@ -110,15 +111,7 @@ export default function GalleriesPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Galleries Grid */}
@@ -218,7 +211,7 @@ export default function GalleriesPage() {
               BRING THESE MOMENTS <span className="text-accent">HOME</span>
             </h2>
             <p className="text-lg text-muted-foreground">
-              Museum-quality prints and photobooks available for all collections
+              Gallery-quality prints and photobooks available for all collections
             </p>
             <Link href="/shop">
               <Button

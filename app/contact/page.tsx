@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, ContactRound } from "lucide-react";
 
 export default function ContactPage() {
@@ -35,35 +36,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-background">
       <Navigation />
 
-      {/* Hero Section */}
-      {/* <section className="relative h-[50vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?q=80&w=2940"
-            alt="Contact"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-4"
-          >
-            <h1 className="font-bebas text-5xl md:text-7xl font-bold text-white">
-              Get in Touch
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Let's create something beautiful together
-            </p>
-          </motion.div>
-        </div>
-      </section> */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
@@ -96,15 +68,8 @@ export default function ContactPage() {
           </motion.div>
         </div>
 
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        {/* Scroll Indicator */}
+        <ScrollIndicator />
       </section> 
 
       {/* Contact Section */}
@@ -195,14 +160,6 @@ export default function ContactPage() {
                     className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
                   >
                     <Facebook className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://twitter.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
-                  >
-                    <Twitter className="w-5 h-5" />
                   </a>
                 </div>
               </div>
@@ -325,12 +282,9 @@ export default function ContactPage() {
             <h2 className="font-bebas text-4xl font-bold mb-4">
               Services Offered
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Professional photography services tailored to your needs
-            </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
                 title: "Commissioned Work",
@@ -340,12 +294,7 @@ export default function ContactPage() {
               {
                 title: "Print Sales",
                 description:
-                  "Museum-quality fine art prints of existing work",
-              },
-              {
-                title: "Workshops",
-                description:
-                  "Photography workshops and educational sessions",
+                  "Gallery-quality fine art prints of existing work",
               },
               {
                 title: "Licensing",

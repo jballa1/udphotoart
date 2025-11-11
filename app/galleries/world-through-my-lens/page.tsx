@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { MapPin, Compass } from "lucide-react";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import worldLensData from "@/lib/world-lens-photos.json";
 
 const regions = ["All", "Southwest", "Alaska", "Peru", "West Coast", "Midwest"];
@@ -63,15 +64,7 @@ export default function GalleryPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Region Filter */}

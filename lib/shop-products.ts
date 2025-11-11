@@ -15,7 +15,7 @@ export const shopProducts: Product[] = [
     category: "Prints",
     image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
     price: 189,
-    description: "Majestic wild mustangs roaming free in the dramatic Texas landscape. Museum-quality giclée print on archival paper.",
+    description: "Majestic wild mustangs roaming free in the dramatic Texas landscape. Gallery-quality giclée print on archival paper.",
     collection: "World Through My Lens",
   },
   {

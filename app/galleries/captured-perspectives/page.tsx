@@ -1,29 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Lightbox } from "@/components/lightbox";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Camera } from "lucide-react";
 import perspectivesData from "@/lib/perspectives-photos.json";
 
 export default function PerspectivesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-  const [lightboxImages, setLightboxImages] = useState<string[]>([]);
-
-  const openLightbox = (images: string[], index: number) => {
-    setLightboxImages(images);
-    setLightboxIndex(index);
-    setLightboxOpen(true);
-  };
-
-  const selectedCategoryData = selectedCategory
-    ? perspectivesData.find((cat) => cat.id === selectedCategory)
-    : null;
-
   return (
     <main className="min-h-screen bg-background">
       <Navigation />
@@ -70,38 +55,30 @@ export default function PerspectivesPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Categories Grid */}
-      {!selectedCategory && (
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <AnimatePresence mode="wait">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {perspectivesData.map((category, index) => (
-                  <motion.div
-                    key={category.id}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.1, duration: 0.5 }}
-                    className="group cursor-pointer"
-                    onClick={() => setSelectedCategory(category.id)}
-                  >
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key="perspectives-grid"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {perspectivesData.map((category, index) => (
+                <motion.div
+                  key={category.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  className="group cursor-pointer"
+                >
+                  <Link href={`/galleries/captured-perspectives/${category.id}`}>
                     {/* Category Card */}
                     <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
                       <img
@@ -134,80 +111,13 @@ export default function PerspectivesPage() {
                         </p>
                       </div>
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </section>
-      )}
-
-      {/* Selected Category Gallery with Masonry Layout */}
-      {selectedCategory && selectedCategoryData && (
-        <section className="py-16 bg-black/5">
-          <div className="container mx-auto px-4">
-            {/* Back Button */}
-            <button
-              onClick={() => setSelectedCategory(null)}
-              className="mb-8 px-6 py-3 rounded-full bg-accent text-white font-bebas tracking-wide hover:bg-accent/90 transition-colors flex items-center gap-2"
-            >
-              ← Back to Categories
-            </button>
-
-            {/* Gallery Header */}
-            <div className="text-center space-y-4 mb-12">
-              <div className="flex items-center justify-center gap-2 text-accent">
-                <Camera className="w-5 h-5" />
-                <span className="text-sm uppercase tracking-widest font-bebas">
-                  {selectedCategoryData.theme}
-                </span>
-              </div>
-              <h2 className="font-bebas text-5xl md:text-7xl font-bold tracking-tight">
-                {selectedCategoryData.name}
-              </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-                {selectedCategoryData.description}
-              </p>
-              <div className="text-muted-foreground/70 text-sm">
-                {selectedCategoryData.photoCount} photographs
-              </div>
-            </div>
-
-            {/* Vertical Masonry Grid - Pinterest Style */}
-            <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
-              {selectedCategoryData.photos.map((photo, idx) => (
-                <motion.div
-                  key={idx}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.02, duration: 0.4 }}
-                  className="break-inside-avoid mb-4 cursor-pointer group"
-                  onClick={() =>
-                    openLightbox(selectedCategoryData.photos, idx)
-                  }
-                >
-                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
-                    <img
-                      src={photo}
-                      alt={`${selectedCategoryData.name} ${idx + 1}`}
-                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
-                  </div>
+                  </Link>
                 </motion.div>
               ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Lightbox */}
-      <Lightbox
-        images={lightboxImages}
-        initialIndex={lightboxIndex}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-      />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </section>
 
       <Footer />
     </main>

@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Calendar, Clock, ArrowRight, BookOpen } from "lucide-react";
+import { ArrowRight, BookOpen, Calendar, Clock } from "lucide-react";
+import { ScrollIndicator } from "@/components/scroll-indicator";
 import { blogPosts } from "@/lib/blog-posts";
 
 export default function BlogPage() {
@@ -57,15 +58,7 @@ export default function BlogPage() {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 2 }}
-        >
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
-            <div className="w-1 h-2 bg-white/50 rounded-full" />
-          </div>
-        </motion.div>
+        <ScrollIndicator />
       </section>
 
       {/* Featured Post */}
