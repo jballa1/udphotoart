@@ -55,7 +55,7 @@ export default function HomePage() {
                 height={90}
                 className="object-contain"
               />
-              <span className="font-heading text-4xl md:text-5xl font-semibold tracking-[0.02em] text-white">
+              <span className="font-heading text-4xl  font-semibold tracking-[0.02em] text-white">
                 PHOTO<span className="text-accent">ART</span>
               </span>
             </motion.div>

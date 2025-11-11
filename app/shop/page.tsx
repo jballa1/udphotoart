@@ -61,7 +61,9 @@ export default function ShopPage() {
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>15 Products</span>
+              <span>•</span>
               <span>Gallery Quality</span>
+              <span>•</span>
               <span>Worldwide Shipping</span>
             </div>
           </motion.div>
