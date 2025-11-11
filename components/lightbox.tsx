@@ -71,7 +71,7 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
         onClick={onClose}
       >
         {/* Header */}
-        <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-gradient-to-b from-black/80 to-transparent">
+        <div className="absolute top-0 left-0 right-0 z-50 flex items-center justify-between p-4 bg-gradient-to-b from-black/60 to-transparent">
           <div className="text-white/70 text-sm">
             {currentIndex + 1} / {optimizedImages.length}
           </div>
@@ -104,20 +104,20 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
           {/* Navigation Arrows */}
           <button
             onClick={handlePrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/30 transition-colors"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <button
             onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/30 transition-colors"
           >
             <ChevronRight className="w-6 h-6" />
           </button>
         </div>
 
         {/* Filmstrip */}
-        <div className="h-32 bg-gradient-to-t from-black/80 to-transparent px-4 pb-4">
+        <div className="h-32 bg-gradient-to-t from-black/60 to-transparent px-4 pb-4">
           <div className="h-full overflow-x-auto overflow-y-hidden flex items-center gap-2 scrollbar-hide">
             {optimizedImages.map((image, index) => (
               <button

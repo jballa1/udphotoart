@@ -10,6 +10,7 @@ import { MapPin, MoveLeft } from "lucide-react";
 import { useState, use } from "react";
 import { notFound } from "next/navigation";
 import locationsData from "@/lib/unspoken-photos.json";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 
 export default function LocationPage({ params }: { params: Promise<{ location: string }> }) {
   const { location } = use(params);
@@ -39,7 +40,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
             alt={locationData.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -78,7 +79,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
         <div className="container mx-auto px-4">
           {/* Back Button */}
           <Link href="/galleries/unspoken">
-            <button className="cta-button mb-8 px-6 py-3 rounded-full bg-accent text-white hover:bg-[var(--color-accent-hover)] hover:bg-[var(--color-accent-hover)] transition-colors inline-flex items-center gap-2">
+            <button className="cta-button mb-8 inline-flex items-center gap-2 rounded-full border border-accent px-4 py-2 text-sm text-accent hover:bg-accent hover:text-white transition-colors">
               <MoveLeft size={14}/> Back to Unspoken
             </button>
           </Link>
@@ -94,15 +95,26 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
                 className="break-inside-avoid mb-4 cursor-pointer group"
                 onClick={() => openLightbox(idx)}
               >
-                <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
-                  <img
-                    src={photo}
-                    alt={`${locationData.name} ${idx + 1}`}
-                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 rounded-lg" />
-                </div>
-              </motion.div>
+                    <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                      <img
+                        src={photo}
+                        alt={`${locationData.name} ${idx + 1}`}
+                        className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
+                      <div className="absolute top-3 right-3">
+                        <AddToCartButton
+                          title={`${locationData.name} Print`}
+                          image={photo}
+                          collection={locationData.name}
+                          price={189}
+                          category="Prints"
+                          label="Add to Cart"
+                          className="px-3 py-1 text-[0.6rem]"
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
             ))}
           </div>
         </div>

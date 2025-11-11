@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, ContactRound } from "lucide-react";
+import { PinterestIcon } from "@/components/footer";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -43,7 +44,7 @@ export default function ContactPage() {
             alt="Shop Fine Art"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -153,7 +154,7 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
                   >
-                    <Instagram className="w-5 h-5" />
+                    <Instagram className="w-6 h-6" />
                   </a>
                   <a
                     href="https://facebook.com"
@@ -161,7 +162,15 @@ export default function ContactPage() {
                     rel="noopener noreferrer"
                     className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
                   >
-                    <Facebook className="w-5 h-5" />
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a
+                    href="https://pinterest.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-3 border border-border rounded-full hover:border-accent hover:text-accent transition-all"
+                  >
+                    <PinterestIcon className="w-7 h-7" />
                   </a>
                 </div>
               </div>

@@ -4,6 +4,19 @@ import Link from "next/link";
 import Image from "next/image";
 import { Instagram, Facebook, Mail, Phone, Globe } from "lucide-react";
 
+export function PinterestIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      {...props}
+    >
+      <path d="M12.04 2C7.58 2 4 5.58 4 10.04c0 3.35 1.99 6.23 4.83 7.45-.07-.63-.13-1.61.03-2.3.14-.6.9-3.84.9-3.84s-.23-.47-.23-1.16c0-1.08.63-1.89 1.42-1.89.67 0 1 .5 1 1.1 0 .67-.42 1.67-.63 2.6-.18.77.4 1.4 1.17 1.4 1.4 0 2.48-1.48 2.48-3.6 0-1.88-1.35-3.19-3.28-3.19-2.24 0-3.55 1.68-3.55 3.42 0 .68.27 1.4.61 1.8.07.08.08.15.06.23-.06.25-.19.78-.22.89-.04.17-.14.21-.33.13-1.23-.56-2-2.33-2-3.75 0-3.05 2.22-5.86 6.41-5.86 3.36 0 5.97 2.39 5.97 5.59 0 3.34-2.11 6.03-5.05 6.03-1 0-1.94-.52-2.27-1.14l-.62 2.36c-.23.89-.86 2-1.28 2.68.96.3 1.98.47 3.04.47 4.46 0 8.04-3.58 8.04-8.04C20.08 5.58 16.5 2 12.04 2z" />
+    </svg>
+  );
+}
+
 export function Footer() {
   return (
     <footer className="bg-[#0b0b0b] text-white">
@@ -41,7 +54,7 @@ export function Footer() {
                   href="tel:+18323731092"
                   className="hover:text-accent transition-colors"
                 >
-                  (832) 373-1092
+                  +1 (832) 373-1092
                 </a>
               </div>
               <div className="flex items-center gap-3">
@@ -86,7 +99,7 @@ export function Footer() {
                 className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center hover:bg-[var(--color-accent-hover)] transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram className="w-5 h-5" />
+                <Instagram className="w-6 h-6" />
               </a>
               <a
                 href="https://facebook.com/udphotoart"
@@ -95,7 +108,16 @@ export function Footer() {
                 className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center hover:bg-[var(--color-accent-hover)] transition-colors"
                 aria-label="Facebook"
               >
-                <Facebook className="w-5 h-5" />
+                <Facebook className="w-6 h-6" />
+              </a>
+              <a
+                href="https://pinterest.com/udphotoart"
+                target="_blank"
+                rel="noreferrer"
+                className="w-10 h-10 rounded-full bg-accent text-white flex items-center justify-center hover:bg-[var(--color-accent-hover)] transition-colors"
+                aria-label="Pinterest"
+              >
+                <PinterestIcon className="w-7 h-7" />
               </a>
             </div>
           </div>

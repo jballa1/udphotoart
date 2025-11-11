@@ -77,7 +77,7 @@ export default function GalleriesPage() {
             alt="Photography Galleries"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -135,17 +135,17 @@ export default function GalleriesPage() {
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className={`absolute inset-0 bg-gradient-to-br ${gallery.color} opacity-40 group-hover:opacity-60 transition-opacity duration-300`} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-transparent" />
 
                       {/* Stats Badges */}
                       <div className="absolute top-4 right-4 flex gap-2">
-                        <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                        <div className="bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <ImageIcon className="w-3 h-3 text-white" />
                           <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.stats.photos}
                           </span>
                         </div>
-                        <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
+                        <div className="bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <MapPin className="w-3 h-3 text-white" />
                           <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.stats.locations}
@@ -154,7 +154,7 @@ export default function GalleriesPage() {
                       </div>
 
                       {/* Hover CTA */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-4 text-center">
                         <Button className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-3">
                           EXPLORE GALLERY
                           <ArrowRight className="w-4 h-4 ml-2" />
@@ -162,7 +162,7 @@ export default function GalleriesPage() {
                       </div>
 
                       {/* Title Overlay */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
+                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                         <h2 className="font-heading text-3xl md:text-4xl font-bold text-white tracking-[0.01em] mb-2">
                           {gallery.title}
                         </h2>

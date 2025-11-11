@@ -30,7 +30,7 @@ export default function HomePage() {
             alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </motion.div>
 
         {/* Hero Content */}
@@ -407,8 +407,8 @@ export default function HomePage() {
                     alt={item.title}
                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                       <p className="text-white/70 text-xs font-sans uppercase tracking-[0.08em] mb-1">{item.collection}</p>
                       <p className="text-white font-heading text-xl tracking-[0.01em]">
                         {item.title}
@@ -577,15 +577,15 @@ export default function HomePage() {
                       alt={post.title}
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
-                    <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                    <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
                       <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                         {post.readTime}
                       </span>
                     </div>
 
-                    <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                       <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full mb-3">
                         {post.category}
                       </span>

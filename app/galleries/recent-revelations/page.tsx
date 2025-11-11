@@ -30,7 +30,7 @@ export default function RevelationsPage() {
             alt="Recent Revelations"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -116,32 +116,32 @@ export default function RevelationsPage() {
                         alt={location.name}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
                       {/* Location Badge */}
-                      <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full">
+                      <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
                         <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                           {location.photoCount} Photos
                         </span>
                       </div>
 
                       {/* Location Info */}
-                      <div className="absolute bottom-0 left-0 right-0 p-6">
-                        <div className="flex items-center gap-2 text-accent mb-2">
-                          <MapPin className="w-4 h-4" />
-                          <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                            {location.country}
-                          </span>
-                        </div>
-                        <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
-                          {location.name}
-                        </h3>
-                        <p className="text-white/80 text-sm line-clamp-2">
-                          {location.description}
-                        </p>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+                      <div className="flex items-center gap-2 text-accent mb-2">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                          {location.country}
+                        </span>
                       </div>
+                      <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
+                        {location.name}
+                      </h3>
+                      <p className="text-white/80 text-sm line-clamp-2">
+                        {location.description}
+                      </p>
                     </div>
-                  </Link>
+                  </div>
+                </Link>
                 </motion.div>
               ))}
             </motion.div>
