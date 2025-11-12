@@ -271,7 +271,7 @@ export default function HomePage() {
                 diverse global experiences—to every photograph. His work reflects a keen eye for detail,
                 creative imagination, and an unwavering commitment to seizing moments that tell powerful stories.
               </p>
-              <div className="pt-4 flex gap-4">
+              <div className="pt-4 flex flex-wrap items-center gap-4">
                 <Link href="/contact">
                   <Button
                     size="lg"
