@@ -19,7 +19,7 @@ export default function UnspokenPage() {
           <img
             src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public"
             alt="Unspoken"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
@@ -98,17 +98,17 @@ export default function UnspokenPage() {
                       {/* Location Info */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                         <div className="flex items-center gap-2 text-accent mb-2">
-                          <Heart className="w-4 h-4" />
-                          <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                            {category.name}
-                          </span>
-                        </div>
+                            <Heart className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                              {category.name}
+                            </span>
+                          </div>
                         <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
-                          {category.name}
-                        </h3>
-                        <p className="text-white/80 text-sm line-clamp-2">
-                          {category.description}
-                        </p>
+                            {category.name}
+                          </h3>
+                          <p className="text-white/80 text-sm line-clamp-2">
+                            {category.description}
+                          </p>
                       </div>
                     </div>
                   </Link>

@@ -53,7 +53,7 @@ export function InsiderPopup() {
         "drop-shadow-2xl"
       )}
     >
-      <div className="rounded-2xl border border-border bg-background backdrop-blur supports-[backdrop-filter]:bg-background/80">
+      <div className="rounded-2xl border border-accent bg-background">
         <div className="flex items-start justify-between gap-2 p-4 pb-3">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-accent">
@@ -87,7 +87,7 @@ export function InsiderPopup() {
           </div>
           <Button
             type="submit"
-            className="w-full rounded-xl bg-foreground text-background hover:bg-foreground/90"
+            className="w-full rounded-xl bg-accent hover:bg-[var(--color-accent-hover)] text-background"
           >
             Join the Circle
           </Button>

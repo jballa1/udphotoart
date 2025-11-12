@@ -31,7 +31,7 @@ export default function ShopPage() {
           <img
             src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public"
             alt="Shop Fine Art"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
@@ -121,22 +121,22 @@ export default function ShopPage() {
 
                   {/* Hover CTA */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <AddToCartButton
-                      title={product.title}
-                      image={product.image}
-                      collection={product.collection}
-                      category={product.category}
-                      price={product.price}
-                      description={product.description}
-                      label="View Details"
+                      <AddToCartButton
+                        title={product.title}
+                        image={product.image}
+                        collection={product.collection}
+                        category={product.category}
+                        price={product.price}
+                        description={product.description}
+                        label="View Details"
                       className="px-6 py-3"
-                    />
-                  </div>
+                      />
+                    </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                     <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-medium rounded-full mb-2">
-                      {product.category}
-                    </span>
+                          {product.category}
+                        </span>
                   </div>
                 </div>
 

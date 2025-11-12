@@ -22,7 +22,7 @@ export default function BlogPage() {
           <img
             src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-nature-0dae414e-aff8-446f-9f8b-f26987a17d3c-rw-1200.jpg/public"
             alt="Blog"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>

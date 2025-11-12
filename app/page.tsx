@@ -28,7 +28,7 @@ export default function HomePage() {
           <img
             src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public"
             alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </motion.div>

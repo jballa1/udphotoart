@@ -108,18 +108,18 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-black/10" />
               <div className="absolute bottom-6 left-6 text-white space-y-1">
-                {item.collection && (
+                  {item.collection && (
                   <p className="text-xs uppercase tracking-[0.08em] text-white/80">
-                    {item.collection}
-                  </p>
-                )}
-                <h3 className="text-2xl font-semibold tracking-[0.02em]">
-                  {item.title}
-                </h3>
+                      {item.collection}
+                    </p>
+                  )}
+                  <h3 className="text-2xl font-semibold  tracking-[0.02em] bg-accent/60 rounded-full px-2 py-0.5 inline-block">
+                    {item.title}
+                  </h3>
               </div>
             </div>
 
-            <div className="flex h-full flex-col gap-6 overflow-y-auto p-6 md:p-10">
+            <div className="flex h-full flex-col gap-6 overflow-y-hidden p-6 md:p-10">
               <div className="space-y-3">
                 <p className="section-kicker text-accent">Prints</p>
                 <h2 className="text-2xl font-semibold tracking-[0.02em]">

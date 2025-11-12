@@ -28,7 +28,7 @@ export default function RevelationsPage() {
           <img
             src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public"
             alt="Recent Revelations"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
@@ -128,18 +128,18 @@ export default function RevelationsPage() {
                       {/* Location Info */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                       <div className="flex items-center gap-2 text-accent mb-2">
-                        <MapPin className="w-4 h-4" />
-                        <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                          {location.country}
-                        </span>
-                      </div>
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                              {location.country}
+                            </span>
+                          </div>
                       <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
-                        {location.name}
-                      </h3>
-                      <p className="text-white/80 text-sm line-clamp-2">
-                        {location.description}
-                      </p>
-                    </div>
+                            {location.name}
+                          </h3>
+                          <p className="text-white/80 text-sm line-clamp-2">
+                            {location.description}
+                          </p>
+                      </div>
                   </div>
                 </Link>
                 </motion.div>

@@ -44,7 +44,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
           <img
             src={locationData.hero}
             alt={locationData.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-top"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
         </div>
