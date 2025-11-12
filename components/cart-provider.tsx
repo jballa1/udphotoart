@@ -154,13 +154,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
               <div className="border-t border-border pt-4 space-y-3">
                 <div className="flex items-baseline justify-between">
-                  <div>
-                    <p className="inline-flex items-end gap-2">
-                      <p className="text-3xl font-semibold tracking-[0.02em]">{displayPrice}</p> <p className="text-sm mb-1 text-muted-foreground">
+                  <div className="inline-flex items-end gap-2">
+                    <p className="text-3xl font-semibold tracking-[0.02em]">
+                      {displayPrice}
+                    </p>
+                    <span className="text-sm mb-1 text-muted-foreground">
                       + shipping
-                    </p>
-                    </p>
-                    
+                    </span>
                   </div>
                   <button
                     onClick={handleAddToCart}

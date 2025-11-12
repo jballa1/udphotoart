@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/components/cart-provider";
+import { InsiderPopup } from "@/components/insider-popup";
 
 // Primary Typography: Cormorant Garamond - for titles (Brand Manual)
 const cormorantGaramond = Cormorant_Garamond({
@@ -61,7 +62,10 @@ export default function RootLayout({
       className={`${cormorantGaramond.variable} ${inter.variable}`}
     >
       <body className="antialiased">
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          {children}
+          <InsiderPopup />
+        </CartProvider>
       </body>
     </html>
   );
