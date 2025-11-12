@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { ReactNode, useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -9,6 +9,8 @@ interface LightboxProps {
   initialIndex: number;
   isOpen: boolean;
   onClose: () => void;
+  renderDetails?: (image: string, index: number) => ReactNode;
+  renderHeaderActions?: (image: string, index: number) => ReactNode;
 }
 
 function getCloudflareVariant(url: string, variant: string): string {
@@ -29,7 +31,14 @@ function getCloudflareVariant(url: string, variant: string): string {
   return parts.join("/");
 }
 
-export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProps) {
+export function Lightbox({
+  images,
+  initialIndex,
+  isOpen,
+  onClose,
+  renderDetails,
+  renderHeaderActions,
+}: LightboxProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
   const optimizedImages = useMemo(() => images.map((image) => image), [images]);
@@ -75,12 +84,18 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
           <div className="text-white/70 text-sm">
             {currentIndex + 1} / {optimizedImages.length}
           </div>
-          <button
-            onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-3">
+            {renderHeaderActions?.(
+              optimizedImages[currentIndex],
+              currentIndex
+            )}
+            <button
+              onClick={onClose}
+              className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Main Image */}
@@ -100,6 +115,12 @@ export function Lightbox({ images, initialIndex, isOpen, onClose }: LightboxProp
               transition={{ duration: 0.3 }}
             />
           </AnimatePresence>
+
+          {renderDetails && (
+            <div className="absolute bottom-6 left-1/2 w-full max-w-2xl -translate-x-1/2 px-4">
+              {renderDetails(optimizedImages[currentIndex], currentIndex)}
+            </div>
+          )}
 
           {/* Navigation Arrows */}
           <button

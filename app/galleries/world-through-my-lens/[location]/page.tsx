@@ -11,6 +11,7 @@ import { useState, use } from "react";
 import { notFound } from "next/navigation";
 import worldLensData from "@/lib/world-lens-photos.json";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { FavoriteToggle } from "@/components/favorite-toggle";
 
 export default function LocationPage({ params }: { params: Promise<{ location: string }> }) {
   const { location } = use(params);
@@ -29,7 +30,12 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
   };
 
   return (
-    <main className="min-h-screen bg-background">
+    <motion.main
+      className="min-h-screen bg-background"
+      initial={{ opacity: 0, y: 32 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       <Navigation />
 
       {/* Hero Section */}
@@ -101,15 +107,23 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
                         className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
-                      <div className="absolute top-3 right-3">
+                      <div className="absolute top-3 right-3 flex items-center gap-2">
+                        <FavoriteToggle
+                          id={photo}
+                          image={photo}
+                          title={locationData.name}
+                          subtitle={locationData.state ?? locationData.region}
+                          gallery="World Through My Lens"
+                          href={`/galleries/world-through-my-lens/${locationData.id}`}
+                        />
                         <AddToCartButton
                           title={`${locationData.name} Print`}
                           image={photo}
                           collection={locationData.name}
                           price={189}
                           category="Prints"
-                          label="Add to Cart"
-                          className="px-3 py-1 text-[0.6rem]"
+                          label={`Add ${locationData.name} to cart`}
+                          mode="icon"
                         />
                       </div>
                     </div>
@@ -125,9 +139,34 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
         initialIndex={lightboxIndex}
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
+        renderHeaderActions={(_, index) => {
+          const image = locationData.photos[index];
+          if (!image) return null;
+          return (
+            <div className="flex items-center gap-2">
+              <FavoriteToggle
+                id={image}
+                image={image}
+                title={locationData.name}
+                subtitle={locationData.state ?? locationData.region}
+                gallery="World Through My Lens"
+                href={`/galleries/world-through-my-lens/${locationData.id}`}
+              />
+              <AddToCartButton
+                title={`${locationData.name} Print`}
+                image={image}
+                collection={locationData.name}
+                price={189}
+                category="Prints"
+                label={`Add ${locationData.name} to cart`}
+                mode="icon"
+              />
+            </div>
+          );
+        }}
       />
 
       <Footer />
-    </main>
+    </motion.main>
   );
 }

@@ -23,6 +23,7 @@ const navItems = [
   { href: "/blog", label: "Blog" },
   { href: "/shop", label: "Shop" },
   { href: "/contact", label: "Contact" },
+  { href: "/favorites", label: "Favorites" },
 ];
 
 export function Navigation() {
