@@ -108,7 +108,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
                           id={photo}
                           image={photo}
                           title={locationData.name}
-                          subtitle={locationData.region}
+                          subtitle={locationData.name}
                           gallery="Unspoken"
                           href={`/galleries/unspoken/${locationData.id}`}
                         />
@@ -144,7 +144,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
                 id={image}
                 image={image}
                 title={locationData.name}
-                subtitle={locationData.region}
+                subtitle={locationData.name}
                 gallery="Unspoken"
                 href={`/galleries/unspoken/${locationData.id}`}
               />
