@@ -113,7 +113,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                       {item.collection}
                     </p>
                   )}
-                  <h3 className="text-2xl font-semibold  tracking-[0.02em] bg-accent/60 rounded-full px-2 py-0.5 inline-block">
+                  <h3 className="text-2xl font-semibold  tracking-[0.02em] bg-accent/60 rounded-sm px-2 py-0.5 inline-block">
                     {item.title}
                   </h3>
               </div>
