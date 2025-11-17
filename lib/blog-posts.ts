@@ -679,8 +679,8 @@ These sessions are among my favorites because I get to witness and capture pure 
     featured: false,
   },
   {
-    id: "oil-country-industrial-beauty",
-    title: "Oil Country: Finding Beauty in Industrial Landscapes",
+    id: "industrial-pastures-industrial-beauty",
+    title: "Industrial Pastures: Finding Beauty in Industrial Landscapes",
     excerpt: "Documenting the stark beauty of Texas oil fields—where industrial might meets the vast West Texas horizon.",
     content: `
 # Oil Country: Finding Beauty in Industrial Landscapes

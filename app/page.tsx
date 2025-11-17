@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Camera, MapPin, Heart, Sparkles, BookOpen, ShoppingCart, Compass } from "lucide-react";
+import { ArrowRight, Camera, MapPin, Heart, Sparkles, BookOpen, ShoppingCart, Compass, Aperture } from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -46,30 +46,17 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.1, duration: 0.8 }}
-              className="flex items-center justify-center mb-4"
+              className=" hidden md:flex items-center justify-center mb-2"
             >
               <Image
-                src="/images/logo-white-icon.png"
+                src="/images/logo-white.png"
                 alt="UDPhotoArt Logo"
-                width={90}
-                height={90}
+                width={350}
+                height={200}
                 className="object-contain"
               />
-              <span className="font-heading text-4xl  font-semibold tracking-[0.02em] text-white">
-                PHOTO<span className="text-accent">ART</span>
-              </span>
+              
             </motion.div>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="hero-title text-white"
-            >
-              SEIZING THE{" "}
-              <span className="text-accent">MOMENT</span>
-            </motion.h1>
-
             <motion.p
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -120,7 +107,7 @@ export default function HomePage() {
       </section>
 
       {/* Featured Collections */}
-      <section className="py-24 bg-background">
+      <section className="py-24">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -139,7 +126,7 @@ export default function HomePage() {
               FEATURED GALLERIES
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Explore curated collections capturing diverse moments and emotions from around the world
+              Wander through curated collections shaped by my journeys moments of stillness, movement, and connection - each gallery offering its own sense of presence and emotion.
             </p>
           </motion.div>
 
@@ -167,7 +154,7 @@ export default function HomePage() {
                 title: "Captured Perspectives",
                 count: "230 Photos",
                 locations: "5 Categories",
-                description: "Artistic interpretations and unique viewpoints",
+                description: "The world, observed with quiet curiosity",
                 image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
                 href: "/galleries/captured-perspectives",
                 icon: Camera,
@@ -176,7 +163,7 @@ export default function HomePage() {
                 title: "Unspoken",
                 count: "163 Photos",
                 locations: "6 Categories",
-                description: "Life's precious moments without words",
+                description: "The subtle poetry of places and people",
                 image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public",
                 href: "/galleries/unspoken",
                 icon: Heart,
@@ -225,78 +212,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-24 bg-black/5">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl"
-            >
-              <img
-                src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-rigo-headshot.png/public"
-                alt="Rigo Gonzalez-Nossa - Fine Art Photographer"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              <div className="flex items-center gap-2 text-accent mb-4">
-                <Camera className="w-5 h-5" />
-                <span className="section-kicker text-accent">
-                  PHOTOGRAPHER & ARTIST
-                </span>
-              </div>
-              <h2 className="section-heading">
-                RIGO GONZALEZ-NOSSA
-              </h2>
-              <div className="h-1 w-20 bg-accent"></div>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Rigo Gonzalez-Nossa, GPHR, is a U.S. Army Gulf War veteran with 20 years of international
-                human resources experience in the oil & gas industry. Beyond his professional achievements,
-                Rigo has cultivated a profound passion for fine art photography that captures the essence
-                of fleeting moments.
-              </p>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                A natural-born leader with charisma and vision, Rigo brings his unique perspective—shaped by
-                diverse global experiences—to every photograph. His work reflects a keen eye for detail,
-                creative imagination, and an unwavering commitment to seizing moments that tell powerful stories.
-              </p>
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <Link href="/contact">
-                  <Button
-                    size="lg"
-                    className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-4"
-                  >
-                    LET'S COLLABORATE
-                  </Button>
-                </Link>
-                <Link href="/blog">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="cta-button px-6 py-4"
-                  >
-                    READ MY STORIES
-                  </Button>
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* Featured Photography Highlights */}
-      <section className="py-24">
+      <section className="py-24 bg-black/5">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -312,10 +229,10 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="section-heading mb-6">
-              FEATURED WORK
+              SIGNATURE COLLECTIONS
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A curated selection showcasing the diversity and artistry across all collections
+              A refined collection of images that capture beauty found across people, places and moments.
             </p>
           </motion.div>
 
@@ -440,7 +357,7 @@ export default function HomePage() {
       </section>
 
       {/* What I Offer */}
-      <section className="py-24 bg-black/5">
+      <section className="py-24 ">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -463,7 +380,7 @@ export default function HomePage() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto">
             {[
               {
                 icon: Camera,
@@ -481,6 +398,12 @@ export default function HomePage() {
                 icon: Sparkles,
                 title: "Digital Downloads",
                 description: "High-resolution digital collections perfect for personal use, wallpapers, and digital galleries",
+                link: "/shop"
+              },
+              {
+                icon: Aperture,
+                title: "Photography Inspired Essentials",
+                description: "Artistic and functional lifestyle, collectibles, and workflow essentials",
                 link: "/shop"
               }
             ].map((service, index) => (
@@ -512,7 +435,7 @@ export default function HomePage() {
       </section>
 
       {/* Latest Blog Posts */}
-      <section className="py-24">
+      <section className="py-24 bg-black/5">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -531,11 +454,11 @@ export default function HomePage() {
               STORIES & INSIGHTS
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Behind-the-scenes stories, photography techniques, and adventures from the field
+              A look beyond the image - perspectives that reveal the craft , the journey, and stories from the world behind the lens.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto">
             {[
               {
                 title: "Capturing Wild Horses in Big Bend",
@@ -620,6 +543,98 @@ export default function HomePage() {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl"
+            >
+              <img
+                src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-rigo-headshot.png/public"
+                alt="Rigo Gonzalez-Nossa - Fine Art Photographer"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="space-y-4"
+            >
+              <h2 className="section-heading">
+                RIGO GONZALEZ-NOSSA
+              </h2>
+              <div className="h-1 w-20 bg-accent"></div>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Photography, for me, is a journey of curiosity. I believe every frame holds a story — a fleeting look, 
+                a quiet laugh, a hidden emotion — and my passion is uncovering those moments, gently and authentically. 
+                Whether I’m roaming city streets, catching golden-hour light, or standing in the stillness of a sunrise, 
+                I strive to create images that feel natural, intimate, and timeless.
+              </p>
+              <div>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Life has carried me through many places and many perspectives — from the coastlines of California to the quiet mornings in Savannah, 
+                the changing landscapes of South Texas, and the airy silence of an Alaskan winter. I’ve wandered colorful plazas in Poland, 
+                lingered in the history and architecture of Europe, absorbed the layered realities of India, and witnessed the stark truths of war in Iraq.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                These journeys taught me to see not through perfection, but through presence — to notice how people carry their stories, 
+                how landscapes shift, and how, beneath all our differences, we share brief, beautiful threads of connection.
+              </p>
+              </div>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                My path meandered through strategy, leadership, and corporate life — but I always gravitated back to an introspective way of understanding 
+                the world through images. That background gives me a unique perspective: an appreciation for what connects us and for the quiet details that 
+                make each person, place, and moment distinct.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                Behind the camera, I find joy in simple things: a morning cup of coffee, a walk to clear the mind, or ideas sparked in quiet reflection. 
+                These small joys shape how I create — thoughtful, grounded, and open to the unexpected.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                I pour this same energy into UD Photo Art: building a space where creativity meets purpose, and where every photograph feels like a conversation. 
+                Whether you’re here to explore, to buy, to seek services or advice, or simply to pause and enjoy the images, I hope they offer something 
+                that resonates — a memory, a feeling, or a moment you didn’t expect to find.
+              </p>
+              <div>
+              <p className="text-base text-muted-foreground font-bold leading-relaxed">
+                Let’s make something beautiful.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                If you’re curious to chat about a session, a print, or a collaborative idea, I’d be thrilled to hear from you.
+              </p>
+              </div>
+              <div className="pt-4 flex flex-wrap items-center gap-4">
+                <Link href="/contact">
+                  <Button
+                    size="lg"
+                    className="cta-button bg-accent hover:bg-[var(--color-accent-hover)] text-white px-6 py-4"
+                  >
+                    LET'S COLLABORATE
+                  </Button>
+                </Link>
+                <Link href="/blog">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="cta-button px-6 py-4"
+                  >
+                    READ MY STORIES
+                  </Button>
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>

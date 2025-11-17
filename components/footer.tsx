@@ -33,15 +33,8 @@ export function Footer() {
               priority
             />
             <p className="text-base text-white/70 leading-relaxed max-w-md mx-auto lg:mx-0">
-              Fine art photography crafted with intention. Cormorant Garamond
-              headlines meet Inter body copy, all grounded in a refined taupe
-              palette inspired by timeless galleries.
+              UDPhotoArt is a fine-art photography brand shaped by intention, grounded in presence, and guided by the philosophy of seizing the moment.
             </p>
-            <div className="flex flex-wrap justify-center lg:justify-start gap-3 text-sm">
-              <span className="section-kicker text-accent">
-                Where Light Meets Legacy
-              </span>
-            </div>
           </div>
 
           {/* Contact */}

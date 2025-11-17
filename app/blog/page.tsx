@@ -44,8 +44,7 @@ export default function BlogPage() {
               Stories & Insights
             </h1>
             <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
-              Thoughts, techniques, and tales from behind the lens—documenting
-              adventures and lessons learned
+              A look beyond the image - perspectives that reveal the craft , the journey, and stories from the world behind the lens
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
               <span>10 Articles</span>

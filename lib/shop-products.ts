@@ -55,8 +55,8 @@ export const shopProducts: Product[] = [
     collection: "Captured Perspectives",
   },
   {
-    id: "oil-country-industrial",
-    title: "Oil Country Heritage",
+    id: "industrial-pastures-industrial",
+    title: "Industrial Pastures Heritage",
     category: "Prints",
     image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-oil-country-124c9218-c74b-4bf3-bc25-1d6b8bfb5c61-rw-1200.jpg/public",
     price: 159,

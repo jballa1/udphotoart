@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { MapPin, Globe2 } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import locationsData from "@/lib/revelations-photos.json";
+import { useRouter } from "next/navigation";
 
-const regions = ["All", "Europe", "Asia", "America"];
+const regions = ["All", "Europe", "Asia", "Americas"];
 
 export default function RevelationsPage() {
   const [selectedRegion, setSelectedRegion] = useState("All");
-
+  const router = useRouter();
   const filteredLocations = locationsData.filter((loc) =>
     selectedRegion === "All" ? true : loc.region === selectedRegion
   );
@@ -50,7 +50,7 @@ export default function RevelationsPage() {
               Recent Revelations
             </h1>
             <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
-              Contemporary global urban exploration across 9 cities — from
+              Contemporary global urban exploration across cities — from
               Nordic winters to vibrant India
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
@@ -108,9 +108,12 @@ export default function RevelationsPage() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   className="group cursor-pointer"
                 >
-                  <Link href={`/galleries/recent-revelations/${location.id}`}>
-                    {/* Location Card */}
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                    <div
+                      onClick={() =>
+                        router.push(`/galleries/recent-revelations/${location.id}`)
+                      }
+                      className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg"
+                    >
                       <img
                         src={location.hero}
                         alt={location.name}
@@ -127,12 +130,18 @@ export default function RevelationsPage() {
 
                       {/* Location Info */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-                      <div className="flex items-center gap-2 text-accent mb-2">
-                            <MapPin className="w-4 h-4" />
-                            <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                              {location.country}
-                            </span>
-                          </div>
+                      <div onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(
+                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.name)},${encodeURIComponent(location.country)}`,
+                            "_blank"
+                          );
+                        }} className="flex items-center gap-2 text-accent mb-2 pointer-events-auto">
+                        <MapPin className="w-4 h-4" />
+                        <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                          {location.country}
+                        </span>
+                      </div>
                       <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                             {location.name}
                           </h3>
@@ -141,7 +150,6 @@ export default function RevelationsPage() {
                           </p>
                       </div>
                   </div>
-                </Link>
                 </motion.div>
               ))}
             </motion.div>

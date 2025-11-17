@@ -10,7 +10,7 @@ import { shopProducts } from "@/lib/shop-products";
 import { useCart } from "@/components/cart-provider";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 
-const categories = ["All", "Prints", "Photobooks", "Digital Downloads"];
+const categories = ["All", "Prints", "Photobooks", "Digital Downloads","Photo-Inspired Goods"];
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");

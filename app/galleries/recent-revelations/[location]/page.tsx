@@ -56,12 +56,19 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
+            <Link                                                                                             
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(locationData.name)},${encodeURIComponent(locationData.country)}`}                                               
+            target="_blank"                                                                                
+            rel="noopener noreferrer"                                                                      
+            className="no-underline"                                                                       
+            > 
             <div className="flex items-center justify-center gap-2 text-accent">
               <MapPin className="w-6 h-6" />
               <span className="section-kicker text-accent">
                 {locationData.country}
               </span>
             </div>
+            </Link>
             <h1 className="hero-title text-white">
               {locationData.name}
             </h1>

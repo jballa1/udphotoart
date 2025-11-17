@@ -1,19 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { MapPin, Compass } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import worldLensData from "@/lib/world-lens-photos.json";
+import { useRouter } from "next/navigation";
 
 const regions = ["All", "Southwest", "Alaska", "Peru", "West Coast", "Midwest"];
 
 export default function GalleryPage() {
   const [selectedRegion, setSelectedRegion] = useState("All");
-
+  const router = useRouter();
   const filteredLocations = worldLensData.filter((loc) =>
     selectedRegion === "All" ? true : loc.region === selectedRegion
   );
@@ -108,9 +108,12 @@ export default function GalleryPage() {
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   className="group cursor-pointer"
                 >
-                  <Link href={`/galleries/world-through-my-lens/${location.id}`}>
-                    {/* Location Card */}
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg">
+                    <div
+                      onClick={() =>
+                        router.push(`/galleries/world-through-my-lens/${location.id}`)
+                      }
+                      className="relative aspect-[4/3] overflow-hidden rounded-2xl mb-4 shadow-lg"
+                    >
                       <img
                         src={location.hero}
                         alt={location.name}
@@ -127,7 +130,13 @@ export default function GalleryPage() {
 
                       {/* Location Info */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-                        <div className="flex items-center gap-2 text-accent mb-2">
+                          <div onClick={(e) => {
+                          e.stopPropagation();
+                          window.open(
+                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location.state)},${encodeURIComponent(location.name)}`,
+                            "_blank"
+                          );
+                        }} className="flex items-center gap-2 text-accent mb-2 pointer-events-auto">
                             <MapPin className="w-4 h-4" />
                             <span className="text-xs uppercase tracking-[0.08em] font-sans">
                               {location.state}
@@ -141,7 +150,6 @@ export default function GalleryPage() {
                           </p>
                       </div>
                     </div>
-                  </Link>
                 </motion.div>
               ))}
             </motion.div>

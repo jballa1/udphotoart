@@ -105,7 +105,7 @@
   {
     "id": "expressions",
     "name": "Expressions",
-    "description": "Wildlife portraits and behavioral moments",
+    "description": "The art of unscripted beauty - candid imagery",
     "theme": "wildlife",
     "order": 2,
     "photoCount": 46,
@@ -162,7 +162,7 @@
   {
     "id": "nature",
     "name": "Nature",
-    "description": "Natural world documentation and beauty",
+    "description": "Nature's soul revealed in a glance",
     "theme": "nature",
     "order": 3,
     "photoCount": 43,
@@ -214,9 +214,9 @@
     ]
   },
   {
-    "id": "oil-country",
-    "name": "Oil Country",
-    "description": "Industrial landscapes and Texas oil fields",
+    "id": "industrial-pastures",
+    "name": "Industrial Pastures",
+    "description": "Framing the contrast of technology and rural America",
     "theme": "industrial",
     "order": 4,
     "photoCount": 47,

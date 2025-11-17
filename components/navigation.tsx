@@ -143,7 +143,7 @@ export function Navigation() {
                 href="/favorites"
                 className={cn(
                   "inline-flex items-center gap-1 px-3 py-1 text-sm font-semibold uppercase tracking-[0.15em] text-white hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
-                  isScrolled && "border-black/10 bg-white text-gray-900"
+                  isScrolled &&  "text-gray-900"
                 )}
                 aria-label={favoritesLabel}
               >
@@ -153,9 +153,9 @@ export function Navigation() {
                     favoritesCount > 0 ? "fill-current text-accent" : ""
                   )}
                 />
-                <span className={cn("text-sm", favoritesCount > 0 ? "text-accent" : "text-white/80")}>
+                {favoritesCount > 0 &&<span className={cn("text-sm", isScrolled ? "text-gray-900":"text-white/80")}>
                   {favoritesCount}
-                </span>
+                </span>}
               </Link>
             </div>
 
@@ -163,7 +163,7 @@ export function Navigation() {
             <div className="flex items-center gap-3 lg:hidden">
               <Link
                 href="/favorites"
-                className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.15em] text-white transition hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                className={cn("inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-[0.15em] text-white transition hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",isScrolled &&  "text-gray-900")}
                 aria-label={favoritesLabel}
               >
                 <Heart
@@ -172,9 +172,9 @@ export function Navigation() {
                     favoritesCount > 0 ? "fill-current text-accent" : ""
                   )}
                 />
-                <span className={cn("text-sm", favoritesCount > 0 ? "text-accent" : "text-white/80")}>
+                {favoritesCount>0 &&<span className={cn("text-sm", isScrolled? "text-gray-900" : "text-white/80")}>
                   {favoritesCount}
-                </span>
+                </span>}
               </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
