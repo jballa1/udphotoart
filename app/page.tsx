@@ -126,7 +126,7 @@ export default function HomePage() {
               FEATURED GALLERIES
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Wander through curated collections shaped by my journeys moments of stillness, movement, and connection - each gallery offering its own sense of presence and emotion.
+              Wander through curated collections shaped by my journeys - moments of stillness, movement, and connection - each gallery offering its own sense of presence and emotion.
             </p>
           </motion.div>
 
