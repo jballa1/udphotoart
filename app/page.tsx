@@ -26,7 +26,7 @@ export default function HomePage() {
           className="absolute inset-0 z-0"
         >
           <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1c2abe0c-bac1-4f44-cca1-309651b87d00/public"
             alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
             className="absolute inset-0 w-full h-full object-cover object-top"
           />
@@ -137,7 +137,7 @@ export default function HomePage() {
                 count: "50 Photos",
                 locations: "9 Countries",
                 description: "Latest captures from international travels",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
+                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public",
                 href: "/galleries/recent-revelations",
                 icon: Sparkles,
               },
@@ -556,10 +556,10 @@ export default function HomePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative h-[600px] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative h-full rounded-2xl overflow-hidden shadow-2xl"
             >
               <img
-                src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-rigo-headshot.png/public"
+                src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/b74ff548-5932-4194-a9e1-8dcd7a2eb900/public"
                 alt="Rigo Gonzalez-Nossa - Fine Art Photographer"
                 className="absolute inset-0 w-full h-full object-cover"
               />

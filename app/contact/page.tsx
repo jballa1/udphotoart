@@ -59,7 +59,7 @@ export default function ContactPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-08b3751a-dba1-440a-aeaf-e8b2c81d2afb-rw-1920.jpg/public"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
             alt="Shop Fine Art"
             className="w-full h-full object-cover object-top"
           />

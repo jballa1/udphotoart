@@ -20,7 +20,7 @@ export default function BlogPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-nature-0dae414e-aff8-446f-9f8b-f26987a17d3c-rw-1200.jpg/public"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/7c594e3a-3ba4-4c58-12c1-7a459249d400/public"
             alt="Blog"
             className="w-full h-full object-cover object-top"
           />

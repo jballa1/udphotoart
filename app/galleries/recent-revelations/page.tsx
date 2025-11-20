@@ -26,7 +26,7 @@ export default function RevelationsPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public"
             alt="Recent Revelations"
             className="w-full h-full object-cover object-top"
           />

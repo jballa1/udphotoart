@@ -13,7 +13,7 @@ const galleries = [
     id: "recent-revelations",
     title: "Recent Revelations",
     description: "A visual diary of my latest photographic adventures across 9 captivating destinations",
-    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
+    image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public",
     href: "/galleries/recent-revelations",
     stats: {
       photos: 50,
@@ -73,11 +73,11 @@ export default function GalleriesPage() {
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-1b6ad388-01d3-4484-a14f-90398e73e698-rw-1920.jpg/public"
+            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1f6e7b4f-a18b-47c9-5bc1-99955251bc00/public"
             alt="Photography Galleries"
             className="w-full h-full object-cover object-top"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/75 via-black/40 to-black/70" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">

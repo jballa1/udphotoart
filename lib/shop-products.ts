@@ -48,7 +48,7 @@ export const shopProducts: Product[] = [
   {
     id: "black-white-expression",
     title: "Monochrome Majesty",
-    category: "Prints",
+    category: "Photo-Inspired Goods",
     image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
     price: 149,
     description: "Timeless black and white photography showcasing dramatic contrast and emotion.",
@@ -57,7 +57,7 @@ export const shopProducts: Product[] = [
   {
     id: "industrial-pastures-industrial",
     title: "Industrial Pastures Heritage",
-    category: "Prints",
+    category: "Photo-Inspired Goods",
     image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-oil-country-124c9218-c74b-4bf3-bc25-1d6b8bfb5c61-rw-1200.jpg/public",
     price: 159,
     description: "Finding beauty in Texas industrial landscapes. Bold, artistic interpretation.",
