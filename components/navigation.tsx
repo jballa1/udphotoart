@@ -64,7 +64,7 @@ export function Navigation() {
           "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
             ? "bg-background backdrop-blur-md shadow-lg"
-            : "bg-gradient-to-b from-black/60 to-transparent backdrop-blur-sm"
+            : "bg-gradient-to-b from-black/40 to-transparent"
         )}
       >
         <nav className="container mx-auto px-4 py-4">

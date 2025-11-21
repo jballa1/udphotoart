@@ -8,6 +8,7 @@ import { MapPin, Globe2 } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import locationsData from "@/lib/revelations-photos.json";
 import { useRouter } from "next/navigation";
+import { HeroShell } from "@/components/hero-shell";
 
 const regions = ["All", "Europe", "Asia", "Americas"];
 
@@ -23,16 +24,11 @@ export default function RevelationsPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public"
-            alt="Recent Revelations"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public"
+        alt="Recent Revelations"
+        className="h-[70vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -46,14 +42,14 @@ export default function RevelationsPage() {
                 Global Exploration
               </span>
             </div>
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               Recent Revelations
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               Contemporary global urban exploration across cities — from
               Nordic winters to vibrant India
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
+            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
               <span>216 Photos</span>
               <span>•</span>
               <span>9 Locations</span>
@@ -65,7 +61,7 @@ export default function RevelationsPage() {
 
         {/* Scroll Indicator */}
         <ScrollIndicator />
-      </section>
+      </HeroShell>
 
       {/* Region Filter */}
       <section className="sticky top-20 z-20 bg-background/95 backdrop-blur-sm border-b">

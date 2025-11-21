@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { blogPosts } from "@/lib/blog-posts";
 import { notFound } from "next/navigation";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function BlogPostPage() {
   const params = useParams();
@@ -29,16 +30,11 @@ export default function BlogPostPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[80vh] flex items-end overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/30" />
-        </div>
-
+      <HeroShell
+        image={post.image}
+        alt={post.title}
+        className="h-[80vh] flex items-end"
+      >
         <div className="relative z-10 container mx-auto px-4 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -49,7 +45,7 @@ export default function BlogPostPage() {
             <div>
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors mb-6"
+                className="inline-flex items-center gap-2 hero-tone hover:opacity-90 transition-colors mb-6"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span className="font-sans uppercase tracking-[0.05em]">
@@ -61,11 +57,11 @@ export default function BlogPostPage() {
               {post.category}
             </span>
 
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               {post.title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-6 text-white/80">
+            <div className="flex flex-wrap items-center gap-6 hero-tone">
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center text-white font-heading">
                   RG
@@ -87,7 +83,7 @@ export default function BlogPostPage() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </HeroShell>
 
       {/* Article Content */}
       <article className="py-16">

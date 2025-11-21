@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, ContactRound, Check } from "lucide-react";
 import { PinterestIcon } from "@/components/footer";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -56,16 +57,11 @@ export default function ContactPage() {
     <main className="min-h-screen bg-background">
       <Navigation />
 
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
-            alt="Shop Fine Art"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
+        alt="Shop Fine Art"
+        className="h-[70vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -79,10 +75,10 @@ export default function ContactPage() {
                 Contact Us
               </span>
             </div>
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               Get in Touch
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               Let's create something beautiful together
             </p>
           </motion.div>
@@ -90,7 +86,7 @@ export default function ContactPage() {
 
         {/* Scroll Indicator */}
         <ScrollIndicator />
-      </section> 
+      </HeroShell> 
 
       {/* Contact Section */}
       <section className="py-24">

@@ -12,6 +12,7 @@ import { notFound } from "next/navigation";
 import locationsData from "@/lib/unspoken-photos.json";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { FavoriteToggle } from "@/components/favorite-toggle";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function LocationPage({ params }: { params: Promise<{ location: string }> }) {
   const { location } = use(params);
@@ -39,16 +40,11 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src={locationData.hero}
-            alt={locationData.name}
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </div>
-
+      <HeroShell
+        image={locationData.hero}
+        alt={locationData.name}
+        className="h-[70vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -57,13 +53,13 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
             className="space-y-6"
           >
             
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               {locationData.name}
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               {locationData.description}
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
+            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
               <span>{locationData.photoCount} Photos</span>
               <span>•</span>
               <span>{locationData.name}</span>
@@ -73,7 +69,7 @@ export default function LocationPage({ params }: { params: Promise<{ location: s
 
         {/* Scroll Indicator */}
         <ScrollIndicator />
-      </section>
+      </HeroShell>
 
       {/* Gallery */}
       <section className="py-16 bg-black/5">

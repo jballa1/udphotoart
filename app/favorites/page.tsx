@@ -11,6 +11,7 @@ import { useFavorites } from "@/components/favorites-provider";
 import { FavoriteToggle } from "@/components/favorite-toggle";
 import { Lightbox } from "@/components/lightbox";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function FavoritesGalleryPage() {
   const { favorites } = useFavorites();
@@ -33,16 +34,11 @@ export default function FavoritesGalleryPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/b248f4d5-cd97-41ac-e843-1173c969f600/public"
-            alt="Favorites"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
-        </div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/b248f4d5-cd97-41ac-e843-1173c969f600/public"
+        alt="Favorites"
+        className="h-[60vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -56,13 +52,13 @@ export default function FavoritesGalleryPage() {
                 Curated by You
               </span>
             </div>
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               Your Favorites
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               Collect the moments that resonate most and revisit them anytime.
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/80 text-sm font-sans uppercase tracking-[0.05em]">
+            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone text-sm font-sans uppercase tracking-[0.05em]">
               <span>
                 {favorites.length} Saved{" "}
                 {favorites.length === 1 ? "Photo" : "Photos"}
@@ -74,7 +70,7 @@ export default function FavoritesGalleryPage() {
         </div>
 
         <ScrollIndicator />
-      </section>
+      </HeroShell>
 
       {/* Favorites Grid */}
       <section className="py-16">

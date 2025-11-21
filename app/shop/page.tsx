@@ -9,6 +9,7 @@ import { ScrollIndicator } from "@/components/scroll-indicator";
 import { shopProducts } from "@/lib/shop-products";
 import { useCart } from "@/components/cart-provider";
 import { AddToCartButton } from "@/components/add-to-cart-button";
+import { HeroShell } from "@/components/hero-shell";
 
 const categories = ["All", "Prints", "Photobooks", "Digital Downloads","Photo-Inspired Goods"];
 
@@ -26,16 +27,11 @@ export default function ShopPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/9d2d532a-2ffa-4a1e-05f8-04703eea1300/public"
-            alt="Shop Fine Art"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/9d2d532a-2ffa-4a1e-05f8-04703eea1300/public"
+        alt="Shop Fine Art"
+        className="h-[70vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -49,14 +45,14 @@ export default function ShopPage() {
                 Fine Art Collection
               </span>
             </div>
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               Shop Prints & Books
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               Transform your space with gallery-quality photography—each piece
               tells a story
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
+            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
               <span>15 Products</span>
               <span>•</span>
               <span>Gallery Quality</span>
@@ -68,7 +64,7 @@ export default function ShopPage() {
 
         {/* Scroll Indicator */}
         <ScrollIndicator />
-      </section>
+      </HeroShell>
 
       {/* Category Filter */}
       <section className="sticky top-20 z-20 bg-background/95 backdrop-blur-sm border-b">

@@ -7,6 +7,7 @@ import { Footer } from "@/components/footer";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { Camera } from "lucide-react";
 import perspectivesData from "@/lib/perspectives-photos.json";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function PerspectivesPage() {
   return (
@@ -14,16 +15,11 @@ export default function PerspectivesPage() {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public"
-            alt="Captured Perspectives"
-            className="w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public"
+        alt="Captured Perspectives"
+        className="h-[70vh] flex items-center justify-center"
+      >
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -37,14 +33,14 @@ export default function PerspectivesPage() {
                 Artistic Vision
               </span>
             </div>
-            <h1 className="hero-title text-white">
+            <h1 className="hero-title hero-tone-strong">
               Captured Perspectives
             </h1>
-            <p className="hero-subtitle text-white/85 max-w-2xl mx-auto">
+            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
               The world changes with every angle, every moment, every point of
               view
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-sm font-sans uppercase tracking-[0.05em]">
+            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
               <span>229 Photos</span>
               <span>•</span>
               <span>5 Categories</span>
@@ -56,7 +52,7 @@ export default function PerspectivesPage() {
 
         {/* Scroll Indicator */}
         <ScrollIndicator />
-      </section>
+      </HeroShell>
 
       {/* Categories Grid */}
       <section className="py-16">

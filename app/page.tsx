@@ -8,6 +8,7 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ScrollIndicator } from "@/components/scroll-indicator";
+import { HeroShell } from "@/components/hero-shell";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -19,20 +20,23 @@ export default function HomePage() {
       <Navigation />
 
       {/* Hero Section with Shrinking Effect */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax */}
-        <motion.div
-          style={{ scale, opacity }}
-          className="absolute inset-0 z-0"
-        >
-          <img
-            src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1c2abe0c-bac1-4f44-cca1-309651b87d00/public"
-            alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
-            className="absolute inset-0 w-full h-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-black/20 to-black/50" />
-        </motion.div>
-
+      <HeroShell
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1c2abe0c-bac1-4f44-cca1-309651b87d00/public"
+        alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
+        className="h-screen flex items-center justify-center"
+        background={
+          <motion.div
+            style={{ scale, opacity }}
+            className="absolute inset-0 z-0"
+          >
+            <img
+              src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1c2abe0c-bac1-4f44-cca1-309651b87d00/public"
+              alt="White Sands National Park - Professional Photography by Rigo Gonzalez-Nossa"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+          </motion.div>
+        }
+      >
         {/* Hero Content */}
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
@@ -61,7 +65,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="hero-subtitle text-white/85 max-w-3xl mx-auto"
+              className="hero-subtitle hero-tone max-w-3xl mx-auto"
             >
               Fine art photography capturing the beauty of our world—from vast landscapes
               to intimate portraits, transforming fleeting moments into timeless art
@@ -86,7 +90,7 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="cta-button border-2 border-white text-white bg-transparent hover:bg-white hover:text-black px-8 py-6 md:text-lg transition-all"
+                  className="cta-button hero-cta-outline border-2 bg-transparent px-8 py-6 md:text-lg transition-all hover:bg-[var(--hero-text-strong)] hover:text-[var(--hero-cta-contrast)] hover:border-[var(--hero-text-strong)]"
                 >
                   SHOP
                 </Button>
@@ -104,7 +108,7 @@ export default function HomePage() {
         >
           <ScrollIndicator/>
         </motion.div>
-      </section>
+      </HeroShell>
 
       {/* Featured Collections */}
       <section className="py-24">
