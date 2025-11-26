@@ -122,7 +122,6 @@ export function HeroShell({
         src={image}
         alt={alt}
         aria-hidden={background ? true : undefined}
-        crossOrigin="anonymous"
         className={cn(
           background ? "sr-only" : "absolute inset-0 h-full w-full object-cover",
           !background && imageClassName

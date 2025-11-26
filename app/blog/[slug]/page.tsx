@@ -1,29 +1,59 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
-import { blogPosts } from "@/lib/blog-posts";
 import { notFound } from "next/navigation";
 import { HeroShell } from "@/components/hero-shell";
+import { useEffect, useState } from "react";
+import type { BlogPost } from "@/lib/blog-posts";
+import { useParams } from "next/navigation";
 
 export default function BlogPostPage() {
-  const params = useParams();
-  const slug = params.slug as string;
+  const params = useParams<{ slug: string }>();
+  const slug = params.slug;
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
 
-  const post = blogPosts.find((p) => p.id === slug);
+  useEffect(() => {
+    if (!slug) return;
+
+    async function loadPost() {
+      try {
+        const res = await fetch(`/api/blog/${slug}`);
+        if (res.status === 404) {
+          notFound();
+          return;
+        }
+        if (!res.ok) {
+          throw new Error("Failed to load blog post");
+        }
+        const data = (await res.json()) as BlogPost;
+        setPost(data);
+
+        const listRes = await fetch("/api/blog");
+        if (listRes.ok) {
+          const allPosts = (await listRes.json()) as BlogPost[];
+          const related = allPosts
+            .filter(
+              (p) => p.category === data.category && p.id !== data.id,
+            )
+            .slice(0, 3);
+          setRelatedPosts(related);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadPost();
+  }, []);
 
   if (!post) {
-    notFound();
+    return null;
   }
-
-  // Get related posts (same category, exclude current)
-  const relatedPosts = blogPosts
-    .filter((p) => p.category === post.category && p.id !== post.id)
-    .slice(0, 3);
 
   return (
     <main className="min-h-screen bg-background">
@@ -31,8 +61,8 @@ export default function BlogPostPage() {
 
       {/* Hero Section */}
       <HeroShell
-        image={post.image}
-        alt={post.title}
+        image={post?.image}
+        alt={post?.title}
         className="h-[80vh] flex items-end"
       >
         <div className="relative z-10 container mx-auto px-4 pb-16">

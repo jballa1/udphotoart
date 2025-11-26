@@ -6,12 +6,35 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ArrowRight, BookOpen, Calendar, Clock } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
-import { blogPosts } from "@/lib/blog-posts";
+import { useEffect, useState } from "react";
+import type { BlogPost } from "@/lib/blog-posts";
 import { HeroShell } from "@/components/hero-shell";
 
 export default function BlogPage() {
-  const featuredPost = blogPosts.find((post) => post.featured);
-  const regularPosts = blogPosts.filter((post) => !post.featured);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const res = await fetch("/api/blog");
+        if (!res.ok) {
+          throw new Error("Failed to load blog posts");
+        }
+        const data = (await res.json()) as BlogPost[];
+        setPosts(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPosts();
+  }, []);
+
+  const featuredPost = posts.find((post) => post.featured);
+  const regularPosts = posts.filter((post) => !post.featured);
 
   return (
     <main className="min-h-screen bg-background">
@@ -43,7 +66,9 @@ export default function BlogPage() {
               A look beyond the image - perspectives that reveal the craft , the journey, and stories from the world behind the lens
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
-              <span>10 Articles</span>
+              <span>
+                {loading ? "Loading..." : `${posts.length} Articles`}
+              </span>
               <span>•</span>
               <span>Photography & Travel</span>
               <span>•</span>
@@ -57,7 +82,14 @@ export default function BlogPage() {
       </HeroShell>
 
       {/* Featured Post */}
-      {featuredPost && (
+      {loading && (
+        <section className="py-16 bg-black/5">
+          <div className="container mx-auto px-4">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg animate-pulse bg-muted/60 h-[320px] md:h-[420px] lg:h-[520px]" />
+          </div>
+        </section>
+      )}
+      {!loading && featuredPost && (
         <section className="py-16 bg-black/5">
           <div className="container mx-auto px-4">
             <motion.div
@@ -143,7 +175,25 @@ export default function BlogPage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {regularPosts.map((post, index) => (
+            {loading &&
+              Array.from({ length: 6 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="group cursor-pointer animate-pulse space-y-4"
+                >
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-lg bg-muted/60" />
+                  <div className="space-y-3">
+                    <div className="h-6 bg-muted/70 rounded w-3/4" />
+                    <div className="h-4 bg-muted/60 rounded w-full" />
+                    <div className="h-4 bg-muted/50 rounded w-2/3" />
+                    <div className="flex items-center gap-4">
+                      <div className="h-3 bg-muted/60 rounded w-24" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            {!loading &&
+              regularPosts.map((post, index) => (
               <motion.article
                 key={post.id}
                 initial={{ opacity: 0, scale: 0.9 }}

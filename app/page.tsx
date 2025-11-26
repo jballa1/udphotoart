@@ -9,11 +9,35 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
+import { useEffect, useState } from "react";
+import type { BlogPost } from "@/lib/blog-posts";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+
+  const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
+  const [blogLoading, setBlogLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadLatestPosts() {
+      try {
+        const res = await fetch("/api/blog");
+        if (!res.ok) {
+          throw new Error("Failed to load blog posts");
+        }
+        const data = (await res.json()) as BlogPost[];
+        setLatestPosts(data.slice(0, 3));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setBlogLoading(false);
+      }
+    }
+
+    loadLatestPosts();
+  }, []);
 
   return (
     <main className="min-h-screen bg-background">
@@ -463,77 +487,67 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-auto">
-            {[
-              {
-                title: "Capturing Wild Horses in Big Bend",
-                excerpt: "An unforgettable encounter with wild mustangs in the dramatic Texas landscape",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
-                category: "Wildlife",
-                readTime: "8 min read",
-                link: "/blog/capturing-wild-horses-big-bend"
-              },
-              {
-                title: "White Sands: Photographing Another World",
-                excerpt: "Capturing the ethereal beauty of New Mexico's otherworldly gypsum dunes",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-white-sands-national-park-new-mexico-0444d443-61f2-4036-a528-a51643d9d672-rw-1920.jpg/public",
-                category: "Landscape",
-                readTime: "7 min read",
-                link: "/blog/white-sands-photographing-otherworldly-landscape"
-              },
-              {
-                title: "Monochrome Magic: Black & White Photography",
-                excerpt: "How removing color amplifies emotion and creates timeless imagery",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
-                category: "Techniques",
-                readTime: "6 min read",
-                link: "/blog/monochrome-magic-black-white-photography"
-              }
-            ].map((post, index) => (
-              <motion.article
-                key={post.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group cursor-pointer"
-              >
-                <Link href={post.link}>
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-lg">
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
-
-                    <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
-                      <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
-                        {post.readTime}
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-                      <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full mb-3">
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-
+            {blogLoading &&
+              Array.from({ length: 3 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="group cursor-pointer animate-pulse space-y-4"
+                >
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-lg bg-muted/60" />
                   <div className="space-y-3">
-                    <h3 className="font-heading text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-[0.01em]">
-                      {post.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
-                      READ MORE
-                      <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
+                    <div className="h-6 bg-muted/70 rounded w-3/4" />
+                    <div className="h-4 bg-muted/60 rounded w-full" />
+                    <div className="h-4 bg-muted/50 rounded w-2/3" />
                   </div>
-                </Link>
-              </motion.article>
-            ))}
+                </div>
+              ))}
+            {!blogLoading &&
+              latestPosts.map((post, index) => (
+                <motion.article
+                  key={post.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1, duration: 0.6 }}
+                  className="group cursor-pointer"
+                >
+                  <Link href={`/blog/${post.id}`}>
+                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-4 shadow-lg">
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-black/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+
+                      <div className="absolute top-4 right-4 bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full">
+                        <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
+                          {post.readTime}
+                        </span>
+                      </div>
+
+                      <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+                        <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-sans uppercase tracking-[0.05em] rounded-full mb-3">
+                          {post.category}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <h3 className="font-heading text-2xl font-bold group-hover:text-accent transition-colors line-clamp-2 tracking-[0.01em]">
+                        {post.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {post.excerpt}
+                      </p>
+                      <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
+                        READ MORE
+                        <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Link>
+                </motion.article>
+              ))}
           </div>
 
           <div className="text-center mt-12">
