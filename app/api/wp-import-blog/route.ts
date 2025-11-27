@@ -45,6 +45,36 @@ async function wpFetch(path: string, init: RequestInit = {}) {
   return res;
 }
 
+async function updatePostAcf(
+  postId: number,
+  imageUrl: string | undefined,
+  readTime: string | undefined,
+) {
+  if (!imageUrl && !readTime) return;
+
+  const acfPayload: Record<string, unknown> = {};
+  if (imageUrl) {
+    acfPayload.feature_image = imageUrl;
+  }
+  if (readTime) {
+    acfPayload.readtime = readTime;
+  }
+
+  const res = await wpFetch(`/posts/${postId}`, {
+    method: "POST",
+    body: JSON.stringify({
+      acf: acfPayload,
+    }),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(
+      `Failed to update ACF feature_image for post ${postId}: ${res.status} ${res.statusText} - ${text}`,
+    );
+  }
+}
+
 async function ensureCategoryId(
   name: string,
   cache: Map<string, number>,
@@ -151,7 +181,13 @@ export async function GET() {
         );
       }
       const existing = (await existingRes.json()) as Array<{ id: number }>;
+
+      // If the post already exists, update its ACF fields (and skip full create)
       if (existing.length > 0) {
+        const existingPostId = existing[0].id;
+
+        await updatePostAcf(existingPostId, post.image, post.readTime);
+
         skipped.push(slug);
         continue;
       }
@@ -177,6 +213,17 @@ export async function GET() {
         tags: tagIds,
       };
 
+      if (post.image || post.readTime) {
+        const acf: Record<string, unknown> = {};
+        if (post.image) {
+          acf.feature_image = post.image;
+        }
+        if (post.readTime) {
+          acf.readtime = post.readTime;
+        }
+        wpPostBody.acf = acf;
+      }
+
       if (post.date) {
         const parsed = new Date(post.date);
         if (!Number.isNaN(parsed.getTime())) {
@@ -198,6 +245,9 @@ export async function GET() {
 
       const createdPost = (await createRes.json()) as { id: number };
       created.push({ slug, id: createdPost.id });
+
+      // Ensure ACF fields are set via the posts API
+      await updatePostAcf(createdPost.id, post.image, post.readTime);
     } catch (error) {
       errors.push({ slug, error: (error as Error).message });
     }
@@ -205,4 +255,3 @@ export async function GET() {
 
   return NextResponse.json({ created, skipped, errors });
 }
-

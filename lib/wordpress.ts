@@ -15,6 +15,10 @@ export interface WPPost {
   excerpt: { rendered: string };
   content: { rendered: string };
   date: string;
+  acf?: {
+    feature_image?: string;
+    readtime?: string;
+  };
   _embedded?: {
     "wp:featuredmedia"?: Array<{
       source_url?: string;
@@ -72,7 +76,11 @@ function estimateReadTime(text: string): string {
 
 function mapWPPostToBlogPost(post: WPPost): BlogPost {
   const featuredImage =
-    post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ?? "";
+    (post.acf?.feature_image && typeof post.acf.feature_image === "string"
+      ? post.acf.feature_image
+      : undefined) ??
+    post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ??
+    "";
 
   const terms = post._embedded?.["wp:term"] ?? [];
   const flatTerms = terms.flat();
@@ -94,6 +102,8 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
     htmlToMarkdownish(post.excerpt.rendered) ||
     contentMarkdown.slice(0, 220);
 
+  const readTimeFromAcf = post.acf?.readtime?.trim();
+
   return {
     id: post.slug,
     title: stripHtml(post.title.rendered),
@@ -103,7 +113,10 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
     category: primaryCategory,
     author: "Rigo Gonzalez-Nossa",
     date: post.date,
-    readTime: estimateReadTime(plainContent || contentMarkdown),
+    readTime:
+      readTimeFromAcf && readTimeFromAcf.length > 0
+        ? readTimeFromAcf
+        : estimateReadTime(plainContent || contentMarkdown),
     featured,
   };
 }
