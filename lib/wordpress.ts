@@ -121,7 +121,7 @@ function mapWPPostToBlogPost(post: WPPost): BlogPost {
   };
 }
 
-async function fetchFromWordPress<T>(path: string): Promise<T> {
+export async function fetchFromWordPress<T>(path: string): Promise<T> {
   if (!API_BASE) {
     throw new Error("WordPress API URL is not configured");
   }

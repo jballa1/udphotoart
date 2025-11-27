@@ -20,6 +20,18 @@ export default function HomePage() {
   const [latestPosts, setLatestPosts] = useState<BlogPost[]>([]);
   const [blogLoading, setBlogLoading] = useState(true);
 
+  interface GalleryGroup {
+    slug: string;
+    name: string;
+    description: string;
+    featureImage: string;
+    photos: number;
+    locations: number;
+  }
+
+  const [galleryGroups, setGalleryGroups] = useState<GalleryGroup[]>([]);
+  const [galleryGroupsLoading, setGalleryGroupsLoading] = useState(true);
+
   useEffect(() => {
     async function loadLatestPosts() {
       try {
@@ -37,6 +49,23 @@ export default function HomePage() {
     }
 
     loadLatestPosts();
+  }, []);
+
+  useEffect(() => {
+    async function loadGalleryGroups() {
+      try {
+        const res = await fetch("/api/gallery-groups");
+        if (!res.ok) return;
+        const data = (await res.json()) as GalleryGroup[];
+        setGalleryGroups(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setGalleryGroupsLoading(false);
+      }
+    }
+
+    loadGalleryGroups();
   }, []);
 
   return (
@@ -159,73 +188,62 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {[
-              {
-                title: "Recent Revelations",
-                count: "50 Photos",
-                locations: "9 Countries",
-                description: "Latest captures from international travels",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8296b099-6beb-4f02-c5a8-ff59f2c25300/public",
-                href: "/galleries/recent-revelations",
-                icon: Sparkles,
-              },
-              {
-                title: "World Through My Lens",
-                count: "733 Photos",
-                locations: "20 Locations",
-                description: "Adventures across America and beyond",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-big-bend-national-park-texas-0bac9d96-b622-453a-be16-80de4506f6e4-rw-1920.jpg/public",
-                href: "/galleries/world-through-my-lens",
-                icon: Compass,
-              },
-              {
-                title: "Captured Perspectives",
-                count: "230 Photos",
-                locations: "5 Categories",
-                description: "The world, observed with quiet curiosity",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
-                href: "/galleries/captured-perspectives",
-                icon: Camera,
-              },
-              {
-                title: "Unspoken",
-                count: "163 Photos",
-                locations: "6 Categories",
-                description: "The subtle poetry of places and people",
-                image: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-portraits-023140e6-f8e1-4e66-a89f-ee346dbacfeb-rw-1200.jpg/public",
-                href: "/galleries/unspoken",
-                icon: Heart,
-              },
-            ].map((collection, index) => (
+            {galleryGroups.map((group, index) => {
+              const icon =
+                group.slug === "recent-revelations"
+                  ? Sparkles
+                  : group.slug === "world-through-my-lens"
+                    ? Compass
+                    : group.slug === "unspoken"
+                      ? Heart
+                      : Camera;
+              const Icon = icon;
+              const locationsLabel =
+                group.slug === "captured-perspectives" ||
+                group.slug === "unspoken"
+                  ? "Categories"
+                  : "Locations";
+
+              const countText = galleryGroupsLoading
+                ? "Loading..."
+                : `${group.photos} Photos`;
+              const locationsText = galleryGroupsLoading
+                ? locationsLabel
+                : `${group.locations} ${locationsLabel}`;
+
+              return (
               <motion.div
-                key={collection.title}
+                key={group.slug}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 className="group relative overflow-hidden rounded-2xl aspect-[3/4] cursor-pointer shadow-lg"
               >
-                <Link href={collection.href}>
+                <Link href={`/galleries/${group.slug}`}>
                   <div className="relative w-full h-full">
                     <img
-                      src={collection.image}
-                      alt={collection.title}
+                      src={
+                        group.featureImage ||
+                        "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1f6e7b4f-a18b-47c9-5bc1-99955251bc00/public"
+                      }
+                      alt={group.name}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
 
                     <div className="absolute inset-0 flex flex-col justify-end p-6">
-                      <collection.icon className="w-8 h-8 text-accent mb-3" />
+                      <Icon className="w-8 h-8 text-accent mb-3" />
                       <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
-                        {collection.title}
+                        {group.name}
                       </h3>
                       <div className="flex items-center gap-3 text-white/70 text-xs mb-3 font-sans uppercase tracking-[0.05em]">
-                        <span>{collection.count}</span>
+                        <span>{countText}</span>
                         <span>•</span>
-                        <span>{collection.locations}</span>
+                        <span>{locationsText}</span>
                       </div>
                       <p className="text-white/80 text-sm mb-4">
-                        {collection.description}
+                        {group.description}
                       </p>
                       <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
                         EXPLORE COLLECTION
@@ -235,7 +253,8 @@ export default function HomePage() {
                   </div>
                 </Link>
               </motion.div>
-            ))}
+            );
+            })}
           </div>
         </div>
       </section>

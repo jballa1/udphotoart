@@ -1,26 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ShoppingBag } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
-import { shopProducts } from "@/lib/shop-products";
 import { useCart } from "@/components/cart-provider";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { HeroShell } from "@/components/hero-shell";
 
-const categories = ["All", "Prints", "Photobooks", "Digital Downloads","Photo-Inspired Goods"];
+interface Product {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  price: number;
+  description: string;
+  collection: string;
+}
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { openCart } = useCart();
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? shopProducts
-      : shopProducts.filter((p) => p.category === selectedCategory);
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) {
+          throw new Error("Failed to load products");
+        }
+        const data = (await res.json()) as Product[];
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of products) {
+      if (p.category) set.add(p.category);
+    }
+    return ["All", ...Array.from(set).sort((a, b) => a.localeCompare(b))];
+  }, [products]);
+
+  const filteredProducts = useMemo(
+    () =>
+      selectedCategory === "All"
+        ? products
+        : products.filter((p) => p.category === selectedCategory),
+    [products, selectedCategory],
+  );
 
   return (
     <main className="min-h-screen bg-background">
@@ -53,7 +92,9 @@ export default function ShopPage() {
               tells a story
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
-              <span>15 Products</span>
+              <span>
+                {loading ? "Loading..." : `${products.length} Products`}
+              </span>
               <span>•</span>
               <span>Gallery Quality</span>
               <span>•</span>
@@ -91,7 +132,22 @@ export default function ShopPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredProducts.map((product, index) => (
+            {loading &&
+              Array.from({ length: 8 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="group animate-pulse cursor-pointer"
+                >
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-lg bg-muted/60" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-muted/70 rounded w-3/4" />
+                    <div className="h-3 bg-muted/60 rounded w-1/2" />
+                    <div className="h-3 bg-muted/50 rounded w-full" />
+                  </div>
+                </div>
+              ))}
+            {!loading &&
+              filteredProducts.map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 40 }}

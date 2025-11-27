@@ -9,26 +9,18 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { useFavorites } from "@/components/favorites-provider";
 
-const navItems = [
-  { href: "/", label: "Home" },
-  {
-    href: "/galleries",
-    label: "Galleries",
-    submenu: [
-      { href: "/galleries/recent-revelations", label: "Recent Revelations" },
-      { href: "/galleries/world-through-my-lens", label: "World Through My Lens" },
-      { href: "/galleries/captured-perspectives", label: "Captured Perspectives" },
-      { href: "/galleries/unspoken", label: "Unspoken" },
-    ]
-  },
-  { href: "/blog", label: "Blog" },
-  { href: "/shop", label: "Shop" },
-  { href: "/contact", label: "Contact" },
-];
+interface NavItem {
+  href: string;
+  label: string;
+  submenu?: Array<{ href: string; label: string }>;
+}
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [galleryItems, setGalleryItems] = useState<
+    Array<{ href: string; label: string }>
+  >([]);
   const pathname = usePathname();
   const { favorites } = useFavorites();
   const favoritesCount = favorites.length;
@@ -45,6 +37,40 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    async function loadGalleryNav() {
+      try {
+        const res = await fetch("/api/gallery-groups");
+        if (!res.ok) return;
+        const data = (await res.json()) as Array<{
+          slug: string;
+          name: string;
+        }>;
+        const items = data.map((g) => ({
+          href: `/galleries/${g.slug}`,
+          label: g.name,
+        }));
+        setGalleryItems(items);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadGalleryNav();
+  }, []);
+
+  const navItems: NavItem[] = [
+    { href: "/", label: "Home" },
+    {
+      href: "/galleries",
+      label: "Galleries",
+      submenu: galleryItems,
+    },
+    { href: "/blog", label: "Blog" },
+    { href: "/shop", label: "Shop" },
+    { href: "/contact", label: "Contact" },
+  ];
   const isActive = (href: string, submenu?: { href: string; label: string }[]) => {
     if (submenu) {
       return submenu.some(item => item.href === pathname) || href === pathname;
