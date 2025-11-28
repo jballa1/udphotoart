@@ -116,7 +116,7 @@ export default function FavoritesGalleryPage() {
                             price={189}
                             category="Prints"
                             mode="icon"
-                            label={`Add ${favorite.title} to cart`}
+                            label={`Purchase ${favorite.title}`}
                           />
                         </div>
                       </div>
@@ -166,7 +166,7 @@ export default function FavoritesGalleryPage() {
                         collection={favorite.gallery}
                         price={189}
                         category="Prints"
-                        label={`Add ${favorite.title} to cart`}
+                        label={`Purchase ${favorite.title}`}
                         mode="icon"
                       />
                     </div>

@@ -230,14 +230,14 @@ export default function LocationPage() {
                         gallery={groupTitle}
                         href={`/galleries/${collectionSlug}/${locationData.id}`}
                       />
-                      <AddToCartButton
-                        title={`${locationData.name} Print`}
-                        image={photo}
-                        collection={locationData.name}
-                        price={189}
-                        category="Prints"
-                        label={`Add ${locationData.name} to cart`}
-                        mode="icon"
+                    <AddToCartButton
+                      title={`${locationData.name} Print`}
+                      image={photo}
+                      collection={locationData.name}
+                      price={189}
+                      category="Prints"
+                      label={`Purchase ${locationData.name}`}
+                      mode="icon"
                       />
                     </div>
                   </div>
@@ -272,14 +272,14 @@ export default function LocationPage() {
                   gallery={groupTitle}
                   href={`/galleries/${collectionSlug}/${locationData.id}`}
                 />
-                <AddToCartButton
-                  title={`${locationData.name} Print`}
-                  image={image}
-                  collection={locationData.name}
-                  price={189}
-                  category="Prints"
-                  label={`Add ${locationData.name} to cart`}
-                  mode="icon"
+              <AddToCartButton
+                title={`${locationData.name} Print`}
+                image={image}
+                collection={locationData.name}
+                price={189}
+                category="Prints"
+                label={`Purchase ${locationData.name}`}
+                mode="icon"
                 />
               </div>
             );

@@ -1,5 +1,5 @@
 import "server-only";
-import { fetchFromWordPress } from "./wordpress";
+import { fetchFromWordPress, decodeHtmlEntities } from "./wordpress";
 
 export interface Product {
   id: string;
@@ -36,7 +36,8 @@ interface WPProduct {
 }
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]+>/g, "").trim();
+  const withoutTags = html.replace(/<[^>]+>/g, "").trim();
+  return decodeHtmlEntities(withoutTags);
 }
 
 function mapWPProductToProduct(product: WPProduct): Product {
@@ -91,4 +92,3 @@ export async function fetchProducts(): Promise<Product[]> {
   );
   return products.map(mapWPProductToProduct);
 }
-

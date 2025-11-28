@@ -27,7 +27,7 @@ export function AddToCartButton({
   category,
   price,
   description,
-  label = "Add to Cart",
+  label = "Purchase",
   className,
   mode = "label",
 }: AddToCartButtonProps) {
