@@ -2,7 +2,18 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Camera, MapPin, Heart, Sparkles, BookOpen, ShoppingCart, Compass, Aperture } from "lucide-react";
+import {
+  ArrowRight,
+  Camera,
+  MapPin,
+  Heart,
+  Sparkles,
+  BookOpen,
+  ShoppingCart,
+  Compass,
+  Aperture,
+  Tag,
+} from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
@@ -11,6 +22,7 @@ import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
 import { useEffect, useState, useMemo } from "react";
 import type { BlogPost } from "@/lib/blog-posts";
+import { AcfIcon } from "@/components/acf-icon";
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
@@ -31,6 +43,8 @@ export default function HomePage() {
     featured: boolean;
     categoryType: string;
     position?: number;
+    icon?: string;
+    locationBased?: boolean;
   }
 
   interface SignatureGallery {
@@ -270,20 +284,10 @@ export default function HomePage() {
                 })
                 .slice(0, 4)
                 .map((group, index) => {
-              const icon =
-                group.slug === "recent-revelations"
-                  ? Sparkles
-                  : group.slug === "world-through-my-lens"
-                    ? Compass
-                    : group.slug === "unspoken"
-                      ? Heart
-                      : Camera;
-              const Icon = icon;
-              const locationsLabel =
-                group.slug === "captured-perspectives" ||
-                group.slug === "unspoken"
-                  ? "Categories"
-                  : "Locations";
+              const iconFallback = Camera;
+              const locationsLabel = group.locationBased
+                ? "Locations"
+                : "Categories";
 
               const countText = `${group.photos} Photos`;
               const locationsText = `${group.locations} ${locationsLabel}`;
@@ -310,7 +314,11 @@ export default function HomePage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
 
                     <div className="absolute inset-0 flex flex-col justify-end p-6">
-                      <Icon className="w-8 h-8 text-accent mb-3" />
+                      <AcfIcon
+                        name={group.icon}
+                        fallback={iconFallback}
+                        className="w-8 h-8 text-accent mb-3"
+                      />
                       <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                         {group.name}
                       </h3>
@@ -487,15 +495,14 @@ export default function HomePage() {
                 })
                 .slice(0, 4)
                 .map((group, index) => {
-                  const icon =
+                  const iconFallback =
                     /print/i.test(group.name)
                       ? Camera
                       : /book/i.test(group.name)
                         ? BookOpen
                         : /digital/i.test(group.name)
                           ? Sparkles
-                          : Aperture;
-                  const Icon = icon;
+                          : Camera;
                   const description =
                     group.dashboardDescription || group.description;
 
@@ -510,7 +517,11 @@ export default function HomePage() {
               >
                 <div >
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
-                    <Icon className="w-8 h-8 text-accent" />
+                    <AcfIcon
+                      name={group.icon}
+                      fallback={iconFallback}
+                      className="w-8 h-8 text-accent"
+                    />
                   </div>
                   <h3 className="font-heading text-2xl font-bold mb-4 tracking-[0.01em]">
                     {group.name}

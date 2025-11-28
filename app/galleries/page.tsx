@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Camera, MapPin, Image as ImageIcon, ArrowRight } from "lucide-react";
+import { Camera, MapPin, Image as ImageIcon, ArrowRight, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
@@ -22,6 +22,8 @@ interface GalleryGroup {
   categoryType: string;
   position?: number;
   color?: string;
+  icon?: string;
+  locationBased?: boolean;
 }
 
 export default function GalleriesPage() {
@@ -157,7 +159,11 @@ export default function GalleriesPage() {
                           </span>
                         </div>
                         <div className="bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1">
-                          <MapPin className="w-3 h-3 text-white" />
+                          {gallery.locationBased ? (
+                            <MapPin className="w-3 h-3 text-white" />
+                          ) : (
+                            <Tag className="w-3 h-3 text-white" />
+                          )}
                           <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.locations}
                           </span>

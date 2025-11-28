@@ -12,6 +12,7 @@ import { notFound, useParams } from "next/navigation";
 import { AddToCartButton } from "@/components/add-to-cart-button";
 import { FavoriteToggle } from "@/components/favorite-toggle";
 import { HeroShell } from "@/components/hero-shell";
+import { AcfIcon } from "@/components/acf-icon";
 
 interface GalleryCollection {
   id: string;
@@ -25,6 +26,12 @@ interface GalleryCollection {
   photos: string[];
   photoCount: number;
   theme?: string;
+  icon?: string;
+}
+
+interface GalleryGroupMeta {
+  slug: string;
+  name: string;
 }
 
 export default function LocationPage() {
@@ -35,6 +42,7 @@ export default function LocationPage() {
   const [locationData, setLocationData] = useState<GalleryCollection | null>(
     null,
   );
+  const [groupMeta, setGroupMeta] = useState<GalleryGroupMeta | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
@@ -68,48 +76,42 @@ export default function LocationPage() {
     loadLocation();
   }, [collectionSlug, locationSlug]);
 
+  useEffect(() => {
+    if (!collectionSlug) return;
+
+    async function loadGroupMeta() {
+      try {
+        const res = await fetch("/api/gallery-groups");
+        if (!res.ok) return;
+        const data = (await res.json()) as GalleryGroupMeta[];
+        const meta = data.find((g) => g.slug === collectionSlug);
+        if (meta) {
+          setGroupMeta(meta);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    loadGroupMeta();
+  }, [collectionSlug]);
+
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
   };
 
-  if (!locationData) {
-    return null;
-  }
 
-  const isWorldThroughMyLens = collectionSlug === "world-through-my-lens";
-  const isRecentRevelations = collectionSlug === "recent-revelations";
-  const isCapturedPerspectives = collectionSlug === "captured-perspectives";
-  const isUnspoken = collectionSlug === "unspoken";
+  const KickerIconFallback = Camera;
 
-  const KickerIcon = isWorldThroughMyLens
-    ? Compass
-    : isRecentRevelations
-      ? Globe2
-      : isCapturedPerspectives
-        ? Camera
-        : isUnspoken
-          ? Heart
-          : Camera;
+  const kickerText =
+    locationData?.state ??
+    locationData?.country ??
+    locationData?.region ??
+    locationData?.theme ??
+    locationData?.name;
 
-  const kickerText = isWorldThroughMyLens
-    ? locationData.state ?? locationData.region ?? ""
-    : isRecentRevelations
-      ? locationData.country ?? locationData.region ?? ""
-      : isCapturedPerspectives
-        ? locationData.theme ?? ""
-        : locationData.name;
-
-  const groupTitle =
-    collectionSlug === "world-through-my-lens"
-      ? "World Through My Lens"
-      : collectionSlug === "recent-revelations"
-        ? "Recent Revelations"
-        : collectionSlug === "captured-perspectives"
-          ? "Captured Perspectives"
-          : collectionSlug === "unspoken"
-            ? "Unspoken"
-            : "Galleries";
+  const groupTitle = groupMeta?.name ?? "Galleries";
 
   return (
     <motion.main
@@ -122,41 +124,56 @@ export default function LocationPage() {
 
       {/* Hero Section */}
       <HeroShell
-        image={locationData.hero}
-        alt={locationData.name}
+        image={
+          locationData?.hero ||
+          "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1f6e7b4f-a18b-47c9-5bc1-99955251bc00/public"
+        }
+        alt={locationData?.name || "Gallery"}
         className="h-[70vh] flex items-center justify-center"
       >
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            {kickerText && (
-              <div className="flex items-center justify-center gap-2 text-accent">
-                <KickerIcon className="w-6 h-6" />
-                <span className="section-kicker text-accent">
-                  {kickerText}
-                </span>
-              </div>
-            )}
-            <h1 className="hero-title hero-tone-strong">
-              {locationData.name}
-            </h1>
-            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
-              {locationData.description}
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
-              <span>{locationData.photoCount} Photos</span>
-              {locationData.region && (
-                <>
-                  <span>•</span>
-                  <span>{locationData.region}</span>
-                </>
-              )}
+          {!locationData ? (
+            <div className="space-y-4 animate-pulse">
+              <div className="mx-auto h-4 w-40 rounded-full bg-black/30" />
+              <div className="mx-auto h-10 w-64 rounded-full bg-black/30" />
+              <div className="mx-auto h-4 w-72 rounded-full bg-black/20" />
             </div>
-          </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              {kickerText && (
+                <div className="flex items-center justify-center gap-2 text-accent">
+                  <AcfIcon
+                    name={locationData.icon}
+                    fallback={KickerIconFallback}
+                    className="w-6 h-6"
+                  />
+                  <span className="section-kicker text-accent">
+                    {kickerText}
+                  </span>
+                </div>
+              )}
+              <h1 className="hero-title hero-tone-strong">
+                {locationData.name}
+              </h1>
+              <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
+                {locationData.description}
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
+                <span>{locationData.photoCount} Photos</span>
+                {locationData.region && (
+                  <>
+                    <span>•</span>
+                    <span>{locationData.region}</span>
+                  </>
+                )}
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Scroll Indicator */}
@@ -175,90 +192,100 @@ export default function LocationPage() {
 
           {/* Vertical Masonry Grid - Pinterest Style */}
           <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-4">
-            {locationData.photos.map((photo, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.02, duration: 0.4 }}
-                className="break-inside-avoid mb-4 cursor-pointer group"
-                onClick={() => openLightbox(idx)}
-              >
-                <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
-                  <img
-                    src={photo}
-                    alt={`${locationData.name} ${idx + 1}`}
-                    className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
-                  <div className="absolute top-3 right-3 flex items-center gap-2">
-                    <FavoriteToggle
-                      id={photo}
-                      image={photo}
-                      title={locationData.name}
-                      subtitle={
-                        locationData.state ??
-                        locationData.country ??
-                        locationData.region ??
-                        locationData.name
-                      }
-                      gallery={groupTitle}
-                      href={`/galleries/${collectionSlug}/${locationData.id}`}
+            {!locationData &&
+              Array.from({ length: 8 }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className="mb-4 h-64 w-full animate-pulse break-inside-avoid rounded-lg bg-muted/60"
+                />
+              ))}
+            {locationData &&
+              locationData.photos.map((photo, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.02, duration: 0.4 }}
+                  className="break-inside-avoid mb-4 cursor-pointer group"
+                  onClick={() => openLightbox(idx)}
+                >
+                  <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
+                    <img
+                      src={photo}
+                      alt={`${locationData.name} ${idx + 1}`}
+                      className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                     />
-                    <AddToCartButton
-                      title={`${locationData.name} Print`}
-                      image={photo}
-                      collection={locationData.name}
-                      price={189}
-                      category="Prints"
-                      label={`Add ${locationData.name} to cart`}
-                      mode="icon"
-                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
+                    <div className="absolute top-3 right-3 flex items-center gap-2">
+                      <FavoriteToggle
+                        id={photo}
+                        image={photo}
+                        title={locationData.name}
+                        subtitle={
+                          locationData.state ??
+                          locationData.country ??
+                          locationData.region ??
+                          locationData.name
+                        }
+                        gallery={groupTitle}
+                        href={`/galleries/${collectionSlug}/${locationData.id}`}
+                      />
+                      <AddToCartButton
+                        title={`${locationData.name} Print`}
+                        image={photo}
+                        collection={locationData.name}
+                        price={189}
+                        category="Prints"
+                        label={`Add ${locationData.name} to cart`}
+                        mode="icon"
+                      />
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+                </motion.div>
+              ))}
           </div>
         </div>
       </section>
 
       {/* Lightbox */}
-      <Lightbox
-        images={locationData.photos}
-        initialIndex={lightboxIndex}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-        renderHeaderActions={(_, index) => {
-          const image = locationData.photos[index];
-          if (!image) return null;
-          return (
-            <div className="flex items-center gap-2">
-              <FavoriteToggle
-                id={image}
-                image={image}
-                title={locationData.name}
-                subtitle={
-                  locationData.state ??
-                  locationData.country ??
-                  locationData.region ??
-                  locationData.name
-                }
-                gallery={groupTitle}
-                href={`/galleries/${collectionSlug}/${locationData.id}`}
-              />
-              <AddToCartButton
-                title={`${locationData.name} Print`}
-                image={image}
-                collection={locationData.name}
-                price={189}
-                category="Prints"
-                label={`Add ${locationData.name} to cart`}
-                mode="icon"
-              />
-            </div>
-          );
-        }}
-      />
+      {locationData && (
+        <Lightbox
+          images={locationData.photos}
+          initialIndex={lightboxIndex}
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          renderHeaderActions={(_, index) => {
+            const image = locationData.photos[index];
+            if (!image) return null;
+            return (
+              <div className="flex items-center gap-2">
+                <FavoriteToggle
+                  id={image}
+                  image={image}
+                  title={locationData.name}
+                  subtitle={
+                    locationData.state ??
+                    locationData.country ??
+                    locationData.region ??
+                    locationData.name
+                  }
+                  gallery={groupTitle}
+                  href={`/galleries/${collectionSlug}/${locationData.id}`}
+                />
+                <AddToCartButton
+                  title={`${locationData.name} Print`}
+                  image={image}
+                  collection={locationData.name}
+                  price={189}
+                  category="Prints"
+                  label={`Add ${locationData.name} to cart`}
+                  mode="icon"
+                />
+              </div>
+            );
+          }}
+        />
+      )}
 
       <Footer />
     </motion.main>

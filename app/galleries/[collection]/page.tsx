@@ -7,6 +7,7 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
+import { AcfIcon } from "@/components/acf-icon";
 import { Camera, Compass, Globe2, Heart, MapPin } from "lucide-react";
 
 interface GalleryCollection {
@@ -32,6 +33,8 @@ interface GalleryGroup {
   subtitle?: string;
   kicker?: string;
   secondaryLabel?: string;
+  icon?: string;
+  locationBased?: boolean;
 }
 
 export default function CollectionPage() {
@@ -174,24 +177,15 @@ export default function CollectionPage() {
       .filter(Boolean),
   ).size;
 
-  if (!groupMeta) {
-    return null;
-  }
-
-  const Icon =
-    collectionSlug === "world-through-my-lens"
-      ? Compass
-      : collectionSlug === "recent-revelations"
-        ? Globe2
-        : collectionSlug === "unspoken"
-          ? Heart
-          : Camera;
+  const IconFallback = Camera;
 
   const secondaryLabel =
-    groupMeta.secondaryLabel ||
+    groupMeta?.secondaryLabel ||
     (filterField === "theme" || filterField === "name"
       ? "Categories"
       : "Regions");
+
+  const showSkeletonHero = !groupMeta;
 
   return (
     <main className="min-h-screen bg-background">
@@ -200,47 +194,73 @@ export default function CollectionPage() {
       {/* Hero Section */}
       <HeroShell
         image={
-          groupMeta.featureImage ||
+          groupMeta?.featureImage ||
           "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/1f6e7b4f-a18b-47c9-5bc1-99955251bc00/public"
         }
-        alt={groupMeta.name}
+        alt={groupMeta?.name || "Gallery"}
         className="h-[70vh] flex items-center justify-center"
       >
         <div className="relative z-10 container mx-auto px-4 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <div className="flex items-center justify-center gap-2 text-accent">
-              <Icon className="w-6 h-6" />
-              <span className="section-kicker text-accent">
-                {groupMeta.kicker || "Photography Collection"}
-              </span>
+          {showSkeletonHero ? (
+            <div className="space-y-4 animate-pulse">
+              <div className="mx-auto h-4 w-40 rounded-full bg-black/30" />
+              <div className="mx-auto h-10 w-64 rounded-full bg-black/30" />
+              <div className="mx-auto h-4 w-72 rounded-full bg-black/20" />
             </div>
-            <h1 className="hero-title hero-tone-strong">
-              {groupMeta.name}
-            </h1>
-            <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
-              {groupMeta.subtitle || groupMeta.description}
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
-              <span>
-                {loading ? "Loading..." : `${totalPhotos} Photos`}
-              </span>
-              {!secondaryLabel&&<>
-              <span>•</span>
-              <span>
-                {loading ? "" : `${totalLocations} Locations`}
-              </span></>}
-              {secondaryLabel&&<>
-              <span>•</span>
-              <span>
-                {loading ? "" : `${secondaryCount || 0} ${secondaryLabel}`}
-              </span></>}
-            </div>
-          </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-6"
+            >
+              <div className="flex items-center justify-center gap-2 text-accent">
+                <AcfIcon
+                  name={groupMeta?.icon}
+                  fallback={IconFallback}
+                  className="w-6 h-6"
+                />
+                <span className="section-kicker text-accent">
+                  {groupMeta?.kicker || "Photography Collection"}
+                </span>
+              </div>
+              <h1 className="hero-title hero-tone-strong">
+                {groupMeta?.name}
+              </h1>
+              <p className="hero-subtitle hero-tone max-w-2xl mx-auto">
+                {groupMeta?.subtitle || groupMeta?.description}
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
+                <span>
+                  {loading ? "Loading..." : `${totalPhotos} Photos`}
+                </span>
+                {!loading && groupMeta?.locationBased && (
+                  <>
+                    <span>•</span>
+                    <span>{`${totalLocations} Locations`}</span>
+                    {groupMeta?.locationBased && secondaryCount > 0 && (
+                      <>
+                        <span>•</span>
+                        <span>{`${secondaryCount} ${
+                            secondaryLabel || "Regions"
+                          }`}
+                        </span>
+                      </>
+                    )}
+                  </>
+                )}
+                {!loading &&
+                  !groupMeta?.locationBased &&
+                  secondaryLabel &&
+                  secondaryCount > 0 && (
+                    <>
+                      <span>•</span>
+                          <span>{`${secondaryCount} ${secondaryLabel}`}</span>
+                        </>
+                      )}
+              </div>
+            </motion.div>
+          )}
         </div>
 
         {/* Scroll Indicator */}
@@ -320,46 +340,44 @@ export default function CollectionPage() {
 
                       {/* Info */}
                       <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-                        {collectionSlug === "world-through-my-lens" &&
-                          item.state && (
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                window.open(
-                                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                    item.state ?? "",
-                                  )},${encodeURIComponent(item.name)}`,
-                                  "_blank",
-                                );
-                              }}
-                              className="flex items-center gap-2 text-accent mb-2 pointer-events-auto"
-                            >
-                              <MapPin className="w-4 h-4" />
-                              <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                                {item.state}
-                              </span>
-                            </div>
-                          )}
-                        {collectionSlug === "recent-revelations" &&
-                          item.country && (
-                            <div
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                window.open(
-                                  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                    item.name,
-                                  )},${encodeURIComponent(item.country ?? "")}`,
-                                  "_blank",
-                                );
-                              }}
-                              className="flex items-center gap-2 text-accent mb-2 pointer-events-auto"
-                            >
-                              <MapPin className="w-4 h-4" />
-                              <span className="text-xs uppercase tracking-[0.08em] font-sans">
-                                {item.country}
-                              </span>
-                            </div>
-                          )}
+                        {groupMeta?.locationBased && item.state && (
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(
+                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                  `${item.state}, ${item.name}`,
+                                )}`,
+                                "_blank",
+                              );
+                            }}
+                            className="flex items-center gap-2 text-accent mb-2 pointer-events-auto"
+                          >
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                              {item.state}
+                            </span>
+                          </div>
+                        )}
+                        {groupMeta?.locationBased && !item.state && item.country && (
+                          <div
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(
+                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                  `${item.name}, ${item.country}`,
+                                )}`,
+                                "_blank",
+                              );
+                            }}
+                            className="flex items-center gap-2 text-accent mb-2 pointer-events-auto"
+                          >
+                            <MapPin className="w-4 h-4" />
+                            <span className="text-xs uppercase tracking-[0.08em] font-sans">
+                              {item.country}
+                            </span>
+                          </div>
+                        )}
                         <h3 className="font-heading text-3xl font-bold text-white mb-2 tracking-[0.01em]">
                           {item.name}
                         </h3>

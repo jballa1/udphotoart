@@ -38,6 +38,8 @@ interface WPCategory {
     featured?: boolean | string | number;
     category?: string;
     position?: number | string;
+    icon?: string;
+    location_based?: boolean | string | number;
   };
   _links?: {
     "wp:post_type"?: Array<{
@@ -78,6 +80,8 @@ export interface GalleryGroupMeta {
   featured: boolean;
   categoryType: string;
   position?: number;
+  icon?: string;
+  locationBased?: boolean;
 }
 
 function parseBoolFlag(value: unknown): boolean {
@@ -248,6 +252,10 @@ export async function fetchGalleryGroupsMeta(): Promise<GalleryGroupMeta[]> {
 
     const featured = parseBoolFlag(acf.featured);
     const position = toNumber(acf.position);
+    const icon =
+      typeof acf.icon === "string" && acf.icon.trim()
+        ? acf.icon.trim()
+        : undefined;
 
     const descriptionText =
       typeof cat.description === "string"
@@ -277,6 +285,8 @@ export async function fetchGalleryGroupsMeta(): Promise<GalleryGroupMeta[]> {
       featured,
       categoryType,
       position,
+      icon,
+      locationBased: parseBoolFlag(acf.location_based),
     };
   });
 }
