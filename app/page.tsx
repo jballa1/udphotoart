@@ -6,13 +6,9 @@ import {
   ArrowRight,
   Camera,
   MapPin,
-  Heart,
   Sparkles,
   BookOpen,
-  ShoppingCart,
-  Compass,
-  Aperture,
-  Tag,
+  ShoppingCart
 } from "lucide-react";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";

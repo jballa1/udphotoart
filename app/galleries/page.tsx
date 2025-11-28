@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { Camera, MapPin, Image as ImageIcon, ArrowRight, Tag } from "lucide-react";
+import { Camera, MapPin, Image as ImageIcon, ArrowRight, Folder } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
@@ -162,7 +162,7 @@ export default function GalleriesPage() {
                           {gallery.locationBased ? (
                             <MapPin className="w-3 h-3 text-white" />
                           ) : (
-                            <Tag className="w-3 h-3 text-white" />
+                            <Folder className="w-3 h-3 text-white" />
                           )}
                           <span className="text-white text-xs font-sans uppercase tracking-[0.05em]">
                             {gallery.locations}

@@ -89,7 +89,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
       {isOpen && item && (
         <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/60 px-4 py-6 backdrop-blur-sm">
-          <div className="relative grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-3xl bg-background shadow-2xl md:h-[540px] md:grid-cols-2">
+          <div className="relative grid w-full max-w-5xl grid-cols-1 overflow-hidden rounded-3xl bg-background shadow-2xl md:h-[440px] md:grid-cols-2">
             <button
               aria-label="Close purchase modal"
               className="absolute right-4 top-4 z-10 rounded-full bg-black/40 p-2 text-white hover:bg-black/60 transition"
@@ -104,7 +104,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 alt={item.title}
                 width={300}
                 height={500}
-                className="h-[540px] w-full object-cover"
+                className="h-[440px] w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-black/10" />
               <div className="absolute bottom-6 left-6 text-white space-y-1">
@@ -131,7 +131,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                 </p>
               </div>
 
-              <div className="space-y-2">
+              {/* <div className="space-y-2">
                 <p className="text-sm font-medium text-muted-foreground">
                   Select Size
                 </p>
@@ -150,7 +150,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     </button>
                   ))}
                 </div>
-              </div>
+              </div> */}
 
               <div className="border-t border-border pt-4 space-y-3">
                 <div className="flex items-baseline justify-between">
