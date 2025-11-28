@@ -91,41 +91,67 @@ export default function CollectionPage() {
     loadGroupMeta();
   }, [collectionSlug]);
 
+  // Decide which field to use for filtering in this collection
+  const filterField = useMemo<
+    "theme" | "region" | "state" | "country" | "name"
+  >(() => {
+    if (items.some((item) => item.theme && item.theme.trim())) {
+      return "theme";
+    }
+    if (items.some((item) => item.region && item.region.trim())) {
+      return "region";
+    }
+    if (items.some((item) => item.state && item.state.trim())) {
+      return "state";
+    }
+    if (items.some((item) => item.country && item.country.trim())) {
+      return "country";
+    }
+    return "name";
+  }, [items]);
+
   const filters = useMemo(() => {
     const set = new Set<string>();
+
     for (const item of items) {
-      if (collectionSlug === "captured-perspectives") {
-        if (item.theme) set.add(item.theme);
-      } else if (collectionSlug === "unspoken") {
-        set.add(item.name);
-      } else if (collectionSlug === "world-through-my-lens") {
-        if (item.region) set.add(item.region);
-      } else if (collectionSlug === "recent-revelations") {
-        if (item.region) set.add(item.region);
+      const value =
+        filterField === "theme"
+          ? item.theme
+          : filterField === "region"
+            ? item.region
+            : filterField === "state"
+              ? item.state
+              : filterField === "country"
+                ? item.country
+                : item.name;
+
+      if (value && value.trim()) {
+        set.add(value.trim());
       }
     }
+
     const list = Array.from(set).sort((a, b) => a.localeCompare(b));
     return ["All", ...list];
-  }, [items, collectionSlug]);
+  }, [items, filterField]);
 
   const filteredItems = useMemo(() => {
     if (selectedFilter === "All") return items;
+
     return items.filter((item) => {
-      if (collectionSlug === "captured-perspectives") {
-        return item.theme === selectedFilter;
-      }
-      if (collectionSlug === "unspoken") {
-        return item.name === selectedFilter;
-      }
-      if (
-        collectionSlug === "world-through-my-lens" ||
-        collectionSlug === "recent-revelations"
-      ) {
-        return item.region === selectedFilter;
-      }
-      return true;
+      const value =
+        filterField === "theme"
+          ? item.theme
+          : filterField === "region"
+            ? item.region
+            : filterField === "state"
+              ? item.state
+              : filterField === "country"
+                ? item.country
+                : item.name;
+
+      return value === selectedFilter;
     });
-  }, [items, selectedFilter, collectionSlug]);
+  }, [items, selectedFilter, filterField]);
 
   const totalPhotos = items.reduce(
     (sum, item) => sum + (item.photoCount ?? 0),
@@ -135,9 +161,15 @@ export default function CollectionPage() {
   const secondaryCount = new Set(
     items
       .map((item) =>
-        collectionSlug === "captured-perspectives" || collectionSlug === "unspoken"
-          ? item.name
-          : item.region,
+        filterField === "theme"
+          ? item.theme
+          : filterField === "region"
+            ? item.region
+            : filterField === "state"
+              ? item.state
+              : filterField === "country"
+                ? item.country
+                : item.name,
       )
       .filter(Boolean),
   ).size;
@@ -157,7 +189,7 @@ export default function CollectionPage() {
 
   const secondaryLabel =
     groupMeta.secondaryLabel ||
-    (collectionSlug === "captured-perspectives" || collectionSlug === "unspoken"
+    (filterField === "theme" || filterField === "name"
       ? "Categories"
       : "Regions");
 
@@ -197,14 +229,16 @@ export default function CollectionPage() {
               <span>
                 {loading ? "Loading..." : `${totalPhotos} Photos`}
               </span>
+              {!secondaryLabel&&<>
               <span>•</span>
               <span>
                 {loading ? "" : `${totalLocations} Locations`}
-              </span>
+              </span></>}
+              {secondaryLabel&&<>
               <span>•</span>
               <span>
                 {loading ? "" : `${secondaryCount || 0} ${secondaryLabel}`}
-              </span>
+              </span></>}
             </div>
           </motion.div>
         </div>
@@ -314,7 +348,7 @@ export default function CollectionPage() {
                                 window.open(
                                   `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                                     item.name,
-                                  )},${encodeURIComponent(item.country)}`,
+                                  )},${encodeURIComponent(item.country ?? "")}`,
                                   "_blank",
                                 );
                               }}

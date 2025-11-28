@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { HeroShell } from "@/components/hero-shell";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import type { BlogPost } from "@/lib/blog-posts";
 
 export default function HomePage() {
@@ -27,10 +27,30 @@ export default function HomePage() {
     featureImage: string;
     photos: number;
     locations: number;
+    dashboardDescription?: string;
+    featured: boolean;
+    categoryType: string;
+    position?: number;
+  }
+
+  interface SignatureGallery {
+    id: string;
+    name: string;
+    group: string;
+    hero: string;
+    description?: string;
+    region?: string;
+    state?: string;
+    country?: string;
+    theme?: string;
+    signatureCollection?: boolean;
+    dashboardPosition?: number;
   }
 
   const [galleryGroups, setGalleryGroups] = useState<GalleryGroup[]>([]);
   const [galleryGroupsLoading, setGalleryGroupsLoading] = useState(true);
+  const [signatureGalleries, setSignatureGalleries] = useState<SignatureGallery[]>([]);
+  const [signatureLoading, setSignatureLoading] = useState(true);
 
   useEffect(() => {
     async function loadLatestPosts() {
@@ -67,6 +87,48 @@ export default function HomePage() {
 
     loadGalleryGroups();
   }, []);
+
+  useEffect(() => {
+    async function loadSignatureGalleries() {
+      try {
+        const res = await fetch("/api/galleries");
+        if (!res.ok) return;
+        const data = (await res.json()) as SignatureGallery[];
+        const filtered = data
+          .filter((g) => g.signatureCollection)
+          .sort((a, b) => {
+            const pa = a.dashboardPosition ?? Number.MAX_SAFE_INTEGER;
+            const pb = b.dashboardPosition ?? Number.MAX_SAFE_INTEGER;
+            return pa - pb;
+          });
+        setSignatureGalleries(filtered);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setSignatureLoading(false);
+      }
+    }
+
+    loadSignatureGalleries();
+  }, []);
+
+  // Arrange signature galleries to match original layout:
+  // - First large card in top-left
+  // - A block of smaller cards to the right
+  // - Second large card beneath the first large, left side
+  const displaySignatureGalleries = useMemo(() => {
+    if (signatureGalleries.length <= 2) {
+      return signatureGalleries;
+    }
+
+    const ordered = [...signatureGalleries];
+    const [firstLarge, secondLarge, ...rest] = ordered;
+
+    const firstRowSmalls = rest.slice(0, 4);
+    const remaining = rest.slice(4);
+
+    return [firstLarge, ...firstRowSmalls, secondLarge, ...remaining];
+  }, [signatureGalleries]);
 
   return (
     <main className="min-h-screen bg-background">
@@ -188,7 +250,26 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {galleryGroups.map((group, index) => {
+            {galleryGroupsLoading &&
+              Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="group animate-pulse relative overflow-hidden rounded-2xl aspect-[3/4] cursor-pointer shadow-lg bg-muted/60"
+                />
+              ))}
+            {!galleryGroupsLoading &&
+              galleryGroups
+                .filter(
+                  (group) =>
+                    group.categoryType === "Galleries" && group.featured,
+                )
+                .sort((a, b) => {
+                  const pa = a.position ?? Number.MAX_SAFE_INTEGER;
+                  const pb = b.position ?? Number.MAX_SAFE_INTEGER;
+                  return pa - pb;
+                })
+                .slice(0, 4)
+                .map((group, index) => {
               const icon =
                 group.slug === "recent-revelations"
                   ? Sparkles
@@ -204,12 +285,8 @@ export default function HomePage() {
                   ? "Categories"
                   : "Locations";
 
-              const countText = galleryGroupsLoading
-                ? "Loading..."
-                : `${group.photos} Photos`;
-              const locationsText = galleryGroupsLoading
-                ? locationsLabel
-                : `${group.locations} ${locationsLabel}`;
+              const countText = `${group.photos} Photos`;
+              const locationsText = `${group.locations} ${locationsLabel}`;
 
               return (
               <motion.div
@@ -243,7 +320,7 @@ export default function HomePage() {
                         <span>{locationsText}</span>
                       </div>
                       <p className="text-white/80 text-sm mb-4">
-                        {group.description}
+                        {group.dashboardDescription || group.description}
                       </p>
                       <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] group-hover:gap-2 transition-all">
                         EXPLORE COLLECTION
@@ -284,108 +361,70 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            {[
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-iditarod-alaska-0a2c4313-37cb-429f-acaf-f6ad40735097-rw-1920.jpg/public",
-                span: "md:col-span-2 md:row-span-2",
-                title: "Iditarod, Alaska",
-                href: "/galleries/world-through-my-lens",
-                collection: "World Through My Lens"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-nature-0dae414e-aff8-446f-9f8b-f26987a17d3c-rw-1200.jpg/public",
-                span: "",
-                title: "Nature",
-                href: "/galleries/captured-perspectives",
-                collection: "Captured Perspectives"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-maternity-157f88b0-4f8a-460c-9eb0-bd9a03228cf6-rw-1200.jpg/public",
-                span: "",
-                title: "Maternity",
-                href: "/galleries/unspoken",
-                collection: "Unspoken"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-prague---czech-republic-0d73fbe7-c3c7-4a77-95ad-c83a9180162c-rw-1920.jpg/public",
-                span: "",
-                title: "Prague",
-                href: "/galleries/recent-revelations",
-                collection: "Recent Revelations"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-balloon-fiesta-new-mexico-00490719-d6fd-4b26-ac92-ac443e3db926-rw-1920.jpg/public",
-                span: "",
-                title: "Balloon Fiesta",
-                href: "/galleries/world-through-my-lens",
-                collection: "World Through My Lens"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-black-white-04c630a6-0dbe-447c-8f39-be082ae74df5-rw-1200.jpg/public",
-                span: "md:col-span-2 md:row-span-2",
-                title: "Black & White",
-                href: "/galleries/captured-perspectives",
-                collection: "Captured Perspectives"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-perspectives-landscape-c1474280-d99c-491f-a321-a9009a2a5c3d.jpg/public",
-                span: "",
-                title: "LandScape",
-                href: "/galleries/captured-perspectives",
-                collection: "Captured Perspectives"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-unspoken-baby-photoshoot-0e0ed734-d9f7-4856-bb7c-04c9ea0bbfab-rw-1200.jpg/public",
-                span: "",
-                title: "Baby Photoshoot",
-                href: "/galleries/unspoken",
-                collection: "Unspoken"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-revelations-palms-springs-california-48e4d897-4cdc-4fd0-bacc-cb92e0a4bdeb-rw-1920.jpg/public",
-                span: "",
-                title: "Palms Springs",
-                href: "/galleries/recent-revelations",
-                collection: "Recent Revelations"
-              },
-              {
-                src: "https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/images-world-lens-holland-michigan-3b21b722-9405-4c9e-8985-490f1e578816-rw-1920.jpg/public",
-                span: "",
-                title: "Holland",
-                href: "/galleries/world-through-my-lens",
-                collection: "World Through My Lens"
-              },
-              
-            ].map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.08, duration: 0.5 }}
-                className={`relative aspect-square overflow-hidden rounded-2xl group cursor-pointer shadow-lg ${item.span}`}
-              >
-                <Link href={item.href}>
-                  <img
-                    src={item.src}
-                    alt={item.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300">
-                    <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
-                      <p className="text-white/70 text-xs font-sans uppercase tracking-[0.08em] mb-1">{item.collection}</p>
-                      <p className="text-white font-heading text-xl tracking-[0.01em]">
-                        {item.title}
-                      </p>
-                      <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        VIEW GALLERY
-                        <ArrowRight className="ml-1 w-4 h-4" />
+            {signatureLoading &&
+              Array.from({ length: 8 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="relative aspect-square overflow-hidden rounded-2xl bg-muted/60 animate-pulse"
+                />
+              ))}
+            {!signatureLoading &&
+              displaySignatureGalleries.map((item, index) => {
+                const largeIds = signatureGalleries.slice(0, 2).map((g) => g.id);
+                const isLarge = largeIds.includes(item.id);
+                const span = isLarge ? "md:col-span-2 md:row-span-2" : "";
+
+                const groupMeta = galleryGroups.find(
+                  (g) => g.slug === item.group,
+                );
+                const collectionLabel =
+                  groupMeta?.name ||
+                  item.group
+                    .split("-")
+                    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+                    .join(" ");
+
+                const subtitle =
+                  item.region || item.state || item.country || item.theme;
+
+                return (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.08, duration: 0.5 }}
+                    className={`relative aspect-square overflow-hidden rounded-2xl group cursor-pointer shadow-lg ${span}`}
+                  >
+                    <Link href={`/galleries/${item.group}/${item.id}`}>
+                      <img
+                        src={item.hero}
+                        alt={item.name}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300">
+                        <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
+                          <p className="text-white/70 text-xs font-sans uppercase tracking-[0.08em] mb-1">
+                            {collectionLabel}
+                          </p>
+                          <p className="text-white font-heading text-xl tracking-[0.01em]">
+                            {item.name}
+                          </p>
+                          {subtitle && (
+                            <p className="text-white/70 text-xs mt-1">
+                              {subtitle}
+                            </p>
+                          )}
+                          <div className="flex items-center text-accent text-sm font-sans uppercase tracking-[0.05em] mt-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            VIEW GALLERY
+                            <ArrowRight className="ml-1 w-4 h-4" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
+                    </Link>
+                  </motion.div>
+                );
+              })}
           </div>
 
           <div className="text-center">
@@ -428,34 +467,41 @@ export default function HomePage() {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mx-auto">
-            {[
-              {
-                icon: Camera,
-                title: "Fine Art Prints",
-                description: "Gallery-quality giclée prints on archival paper in multiple sizes—from intimate 8x10\" to striking 40x60\" pieces",
-                link: "/shop"
-              },
-              {
-                icon: BookOpen,
-                title: "Photobooks",
-                description: "Curated hardcover collections showcasing complete stories from each gallery with 100+ pages of stunning imagery",
-                link: "/shop"
-              },
-              {
-                icon: Sparkles,
-                title: "Digital Downloads",
-                description: "High-resolution digital collections perfect for personal use, wallpapers, and digital galleries",
-                link: "/shop"
-              },
-              {
-                icon: Aperture,
-                title: "Photography Inspired Essentials",
-                description: "Artistic and functional lifestyle, collectibles, and workflow essentials",
-                link: "/shop"
-              }
-            ].map((service, index) => (
+            {galleryGroupsLoading &&
+              Array.from({ length: 4 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse bg-muted/60 rounded-2xl h-[220px]"
+                />
+              ))}
+            {!galleryGroupsLoading &&
+              galleryGroups
+                .filter(
+                  (group) =>
+                    group.categoryType === "Products" && group.featured,
+                )
+                .sort((a, b) => {
+                  const pa = a.position ?? Number.MAX_SAFE_INTEGER;
+                  const pb = b.position ?? Number.MAX_SAFE_INTEGER;
+                  return pa - pb;
+                })
+                .slice(0, 4)
+                .map((group, index) => {
+                  const icon =
+                    /print/i.test(group.name)
+                      ? Camera
+                      : /book/i.test(group.name)
+                        ? BookOpen
+                        : /digital/i.test(group.name)
+                          ? Sparkles
+                          : Aperture;
+                  const Icon = icon;
+                  const description =
+                    group.dashboardDescription || group.description;
+
+                  return (
               <motion.div
-                key={service.title}
+                key={group.slug}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -464,19 +510,24 @@ export default function HomePage() {
               >
                 <div >
                   <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
-                    <service.icon className="w-8 h-8 text-accent" />
+                    <Icon className="w-8 h-8 text-accent" />
                   </div>
-                  <h3 className="font-heading text-2xl font-bold mb-4 tracking-[0.01em]">{service.title}</h3>
-                  <p className="text-muted-foreground mb-6 leading-relaxed">{service.description}</p>
+                  <h3 className="font-heading text-2xl font-bold mb-4 tracking-[0.01em]">
+                    {group.name}
+                  </h3>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">
+                    {description}
+                  </p>
                 </div>
-                <Link href={service.link} className="justify-self-end">
+                <Link href="/shop" className="justify-self-end">
                   <Button variant="outline" className="cta-button group px-6 py-4">
                     LEARN MORE
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </Link>
               </motion.div>
-            ))}
+                  );
+                })}
           </div>
         </div>
       </section>
@@ -593,7 +644,7 @@ export default function HomePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative h-full rounded-2xl overflow-hidden shadow-2xl"
+              className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-2xl"
             >
               <img
                 src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/b74ff548-5932-4194-a9e1-8dcd7a2eb900/public"

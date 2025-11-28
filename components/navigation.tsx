@@ -46,11 +46,20 @@ export function Navigation() {
         const data = (await res.json()) as Array<{
           slug: string;
           name: string;
+          categoryType: string;
+          position?: number;
         }>;
-        const items = data.map((g) => ({
-          href: `/galleries/${g.slug}`,
-          label: g.name,
-        }));
+        const items = data
+          .filter((g) => g.categoryType === "Galleries")
+          .sort((a, b) => {
+            const pa = a.position ?? Number.MAX_SAFE_INTEGER;
+            const pb = b.position ?? Number.MAX_SAFE_INTEGER;
+            return pa - pb;
+          })
+          .map((g) => ({
+            href: `/galleries/${g.slug}`,
+            label: g.name,
+          }));
         setGalleryItems(items);
       } catch (error) {
         console.error(error);

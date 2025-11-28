@@ -1,5 +1,5 @@
 import "server-only";
-import { fetchFromWordPress } from "./wordpress";
+import { fetchFromWordPress, decodeHtmlEntities } from "./wordpress";
 
 export interface WPGallery {
   id: number;
@@ -16,6 +16,8 @@ export interface WPGallery {
     theme?: string;
     icon?: string;
     order?: number | string;
+    signature_collection?: boolean | string | number;
+    dashboard_position?: number | string;
   };
   photos?: string[];
   class_list?: string[];
@@ -32,7 +34,10 @@ interface WPCategory {
     subtitle?: string;
     kicker?: string;
     secondary_label?: string;
-    isgallerycategory?: boolean | string | number;
+    dashboard_description?: string;
+    featured?: boolean | string | number;
+    category?: string;
+    position?: number | string;
   };
   _links?: {
     "wp:post_type"?: Array<{
@@ -55,6 +60,9 @@ export interface GalleryCollection {
   theme?: string;
   icon?: string;
   order?: number;
+   // Home "Signature Collections" section
+  signatureCollection?: boolean;
+  dashboardPosition?: number;
 }
 
 export interface GalleryGroupMeta {
@@ -66,9 +74,13 @@ export interface GalleryGroupMeta {
   kicker?: string;
   secondaryLabel?: string;
   galleryCount: number;
+  dashboardDescription?: string;
+  featured: boolean;
+  categoryType: string;
+  position?: number;
 }
 
-function isGalleryCategoryFlag(value: unknown): boolean {
+function parseBoolFlag(value: unknown): boolean {
   if (typeof value === "boolean") return value;
   if (typeof value === "number") return value !== 0;
   if (typeof value === "string") {
@@ -92,7 +104,7 @@ function getGroupFromClassList(
 }
 
 function normaliseTitle(html: string): string {
-  return html.replace(/<[^>]+>/g, "").trim();
+  return decodeHtmlEntities(html.replace(/<[^>]+>/g, "").trim());
 }
 
 function toNumber(value: unknown): number | undefined {
@@ -121,6 +133,8 @@ function mapWPGalleryToCollection(
     : [];
 
   const order = toNumber(acf.order);
+  const signatureCollection = parseBoolFlag(acf.signature_collection);
+  const dashboardPosition = toNumber(acf.dashboard_position);
 
   return {
     id: wpGallery.slug,
@@ -152,6 +166,8 @@ function mapWPGalleryToCollection(
     icon:
       typeof acf.icon === "string" && acf.icon.trim() ? acf.icon : undefined,
     order,
+    signatureCollection,
+    dashboardPosition,
   };
 }
 
@@ -202,43 +218,65 @@ export async function fetchGalleryGroupsMeta(): Promise<GalleryGroupMeta[]> {
     "/categories?per_page=100",
   );
 
-  // Only categories that are used by the gallery CPT
-  const galleryCategories = categories.filter((cat) =>
-    isGalleryCategoryFlag(cat.acf?.isgallerycategory) &&
-    (cat._links?.["wp:post_type"] ?? []).some((rel) =>
-      rel.href.includes("/wp/v2/gallery"),
-    ),
+  // Only categories explicitly marked for dashboard use
+  const dashboardCategories = categories.filter(
+    (cat) =>
+      typeof cat.acf?.category === "string" &&
+      cat.acf.category.trim().length > 0,
   );
 
-  return galleryCategories.map((cat) => {
+  return dashboardCategories.map((cat) => {
     const acf = cat.acf ?? {};
     const featureImage =
       (acf.feature_image && typeof acf.feature_image === "string"
         ? acf.feature_image
         : "") || "";
 
+    const rawCategoryType =
+      typeof acf.category === "string" && acf.category.trim()
+        ? acf.category.trim()
+        : "";
+    const categoryType = rawCategoryType
+      ? decodeHtmlEntities(rawCategoryType)
+      : "";
+
+    const dashboardDescription =
+      typeof acf.dashboard_description === "string" &&
+      acf.dashboard_description.trim()
+        ? decodeHtmlEntities(acf.dashboard_description.trim())
+        : undefined;
+
+    const featured = parseBoolFlag(acf.featured);
+    const position = toNumber(acf.position);
+
+    const descriptionText =
+      typeof cat.description === "string"
+        ? cat.description.replace(/<[^>]+>/g, "").trim()
+        : "";
+
     return {
       slug: cat.slug,
-      name: cat.name,
-      description:
-        typeof cat.description === "string"
-          ? cat.description.replace(/<[^>]+>/g, "").trim()
-          : "",
+      name: decodeHtmlEntities(cat.name),
+      description: decodeHtmlEntities(descriptionText),
       featureImage,
       subtitle:
         typeof acf.subtitle === "string" && acf.subtitle.trim()
-          ? acf.subtitle
+          ? decodeHtmlEntities(acf.subtitle.trim())
           : undefined,
       kicker:
         typeof acf.kicker === "string" && acf.kicker.trim()
-          ? acf.kicker
+          ? decodeHtmlEntities(acf.kicker.trim())
           : undefined,
       secondaryLabel:
         typeof acf.secondary_label === "string" &&
         acf.secondary_label.trim()
-          ? acf.secondary_label
+          ? decodeHtmlEntities(acf.secondary_label.trim())
           : undefined,
       galleryCount: cat.count ?? 0,
+      dashboardDescription,
+      featured,
+      categoryType,
+      position,
     };
   });
 }

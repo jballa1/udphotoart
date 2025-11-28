@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -18,6 +17,11 @@ interface GalleryGroup {
   photos: number;
   locations: number;
   names: string[];
+  dashboardDescription?: string;
+  featured: boolean;
+  categoryType: string;
+  position?: number;
+  color?: string;
 }
 
 export default function GalleriesPage() {
@@ -43,11 +47,19 @@ export default function GalleriesPage() {
     loadGroups();
   }, []);
 
-  const galleries = useMemo(() => {
-    return groups;
-  }, [groups]);
+  const galleries = useMemo(
+    () =>
+      groups
+        .filter((g) => g.categoryType === "Galleries")
+        .sort((a, b) => {
+          const pa = a.position ?? Number.MAX_SAFE_INTEGER;
+          const pb = b.position ?? Number.MAX_SAFE_INTEGER;
+          return pa - pb;
+        }),
+    [groups],
+  );
 
-  const totalCollections = groups.length;
+  const totalCollections = galleries.length;
   const totalPhotos = galleries.reduce(
     (sum, g) => sum + (g.photos ?? 0),
   0,
@@ -102,8 +114,6 @@ export default function GalleriesPage() {
             </div>
           </motion.div>
         </div>
-
-        {/* Scroll Indicator */}
         <ScrollIndicator />
       </HeroShell>
 

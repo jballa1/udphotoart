@@ -34,9 +34,11 @@ export interface WPPost {
   };
 }
 
-function decodeHtmlEntities(html: string): string {
+export function decodeHtmlEntities(html: string): string {
   return html
     .replace(/&nbsp;/g, " ")
+    // Common encodings for ampersand coming from WordPress
+    .replace(/&#38;|&#038;/g, "&")
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
