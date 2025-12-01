@@ -9,42 +9,41 @@ type HeroTonePreference = HeroTone | "auto";
 const toneCache = new Map<string, HeroTone>();
 
 function sampleTone(img: HTMLImageElement): HeroTone {
-  try {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    const sampleSize = 48;
-    canvas.width = sampleSize;
-    canvas.height = sampleSize;
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+  const sampleSize = 48;
+  canvas.width = sampleSize;
+  canvas.height = sampleSize;
 
-    ctx?.drawImage(img, 0, 0, sampleSize, sampleSize);
-    const data = ctx?.getImageData(0, 0, sampleSize, sampleSize).data;
-    if (!data) return "dark";
-
-    const start = Math.floor(sampleSize * 0.2);
-    const end = Math.ceil(sampleSize * 0.8);
-    let sum = 0;
-    let count = 0;
-    let brightCount = 0;
-
-    for (let y = start; y < end; y++) {
-      for (let x = start; x < end; x++) {
-        const idx = (y * sampleSize + x) * 4;
-        const [r, g, b] = [data[idx], data[idx + 1], data[idx + 2]];
-        const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-        sum += luminance;
-        count += 1;
-        if (luminance > 180) brightCount += 1;
-      }
-    }
-
-    const avg = sum / Math.max(count, 1);
-    const brightRatio = brightCount / Math.max(count, 1);
-
-    if (brightRatio > 0.55) return "light";
-    return avg > 165 ? "light" : "dark";
-  } catch (error) {
+  if (!ctx) {
     return "dark";
   }
+
+  ctx.drawImage(img, 0, 0, sampleSize, sampleSize);
+  const data = ctx.getImageData(0, 0, sampleSize, sampleSize).data;
+
+  const start = Math.floor(sampleSize * 0.2);
+  const end = Math.ceil(sampleSize * 0.8);
+  let sum = 0;
+  let count = 0;
+  let brightCount = 0;
+
+  for (let y = start; y < end; y++) {
+    for (let x = start; x < end; x++) {
+      const idx = (y * sampleSize + x) * 4;
+      const [r, g, b] = [data[idx], data[idx + 1], data[idx + 2]];
+      const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+      sum += luminance;
+      count += 1;
+      if (luminance > 180) brightCount += 1;
+    }
+  }
+
+  const avg = sum / Math.max(count, 1);
+  const brightRatio = brightCount / Math.max(count, 1);
+
+  if (brightRatio > 0.55) return "light";
+  return avg > 165 ? "light" : "dark";
 }
 
 interface HeroShellProps extends React.HTMLAttributes<HTMLElement> {
@@ -61,7 +60,7 @@ interface HeroShellProps extends React.HTMLAttributes<HTMLElement> {
 export function HeroShell({
   image,
   alt,
-  tone = "auto",
+  tone = "dark",
   overlay,
   background,
   imageClassName,
@@ -96,10 +95,18 @@ export function HeroShell({
         return;
       }
 
-      const detected = sampleTone(img);
-      toneCache.set(src, detected);
-      setTheme(detected);
-      onThemeChange?.(detected);
+      try {
+        const detected = sampleTone(img);
+        toneCache.set(src, detected);
+        setTheme(detected);
+        onThemeChange?.(detected);
+      } catch {
+        // If we can't read pixels (e.g. due to CORS),
+        // fall back to the configured fallback theme.
+        toneCache.set(src, fallbackTheme);
+        setTheme(fallbackTheme);
+        onThemeChange?.(fallbackTheme);
+      }
     };
 
     if (img.complete && img.naturalWidth > 0) {

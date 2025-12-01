@@ -11,6 +11,8 @@ import { Mail, Phone, MapPin, Send, Instagram, Facebook, Twitter, ContactRound, 
 import { PinterestIcon } from "@/components/footer";
 import { HeroShell } from "@/components/hero-shell";
 
+type ContactField = "name" | "email" | "subject" | "message";
+
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -21,36 +23,119 @@ export default function ContactPage() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Record<ContactField, string>>({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+  const [generalError, setGeneralError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setGeneralError("");
 
-    // Simulate a network request
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // Client-side validation for each field
+    const nextErrors: Record<ContactField, string> = {
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    };
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
+    if (!formData.name.trim()) {
+      nextErrors.name = "Please enter your name.";
+    }
 
-    // Reset the form after a few seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        name: "",
-        email: "",
-        subject: "",
-        message: "",
+    if (!formData.email.trim()) {
+      nextErrors.email = "Please enter your email address.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      nextErrors.email = "Please enter a valid email address.";
+    }
+
+    if (!formData.subject.trim()) {
+      nextErrors.subject = "Please enter a subject.";
+    }
+
+    if (!formData.message.trim()) {
+      nextErrors.message = "Please enter a message.";
+    }
+
+    const hasErrors = Object.values(nextErrors).some(Boolean);
+    if (hasErrors) {
+      setFieldErrors(nextErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setFieldErrors({
+      name: "",
+      email: "",
+      subject: "",
+      message: "",
+    });
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
-    }, 5000);
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        const message =
+          data?.error ||
+          "Something went wrong while sending your message. Please try again.";
+        setGeneralError(message);
+      } else {
+        setIsSubmitted(true);
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
+
+        // Reset the form after a few seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      }
+    } catch (error) {
+      console.error("Error submitting contact form:", error);
+      setGeneralError(
+        "We couldn't send your message right now. Please try again in a moment.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+    const fieldName = name as ContactField;
+
+    setFormData((prev) => ({
+      ...prev,
+      [fieldName]: value,
+    }));
+
+    setFieldErrors((prev) => ({
+      ...prev,
+      [fieldName]: "",
+    }));
+
+    if (generalError) {
+      setGeneralError("");
+    }
   };
 
   return (
@@ -58,7 +143,7 @@ export default function ContactPage() {
       <Navigation />
 
       <HeroShell
-        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/9d2d532a-2ffa-4a1e-05f8-04703eea1300/public"
         alt="Shop Fine Art"
         className="h-[70vh] flex items-center justify-center"
       >
@@ -201,6 +286,7 @@ export default function ContactPage() {
             >
               <form
                 onSubmit={handleSubmit}
+                noValidate
                 className="bg-muted/30 rounded-lg p-8 space-y-6"
               >
                 {isSubmitted ? (
@@ -222,13 +308,18 @@ export default function ContactPage() {
                   </div>
                 ) : (
                   <>
+                    {generalError && (
+                      <p className="text-sm text-red-500 text-center">
+                        {generalError}
+                      </p>
+                    )}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
                         <label
                           htmlFor="name"
                           className="text-sm font-medium block"
                         >
-                          Your Name
+                          Your Name<span className="text-red-500">*</span>
                         </label>
                         <input
                           type="text"
@@ -236,11 +327,15 @@ export default function ContactPage() {
                           name="name"
                           value={formData.name}
                           onChange={handleChange}
-                          required
                           disabled={isSubmitting}
                           className="w-full px-4 py-3 rounded-md border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent transition-all disabled:opacity-50"
                           placeholder="John Doe"
                         />
+                        {fieldErrors.name && (
+                          <p className="text-xs text-red-500 mt-0.5">
+                            {fieldErrors.name}
+                          </p>
+                        )}
                       </div>
 
                       <div className="space-y-2">
@@ -248,7 +343,7 @@ export default function ContactPage() {
                           htmlFor="email"
                           className="text-sm font-medium block"
                         >
-                          Email Address
+                          Email Address<span className="text-red-500">*</span>
                         </label>
                         <input
                           type="email"
@@ -256,11 +351,15 @@ export default function ContactPage() {
                           name="email"
                           value={formData.email}
                           onChange={handleChange}
-                          required
                           disabled={isSubmitting}
                           className="w-full px-4 py-3 rounded-md border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent transition-all disabled:opacity-50"
                           placeholder="john@example.com"
                         />
+                        {fieldErrors.email && (
+                          <p className="text-xs text-red-500 mt-0.5">
+                            {fieldErrors.email}
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -269,7 +368,7 @@ export default function ContactPage() {
                         htmlFor="subject"
                         className="text-sm font-medium block"
                       >
-                        Subject
+                        Subject<span className="text-red-500">*</span>
                       </label>
                       <input
                         type="text"
@@ -277,11 +376,15 @@ export default function ContactPage() {
                         name="subject"
                         value={formData.subject}
                         onChange={handleChange}
-                        required
                         disabled={isSubmitting}
                         className="w-full px-4 py-3 rounded-md border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent transition-all disabled:opacity-50"
                         placeholder="What would you like to discuss?"
                       />
+                      {fieldErrors.subject && (
+                        <p className="text-xs text-red-500 mt-0.5">
+                          {fieldErrors.subject}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-2">
@@ -289,20 +392,24 @@ export default function ContactPage() {
                         htmlFor="message"
                         className="text-sm font-medium block"
                       >
-                        Message
+                        Message<span className="text-red-500">*</span>
                       </label>
                       <textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleChange}
-                        required
                         disabled={isSubmitting}
                         rows={6}
                         className="w-full px-4 py-3 rounded-md border border-border bg-background focus:outline-none focus:ring-2 focus:ring-accent transition-all resize-none disabled:opacity-50"
                         placeholder="Tell me about your project or inquiry..."
-                      />
-                    </div>
+                       />
+                      {fieldErrors.message && (
+                        <p className="text-xs text-red-500 mt-0.5">
+                          {fieldErrors.message}
+                        </p>
+                      )}
+                     </div>
 
                     <Button
                       type="submit"

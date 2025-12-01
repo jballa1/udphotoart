@@ -12,6 +12,8 @@ export function InsiderPopup() {
   const [isOpen, setIsOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const alreadyDismissed =
@@ -33,13 +35,48 @@ export function InsiderPopup() {
     }
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setHasSubmitted(true);
-    closePopup();
+    if (isSubmitting) return;
 
-    // Hook up to actual email handling here (API route, ESP, etc.).
-    console.info("Insider signup:", email);
+    if (!email) {
+      setErrorMessage("Please enter your email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage(null);
+
+    try {
+      const response = await fetch("/api/insider", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const data = (await response.json().catch(() => null)) as
+          | { error?: string }
+          | null;
+        const message =
+          data?.error ||
+          "We couldn't save your email right now. Please try again.";
+        setErrorMessage(message);
+      } else {
+        setHasSubmitted(true);
+        setEmail("");
+        closePopup();
+      }
+    } catch (error) {
+      console.error("Error submitting insider signup:", error);
+      setErrorMessage(
+        "Something went wrong. Please try again in a moment.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (!isOpen) {
@@ -73,23 +110,33 @@ export function InsiderPopup() {
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-2 p-4 pt-0">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="space-y-2 p-4 pt-0"
+        >
           <div className="relative">
             <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
             <input
               type="email"
-              required
               placeholder="Email address"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              disabled={isSubmitting}
               className="w-full rounded-xl border border-border bg-background/70 py-2 pr-3 pl-10 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent transition"
             />
           </div>
+          {errorMessage && (
+            <p className="text-xs text-red-500 mt-0.5">
+              {errorMessage}
+            </p>
+          )}
           <Button
             type="submit"
-            className="w-full rounded-xl bg-accent hover:bg-[var(--color-accent-hover)] text-background"
+            disabled={isSubmitting}
+            className="w-full rounded-xl bg-accent hover:bg-[var(--color-accent-hover)] text-background disabled:opacity-70"
           >
-            Join the Circle
+            {isSubmitting ? "Joining..." : "Join the Circle"}
           </Button>
           <p className="text-center text-[11px] leading-tight text-muted-foreground">
             {hasSubmitted

@@ -67,7 +67,7 @@ export default function ShopPage() {
 
       {/* Hero Section */}
       <HeroShell
-        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/9d2d532a-2ffa-4a1e-05f8-04703eea1300/public"
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
         alt="Shop Fine Art"
         className="h-[70vh] flex items-center justify-center"
       >
