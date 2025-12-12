@@ -10,6 +10,13 @@ import { HeroShell } from "@/components/hero-shell";
 import { AcfIcon } from "@/components/acf-icon";
 import { Camera, Compass, Globe2, Heart, MapPin } from "lucide-react";
 
+interface GalleryPhoto {
+  id: number;
+  image: string;
+  forSale?: boolean;
+  pictimeUrl?: string;
+}
+
 interface GalleryCollection {
   id: string;
   name: string;
@@ -19,7 +26,7 @@ interface GalleryCollection {
   country?: string;
   description?: string;
   hero: string;
-  photos: string[];
+  photos: GalleryPhoto[];
   photoCount: number;
   theme?: string;
   icon?: string;

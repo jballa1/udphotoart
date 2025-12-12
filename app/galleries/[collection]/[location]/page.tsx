@@ -14,6 +14,13 @@ import { FavoriteToggle } from "@/components/favorite-toggle";
 import { HeroShell } from "@/components/hero-shell";
 import { AcfIcon } from "@/components/acf-icon";
 
+interface GalleryPhoto {
+  id: number;
+  image: string;
+  forSale?: boolean;
+  pictimeUrl?: string;
+}
+
 interface GalleryCollection {
   id: string;
   name: string;
@@ -23,7 +30,7 @@ interface GalleryCollection {
   country?: string;
   description?: string;
   hero: string;
-  photos: string[];
+  photos: GalleryPhoto[];
   photoCount: number;
   theme?: string;
   icon?: string;
@@ -211,15 +218,15 @@ export default function LocationPage() {
                 >
                   <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-2xl transition-all duration-300">
                     <img
-                      src={photo}
+                      src={photo.image}
                       alt={`${locationData.name} ${idx + 1}`}
                       className="w-full h-auto transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg" />
                     <div className="absolute top-3 right-3 flex items-center gap-2">
                       <FavoriteToggle
-                        id={photo}
-                        image={photo}
+                        id={photo.image}
+                        image={photo.image}
                         title={locationData.name}
                         subtitle={
                           locationData.state ??
@@ -230,15 +237,18 @@ export default function LocationPage() {
                         gallery={groupTitle}
                         href={`/galleries/${collectionSlug}/${locationData.id}`}
                       />
-                    <AddToCartButton
-                      title={`${locationData.name} Print`}
-                      image={photo}
-                      collection={locationData.name}
-                      price={189}
-                      category="Prints"
-                      label={`Purchase ${locationData.name}`}
-                      mode="icon"
-                      />
+                      {photo.pictimeUrl && (
+                        <AddToCartButton
+                          title={`${locationData.name} Print`}
+                          image={photo.image}
+                          collection={locationData.name}
+                          price={189}
+                          category="Prints"
+                          label={`Purchase ${locationData.name}`}
+                          mode="icon"
+                          pictimeUrl={photo.pictimeUrl}
+                        />
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -250,18 +260,18 @@ export default function LocationPage() {
       {/* Lightbox */}
       {locationData && (
         <Lightbox
-          images={locationData.photos}
+          images={locationData.photos.map((photo) => photo.image)}
           initialIndex={lightboxIndex}
           isOpen={lightboxOpen}
           onClose={() => setLightboxOpen(false)}
           renderHeaderActions={(_, index) => {
-            const image = locationData.photos[index];
-            if (!image) return null;
+            const photo = locationData.photos[index];
+            if (!photo) return null;
             return (
               <div className="flex items-center gap-2">
                 <FavoriteToggle
-                  id={image}
-                  image={image}
+                  id={photo.image}
+                  image={photo.image}
                   title={locationData.name}
                   subtitle={
                     locationData.state ??
@@ -271,16 +281,20 @@ export default function LocationPage() {
                   }
                   gallery={groupTitle}
                   href={`/galleries/${collectionSlug}/${locationData.id}`}
+                  pictimeUrl={photo.pictimeUrl}
                 />
-              <AddToCartButton
-                title={`${locationData.name} Print`}
-                image={image}
-                collection={locationData.name}
-                price={189}
-                category="Prints"
-                label={`Purchase ${locationData.name}`}
-                mode="icon"
-                />
+                {photo.pictimeUrl && (
+                  <AddToCartButton
+                    title={`${locationData.name} Print`}
+                    image={photo.image}
+                    collection={locationData.name}
+                    price={189}
+                    category="Prints"
+                    label={`Purchase ${locationData.name}`}
+                    mode="icon"
+                    pictimeUrl={photo.pictimeUrl}
+                  />
+                )}
               </div>
             );
           }}

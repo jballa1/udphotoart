@@ -19,6 +19,7 @@ export function FavoriteToggle({
   subtitle,
   gallery,
   href,
+  pictimeUrl,
   className,
 }: FavoriteToggleProps) {
   const { toggleFavorite, isFavorite } = useFavorites();
@@ -27,7 +28,7 @@ export function FavoriteToggle({
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();
-    toggleFavorite({ id, image, title, subtitle, gallery, href });
+    toggleFavorite({ id, image, title, subtitle, gallery, href, pictimeUrl });
   };
 
   return (

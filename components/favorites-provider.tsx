@@ -18,6 +18,7 @@ export type FavoritePhoto = {
   subtitle?: string;
   gallery: string;
   href: string;
+  pictimeUrl?: string;
 };
 
 type FavoritesContextValue = {

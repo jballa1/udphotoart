@@ -12,6 +12,7 @@ export type AddToCartPayload = {
   category?: string;
   price?: number;
   description?: string;
+  pictimeUrl?: string;
 };
 
 type AddToCartButtonProps = AddToCartPayload & {
@@ -27,6 +28,7 @@ export function AddToCartButton({
   category,
   price,
   description,
+  pictimeUrl,
   label = "Purchase",
   className,
   mode = "label",
@@ -36,6 +38,12 @@ export function AddToCartButton({
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
+
+    if (pictimeUrl && typeof window !== "undefined") {
+      window.open(pictimeUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     openCart({
       title,
       image,

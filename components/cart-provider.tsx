@@ -18,6 +18,7 @@ type CartItem = {
   category?: string;
   price?: number;
   description?: string;
+  pictimeUrl?: string;
 };
 
 type CartContextValue = {
@@ -58,7 +59,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setItem(null);
   }, []);
 
-  const handleAddToCart = () => {
+  const handlePurchase = () => {
+    if (item?.pictimeUrl && typeof window !== "undefined") {
+      window.open(item.pictimeUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
     setJustAdded(true);
     setTimeout(() => {
       setJustAdded(false);
@@ -163,7 +169,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
                     </span>
                   </div>
                   <button
-                    onClick={handleAddToCart}
+                    onClick={handlePurchase}
                     className="cta-button flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-white hover:bg-[var(--color-accent-hover)] transition"
                   >
                     <ShoppingCart className="h-5 w-5" />

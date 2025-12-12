@@ -9,6 +9,7 @@ export interface Product {
   price: number;
   description: string;
   collection: string;
+  pictimeUrl?: string;
 }
 
 interface WPProduct {
@@ -22,6 +23,7 @@ interface WPProduct {
     price?: string | number;
     collection?: string;
     category?: string;
+    pictime_url?: string;
   };
   _embedded?: {
     "wp:term"?: Array<
@@ -64,6 +66,11 @@ function mapWPProductToProduct(product: WPProduct): Product {
       ? acf.feature_image
       : "") || "";
 
+  const pictimeUrl =
+    typeof acf.pictime_url === "string" && acf.pictime_url.trim()
+      ? acf.pictime_url.trim()
+      : undefined;
+
   const priceRaw = acf.price;
   const priceNumber =
     typeof priceRaw === "number"
@@ -83,6 +90,7 @@ function mapWPProductToProduct(product: WPProduct): Product {
     price: Number.isFinite(priceNumber) ? priceNumber : 0,
     description: stripHtml(descriptionHtml),
     collection,
+    pictimeUrl,
   };
 }
 

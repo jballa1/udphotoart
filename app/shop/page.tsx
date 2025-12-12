@@ -7,7 +7,6 @@ import { Footer } from "@/components/footer";
 import { ShoppingBag } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
 import { useCart } from "@/components/cart-provider";
-import { AddToCartButton } from "@/components/add-to-cart-button";
 import { HeroShell } from "@/components/hero-shell";
 
 interface Product {
@@ -18,6 +17,7 @@ interface Product {
   price: number;
   description: string;
   collection: string;
+  pictimeUrl?: string;
 }
 
 export default function ShopPage() {
@@ -148,14 +148,14 @@ export default function ShopPage() {
               ))}
             {!loading &&
               filteredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                className="group cursor-pointer"
-                onClick={() => openCart(product)}
-              >
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                  className="group cursor-pointer"
+                  onClick={() => openCart(product)}
+                >
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-lg">
                   <img
                     src={product.image}
@@ -173,17 +173,18 @@ export default function ShopPage() {
 
                   {/* Hover CTA */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <AddToCartButton
-                        title={product.title}
-                        image={product.image}
-                        collection={product.collection}
-                        category={product.category}
-                        price={product.price}
-                        description={product.description}
-                        label="View Details"
-                      className="px-6 py-3"
-                      />
-                    </div>
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        openCart(product);
+                      }}
+                      className="px-6 py-3 rounded-full bg-accent text-white text-xs font-semibold tracking-[0.05em] uppercase shadow-lg transition hover:bg-[var(--color-accent-hover)]"
+                    >
+                      View Details
+                    </button>
+                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                     <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-medium rounded-full mb-2">

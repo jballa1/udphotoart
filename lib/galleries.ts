@@ -18,9 +18,17 @@ export interface WPGallery {
     order?: number | string;
     signature_collection?: boolean | string | number;
     dashboard_position?: number | string;
+    gallery_photos?: unknown;
   };
   photos?: string[];
   class_list?: string[];
+}
+
+export interface GalleryPhoto {
+  id: number;
+  image: string;
+  forSale: boolean;
+  pictimeUrl?: string;
 }
 
 interface WPCategory {
@@ -57,12 +65,12 @@ export interface GalleryCollection {
   country?: string;
   description?: string;
   hero: string;
-  photos: string[];
+  photos: GalleryPhoto[];
   photoCount: number;
   theme?: string;
   icon?: string;
   order?: number;
-   // Home "Signature Collections" section
+  // Home "Signature Collections" section
   signatureCollection?: boolean;
   dashboardPosition?: number;
 }
@@ -120,6 +128,30 @@ function toNumber(value: unknown): number | undefined {
   return undefined;
 }
 
+function normaliseIdArray(value: unknown): number[] {
+  if (!value) return [];
+  if (Array.isArray(value)) {
+    return value
+      .map((v) => {
+        if (typeof v === "number") return v;
+        if (typeof v === "string" && v.trim() !== "") {
+          const n = Number(v);
+          if (!Number.isNaN(n)) return n;
+        }
+        return undefined;
+      })
+      .filter((v): v is number => typeof v === "number");
+  }
+  if (typeof value === "number" && Number.isFinite(value)) {
+    return [value];
+  }
+  if (typeof value === "string" && value.trim() !== "") {
+    const n = Number(value);
+    return Number.isNaN(n) ? [] : [n];
+  }
+  return [];
+}
+
 function mapWPGalleryToCollection(
   wpGallery: WPGallery,
 ): GalleryCollection | null {
@@ -132,9 +164,7 @@ function mapWPGalleryToCollection(
       ? acf.feature_image
       : "") || "";
 
-  const photos = Array.isArray(wpGallery.photos)
-    ? wpGallery.photos.filter((p): p is string => typeof p === "string")
-    : [];
+  const galleryPhotoIds = normaliseIdArray(acf.gallery_photos);
 
   const order = toNumber(acf.order);
   const signatureCollection = parseBoolFlag(acf.signature_collection);
@@ -161,8 +191,10 @@ function mapWPGalleryToCollection(
         ? acf.description
         : undefined,
     hero,
-    photos,
-    photoCount: photos.length,
+    // For collection lists we only need the count; the detail API
+    // will populate the photos array from the photo post type.
+    photos: [] as GalleryPhoto[],
+    photoCount: galleryPhotoIds.length,
     theme:
       typeof acf.theme === "string" && acf.theme.trim()
         ? acf.theme
@@ -213,8 +245,70 @@ export async function fetchGalleryCollectionBySlug(
 
   if (!galleries.length) return null;
 
-  const mapped = mapWPGalleryToCollection(galleries[0]);
-  return mapped ?? null;
+  const wpGallery = galleries[0];
+  const mapped = mapWPGalleryToCollection(wpGallery);
+  if (!mapped) return null;
+
+  // Populate photos for this single gallery from the related photo posts
+  const acf = wpGallery.acf ?? {};
+  const galleryPhotoIds = normaliseIdArray(acf.gallery_photos);
+
+  if (galleryPhotoIds.length === 0) {
+    return mapped;
+  }
+
+  // Fetch the related photo posts by ID and map to image URLs.
+  // We use the include= query to keep it to this gallery's photos.
+  const includeParam = galleryPhotoIds.join(",");
+  const photoPosts = await fetchFromWordPress<
+    Array<{
+      id: number;
+      acf?: {
+        image_url?: string;
+        for_sale?: boolean | string | number;
+        pictime_url?: string;
+      };
+    }>
+  >(`/photo?include=${includeParam}&per_page=${galleryPhotoIds.length}`);
+
+  // Build a map of id -> GalleryPhoto to preserve the order defined in ACF.
+  const photoById = new Map<number, GalleryPhoto>();
+  for (const photo of photoPosts) {
+    const urlRaw =
+      typeof photo.acf?.image_url === "string"
+        ? photo.acf.image_url.trim()
+        : "";
+    if (!urlRaw) continue;
+
+    const pictimeUrl =
+      typeof photo.acf?.pictime_url === "string" &&
+      photo.acf.pictime_url.trim()
+        ? photo.acf.pictime_url.trim()
+        : undefined;
+
+    const forSale = !!pictimeUrl;
+
+    photoById.set(photo.id, {
+      id: photo.id,
+      image: urlRaw,
+      forSale,
+      pictimeUrl,
+    });
+  }
+
+  const photos: GalleryPhoto[] = [];
+  for (const id of galleryPhotoIds) {
+    const meta = photoById.get(id);
+    if (meta) {
+      photos.push(meta);
+    }
+  }
+
+  return {
+    ...mapped,
+    photos,
+    photoCount: photos.length,
+  };
 }
 
 export async function fetchGalleryGroupsMeta(): Promise<GalleryGroupMeta[]> {
