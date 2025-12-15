@@ -645,13 +645,13 @@ export default function HomePage() {
       {/* About Section */}
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-7xl mx-auto min-w-0">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-2xl"
+              className="relative h-full min-h-[500px] rounded-2xl overflow-hidden shadow-2xl !min-w-0"
             >
               <img
                 src="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/b74ff548-5932-4194-a9e1-8dcd7a2eb900/public"
@@ -661,11 +661,11 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
-              className="space-y-4"
+              className="space-y-4 !min-w-0"
             >
               <h2 className="section-heading">
                 RIGO GONZALEZ-NOSSA
