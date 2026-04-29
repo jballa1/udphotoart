@@ -149,14 +149,25 @@ body {
     font-size: clamp(2.5rem, 7vw, 4rem);
     line-height: 1.1;
     letter-spacing: 0.02em;
-    text-shadow: 0 14px 36px rgba(0, 0, 0, 0.55), 0 0 12px rgba(0, 0, 0, 0.35);
+    /* Soft glow + tight shadow for readability over bright images */
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.4),
+      0 0 18px rgba(0, 0, 0, 0.55);
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.7);
+    text-stroke: 1.5px rgba(0, 0, 0, 0.7);
+    paint-order: stroke fill;
   }
 
   .hero-subtitle {
     font-family: var(--font-inter), sans-serif;
     letter-spacing: 0.01em;
     font-size: clamp(1rem, 1.2vw, 1.125rem);
-    text-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    text-shadow:
+      0 1px 3px rgba(0, 0, 0, 0.35),
+      0 0 12px rgba(0, 0, 0, 0.5);
+    -webkit-text-stroke: 0.8px rgba(0, 0, 0, 0.6);
+    text-stroke: 0.8px rgba(0, 0, 0, 0.6);
+    paint-order: stroke fill;
   }
 
   .hero-shell {

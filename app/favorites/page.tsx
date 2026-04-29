@@ -109,15 +109,18 @@ export default function FavoritesGalleryPage() {
 
                         <div className="absolute top-3 right-3 flex items-center gap-2">
                           <FavoriteToggle {...favorite} />
-                          <AddToCartButton
-                            title={`${favorite.title} Print`}
-                            image={favorite.image}
-                            collection={favorite.gallery}
-                            price={189}
-                            category="Prints"
-                            mode="icon"
-                            label={`Add ${favorite.title} to cart`}
-                          />
+                          {favorite.pictimeUrl && (
+                            <AddToCartButton
+                              title={`${favorite.title} Print`}
+                              image={favorite.image}
+                              collection={favorite.gallery}
+                              price={189}
+                              category="Prints"
+                              mode="icon"
+                              label={`Purchase ${favorite.title}`}
+                              pictimeUrl={favorite.pictimeUrl}
+                            />
+                          )}
                         </div>
                       </div>
                     </div>
@@ -160,15 +163,18 @@ export default function FavoritesGalleryPage() {
                   return (
                     <div className="flex items-center gap-2">
                       <FavoriteToggle {...favorite} />
-                      <AddToCartButton
-                        title={`${favorite.title} Print`}
-                        image={favorite.image}
-                        collection={favorite.gallery}
-                        price={189}
-                        category="Prints"
-                        label={`Add ${favorite.title} to cart`}
-                        mode="icon"
-                      />
+                      {favorite.pictimeUrl && (
+                        <AddToCartButton
+                          title={`${favorite.title} Print`}
+                          image={favorite.image}
+                          collection={favorite.gallery}
+                          price={189}
+                          category="Prints"
+                          label={`Purchase ${favorite.title}`}
+                          mode="icon"
+                          pictimeUrl={favorite.pictimeUrl}
+                        />
+                      )}
                     </div>
                   );
                 }}

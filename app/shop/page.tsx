@@ -1,26 +1,65 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { ShoppingBag } from "lucide-react";
 import { ScrollIndicator } from "@/components/scroll-indicator";
-import { shopProducts } from "@/lib/shop-products";
 import { useCart } from "@/components/cart-provider";
-import { AddToCartButton } from "@/components/add-to-cart-button";
 import { HeroShell } from "@/components/hero-shell";
 
-const categories = ["All", "Prints", "Photobooks", "Digital Downloads","Photo-Inspired Goods"];
+interface Product {
+  id: string;
+  title: string;
+  category: string;
+  image: string;
+  price: number;
+  description: string;
+  collection: string;
+  pictimeUrl?: string;
+}
 
 export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const { openCart } = useCart();
 
-  const filteredProducts =
-    selectedCategory === "All"
-      ? shopProducts
-      : shopProducts.filter((p) => p.category === selectedCategory);
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const res = await fetch("/api/products");
+        if (!res.ok) {
+          throw new Error("Failed to load products");
+        }
+        const data = (await res.json()) as Product[];
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadProducts();
+  }, []);
+
+  const categories = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of products) {
+      if (p.category) set.add(p.category);
+    }
+    return ["All", ...Array.from(set).sort((a, b) => a.localeCompare(b))];
+  }, [products]);
+
+  const filteredProducts = useMemo(
+    () =>
+      selectedCategory === "All"
+        ? products
+        : products.filter((p) => p.category === selectedCategory),
+    [products, selectedCategory],
+  );
 
   return (
     <main className="min-h-screen bg-background">
@@ -28,7 +67,7 @@ export default function ShopPage() {
 
       {/* Hero Section */}
       <HeroShell
-        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/9d2d532a-2ffa-4a1e-05f8-04703eea1300/public"
+        image="https://imagedelivery.net/v_WuhwGIT0Zeg5Rlb5xL8Q/8df923e8-3523-4bcc-bf7f-f3642ee79700/public"
         alt="Shop Fine Art"
         className="h-[70vh] flex items-center justify-center"
       >
@@ -53,7 +92,9 @@ export default function ShopPage() {
               tells a story
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 hero-tone-muted text-sm font-sans uppercase tracking-[0.05em]">
-              <span>15 Products</span>
+              <span>
+                {loading ? "Loading..." : `${products.length} Products`}
+              </span>
               <span>•</span>
               <span>Gallery Quality</span>
               <span>•</span>
@@ -91,15 +132,30 @@ export default function ShopPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {filteredProducts.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05, duration: 0.4 }}
-                className="group cursor-pointer"
-                onClick={() => openCart(product)}
-              >
+            {loading &&
+              Array.from({ length: 8 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="group animate-pulse cursor-pointer"
+                >
+                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-lg bg-muted/60" />
+                  <div className="space-y-2">
+                    <div className="h-4 bg-muted/70 rounded w-3/4" />
+                    <div className="h-3 bg-muted/60 rounded w-1/2" />
+                    <div className="h-3 bg-muted/50 rounded w-full" />
+                  </div>
+                </div>
+              ))}
+            {!loading &&
+              filteredProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05, duration: 0.4 }}
+                  className="group cursor-pointer"
+                  onClick={() => openCart(product)}
+                >
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4 shadow-lg">
                   <img
                     src={product.image}
@@ -117,17 +173,18 @@ export default function ShopPage() {
 
                   {/* Hover CTA */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <AddToCartButton
-                        title={product.title}
-                        image={product.image}
-                        collection={product.collection}
-                        category={product.category}
-                        price={product.price}
-                        description={product.description}
-                        label="View Details"
-                      className="px-6 py-3"
-                      />
-                    </div>
+                    <button
+                      type="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                        openCart(product);
+                      }}
+                      className="px-6 py-3 rounded-full bg-accent text-white text-xs font-semibold tracking-[0.05em] uppercase shadow-lg transition hover:bg-[var(--color-accent-hover)]"
+                    >
+                      View Details
+                    </button>
+                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black/70 via-black/40 to-transparent">
                     <span className="inline-block px-3 py-1 bg-accent/90 text-white text-xs font-medium rounded-full mb-2">
